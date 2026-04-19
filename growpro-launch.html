@@ -5,151 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GrowPro — Build Your Telehealth Business</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:#FFF;color:#0D1B2A;line-height:1.6;overflow-x:hidden}
-h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
-:root{--p:#8B7EC8;--pl:#E8E4F5;--pb:#F4F2FA;--n:#0D1B2A;--gb:#F7F7F9;--gbd:#E5E5EA;--g:#34C759;--gold:#D4A843;--gl:#FFF8E7;--w:#FFF;--sh:0 2px 12px rgba(13,27,42,0.06);--shh:0 4px 20px rgba(13,27,42,0.1);--r:12px;--t:0.3s ease}
-.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
-.hdr{padding:20px 0;border-bottom:1px solid var(--gbd);background:var(--w);position:sticky;top:0;z-index:100}
-.hdr .wrap{display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:'Inter',sans-serif;font-weight:800;font-size:24px;letter-spacing:4px;color:var(--n)}
-.logo span{color:var(--p)}
-.tag{font-size:13px;color:#888;letter-spacing:1px}
-.pbar{background:var(--w);border-bottom:1px solid var(--gbd);padding:16px 0;position:sticky;top:65px;z-index:99}
-.psteps{display:flex;justify-content:center;gap:8px;align-items:center}
-.pst{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#AAA;transition:var(--t)}
-.pst.active{color:var(--p);font-weight:600}
-.pst.completed{color:var(--p)}
-.pdot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;background:var(--gb);color:#AAA;border:2px solid var(--gbd);transition:var(--t);flex-shrink:0}
-.pst.active .pdot{background:var(--p);color:var(--w);border-color:var(--p)}
-.pst.completed .pdot{background:var(--p);color:var(--w);border-color:var(--p)}
-.pcon{width:40px;height:2px;background:var(--gbd);flex-shrink:0}
-.pcon.completed{background:var(--p)}
-.plbl{display:none}
-@media(min-width:768px){.plbl{display:inline}.pcon{width:60px}}
-.tbar{background:var(--n);color:var(--w);padding:10px 0;overflow:hidden;font-size:13px;font-weight:500;letter-spacing:.5px}
-.tbi{display:flex;animation:sctrust 20s linear infinite;white-space:nowrap}
-.ti{padding:0 32px;flex-shrink:0}
-.ti::before{content:'✦';margin-right:12px;color:var(--p)}
-@keyframes sctrust{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.main{display:flex;gap:32px;padding:40px 0 120px}
-.ca{flex:1;min-width:0}
-.sec{display:none;animation:fadeIn .4s ease}
-.sec.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.h1{font-size:36px;font-weight:600;margin-bottom:8px;color:var(--n);line-height:1.2}
-.sub{font-size:16px;color:#666;margin-bottom:32px;max-width:600px}
-.grid{display:grid;gap:20px}
-.g2{grid-template-columns:1fr 1fr}
-.g3{grid-template-columns:repeat(3,1fr)}
-@media(max-width:768px){.g2,.g3{grid-template-columns:1fr}}
-.c{background:var(--w);border:2px solid var(--gbd);border-radius:var(--r);padding:28px;cursor:pointer;transition:var(--t);position:relative;box-shadow:var(--sh)}
-.c:hover{box-shadow:var(--shh);transform:translateY(-2px)}
-.c.sel{border-color:var(--p);background:var(--pb)}
-.c.rec{border-color:var(--p);border-width:2px}
-.c.lck{cursor:default;opacity:.85;background:#F0FFF0;border-color:#C8E6C9}
-.c.lck:hover{transform:none;box-shadow:var(--sh)}
-.c.dis{cursor:default;opacity:.5;pointer-events:none}
-.csm{padding:20px}
-.csm .ct{font-size:18px}
-.csm .cp{font-size:20px;margin-bottom:8px}
-.bdg{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:4px 12px;border-radius:20px;margin-bottom:12px}
-.b-new{background:#E8F5E9;color:#2E7D32}
-.b-pop{background:var(--pl);color:var(--p)}
-.b-fast{background:#E3F2FD;color:#1565C0}
-.b-hv{background:var(--gl);color:#8B6914}
-.b-prem{background:linear-gradient(135deg,#F5E6D3,#E8D5B7);color:#6B4226}
-.b-rec{background:#FFF3E0;color:#E65100}
-.ck{position:absolute;top:16px;right:16px;width:28px;height:28px;border-radius:50%;background:var(--p);color:var(--w);display:none;align-items:center;justify-content:center;font-size:14px;font-weight:700}
-.c.sel .ck,.c.lck .ck{display:flex}
-.c.lck .ck{background:var(--g)}
-.ct{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;margin-bottom:4px}
-.cs{font-size:14px;color:#666;margin-bottom:16px}
-.cp{font-size:28px;font-weight:700;color:var(--n);margin-bottom:16px}
-.cp .sx{font-size:14px;font-weight:500;color:#888}
-.cp .ap{color:var(--p)}
-.cl{list-style:none;margin-bottom:16px}
-.cl li{font-size:14px;padding:4px 0;display:flex;align-items:flex-start;gap:8px}
-.cl li::before{content:'✓';color:var(--g);font-weight:700;flex-shrink:0}
-.cn{font-size:13px;color:#888;font-style:italic;margin-top:12px}
-.cd{font-size:14px;color:#555;margin-bottom:8px;line-height:1.5}
-.c.pep{background:var(--gl);border:2px solid var(--gold);animation:pepglow 2.5s ease-in-out infinite}
-.c.pep.sel{background:#FFF3D0;border-color:var(--gold)}
-@keyframes pepglow{0%,100%{box-shadow:0 0 8px rgba(212,168,67,.2),var(--sh)}50%{box-shadow:0 0 20px rgba(212,168,67,.4),var(--shh)}}
-.gh{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#888;margin:36px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--gbd)}
-.ai{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--pl);color:var(--p);font-size:16px;font-weight:700;flex-shrink:0}
-.c.sel .ai,.c.lck .ai{display:none}
-.side{width:320px;flex-shrink:0;position:sticky;top:140px;align-self:flex-start;display:none}
-@media(min-width:1024px){.side{display:block}}
-.sc{background:var(--gb);border-radius:var(--r);padding:28px;border:1px solid var(--gbd)}
-.sct{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:20px;color:var(--n)}
-.sl{display:flex;justify-content:space-between;font-size:14px;padding:6px 0;border-bottom:1px solid var(--gbd)}
-.sl:last-of-type{border-bottom:none}
-.sl .lb{color:#666}
-.sl .vl{font-weight:600}
-.sdv{height:1px;background:var(--gbd);margin:16px 0}
-.stot{display:flex;justify-content:space-between;font-size:18px;font-weight:700;padding:8px 0}
-.stot .vl{color:var(--p)}
-.ssi{font-size:12px;color:#AAA;text-align:center;margin-top:16px;text-transform:uppercase;letter-spacing:1px}
-.mbar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--w);border-top:1px solid var(--gbd);box-shadow:0 -4px 20px rgba(0,0,0,.08);z-index:200;transition:var(--t)}
-@media(max-width:1023px){.mbar{display:block}body{padding-bottom:80px}}
-.mbc{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;cursor:pointer}
-.mbt{display:flex;gap:24px}
-.mbi{text-align:center}
-.mbi .am{font-size:18px;font-weight:700;color:var(--n)}
-.mbi .lb{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.5px}
-.mbx{font-size:20px;color:#888;transition:var(--t)}
-.mbar.exp .mbx{transform:rotate(180deg)}
-.mbe{display:none;padding:0 24px 20px;max-height:60vh;overflow-y:auto}
-.mbar.exp .mbe{display:block}
-.btn{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;padding:14px 32px;border-radius:8px;border:none;cursor:pointer;transition:var(--t);display:inline-flex;align-items:center;gap:8px}
-.btn-p{background:var(--p);color:var(--w)}
-.btn-p:hover{background:#7A6DB7}
-.btn-p:disabled{background:#CCC;cursor:not-allowed}
-.btn-s{background:transparent;color:var(--p);border:2px solid var(--p)}
-.btn-s:hover{background:var(--pb)}
-.bnav{display:flex;justify-content:space-between;margin-top:40px;gap:16px}
-.suc{background:var(--gb);border-radius:var(--r);padding:32px;border:1px solid var(--gbd)}
-.suse{margin-bottom:24px}
-.sust{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#888;margin-bottom:12px}
-.sui{display:flex;justify-content:space-between;padding:8px 0;font-size:15px;border-bottom:1px solid #E8E8EC}
-.sui:last-child{border-bottom:none}
-.sui .inc{color:var(--g);font-weight:600;font-size:13px}
-.sudv{height:2px;background:var(--n);margin:24px 0}
-.sutr{display:flex;justify-content:space-between;font-size:22px;font-weight:700;padding:8px 0}
-.sutr .vl{color:var(--p)}
-.sufp{font-size:12px;color:#999;margin-top:20px;line-height:1.6}
-.fg{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:560px}
-@media(max-width:600px){.fg{grid-template-columns:1fr}}
-.fi{display:flex;flex-direction:column;gap:6px}
-.fi.fw{grid-column:1/-1}
-.fl{font-size:14px;font-weight:600;color:var(--n)}
-.fl .rq{color:#E53935}
-.fx,.fsel{font-family:'DM Sans',sans-serif;font-size:15px;padding:12px 16px;border:2px solid var(--gbd);border-radius:8px;background:var(--w);color:var(--n);transition:var(--t);outline:none}
-.fx:focus,.fsel:focus{border-color:var(--p)}
-.fx.err{border-color:#E53935}
-.fe{font-size:12px;color:#E53935;display:none}
-.fe.show{display:block}
-.conf{text-align:center;padding:40px 0}
-.conf-i{width:80px;height:80px;border-radius:50%;background:#E8F5E9;color:var(--g);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 24px}
-.conf h1{font-size:42px;margin-bottom:8px}
-.conf p{font-size:16px;color:#666;margin-bottom:32px}
-.conf-r{max-width:560px;margin:0 auto;text-align:left}
-.conf-c{margin-top:32px;font-size:14px;color:#888}
-.conf-c a{color:var(--p);text-decoration:none}
-.hid{display:none!important}
-.ft{background:var(--gb);border-top:1px solid var(--gbd);padding:32px 0;text-align:center;font-size:13px;color:#888;line-height:1.8}
-.ft a{color:var(--p);text-decoration:none}
-.ftl{margin-bottom:8px}
-.plat-box{background:var(--pb);border:1px solid var(--pl);border-radius:var(--r);padding:20px 24px;margin-bottom:24px}
-.plat-title{font-weight:700;font-size:14px;color:var(--n);margin-bottom:8px}
-.plat-line{display:flex;justify-content:space-between;font-size:14px;padding:4px 0}
-.plat-line .lb{color:#666}
-.plat-line .vl{font-weight:600;color:var(--n)}
-.plat-note{font-size:12px;color:#888;margin-top:8px;font-style:italic}
-</style>
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Inter',sans-serif;background:#FFF;color:#0D1B2A;line-height:1.6;overflow-x:hidden}h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}:root{--p:#8B7EC8;--pl:#E8E4F5;--pb:#F4F2FA;--n:#0D1B2A;--gb:#F7F7F9;--gbd:#E5E5EA;--g:#34C759;--gold:#D4A843;--gl:#FFF8E7;--w:#FFF;--sh:0 2px 12px rgba(13,27,42,0.06);--shh:0 4px 20px rgba(13,27,42,0.1);--r:12px;--t:0.3s ease}.wrap{max-width:1200px;margin:0 auto;padding:0 24px}.hdr{padding:20px 0;border-bottom:1px solid var(--gbd);background:var(--w);position:sticky;top:0;z-index:100}.hdr .wrap{display:flex;align-items:center;justify-content:space-between}.logo{font-family:'Inter',sans-serif;font-weight:800;font-size:24px;letter-spacing:4px;color:var(--n)}.logo span{color:var(--p)}.tag{font-size:13px;color:#888;letter-spacing:1px}.pbar{background:var(--w);border-bottom:1px solid var(--gbd);padding:16px 0;position:sticky;top:65px;z-index:99}.psteps{display:flex;justify-content:center;gap:8px;align-items:center}.pst{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#AAA;transition:var(--t)}.pst.active{color:var(--p);font-weight:600}.pst.completed{color:var(--p)}.pdot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;background:var(--gb);color:#AAA;border:2px solid var(--gbd);transition:var(--t);flex-shrink:0}.pst.active .pdot{background:var(--p);color:var(--w);border-color:var(--p)}.pst.completed .pdot{background:var(--p);color:var(--w);border-color:var(--p)}.pcon{width:40px;height:2px;background:var(--gbd);flex-shrink:0}.pcon.completed{background:var(--p)}.plbl{display:none}@media(min-width:768px){.plbl{display:inline}.pcon{width:60px}}.tbar{background:var(--n);color:var(--w);padding:10px 0;overflow:hidden;font-size:13px;font-weight:500;letter-spacing:.5px}.tbi{display:flex;animation:sctrust 20s linear infinite;white-space:nowrap}.ti{padding:0 32px;flex-shrink:0}.ti::before{content:'✦';margin-right:12px;color:var(--p)}@keyframes sctrust{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}.main{display:flex;gap:32px;padding:40px 0 120px}.ca{flex:1;min-width:0}.sec{display:none;animation:fadeIn .4s ease}.sec.active{display:block}@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}.h1{font-size:36px;font-weight:600;margin-bottom:8px;color:var(--n);line-height:1.2}.sub{font-size:16px;color:#666;margin-bottom:32px;max-width:600px}.grid{display:grid;gap:20px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}@media(max-width:768px){.g2,.g3{grid-template-columns:1fr}}.c{background:var(--w);border:2px solid var(--gbd);border-radius:var(--r);padding:28px;cursor:pointer;transition:var(--t);position:relative;box-shadow:var(--sh)}.c:hover{box-shadow:var(--shh);transform:translateY(-2px)}.c.sel{border-color:var(--p);background:var(--pb)}.c.rec{border-color:var(--p);border-width:2px}.c.lck{cursor:default;opacity:.85;background:#F0FFF0;border-color:#C8E6C9}.c.lck:hover{transform:none;box-shadow:var(--sh)}.c.dis{cursor:default;opacity:.5;pointer-events:none}.csm{padding:20px}.csm .ct{font-size:18px}.csm .cp{font-size:20px;margin-bottom:8px}.bdg{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:4px 12px;border-radius:20px;margin-bottom:12px}.b-new{background:#E8F5E9;color:#2E7D32}.b-pop{background:var(--pl);color:var(--p)}.b-fast{background:#E3F2FD;color:#1565C0}.b-hv{background:var(--gl);color:#8B6914}.b-prem{background:linear-gradient(135deg,#F5E6D3,#E8D5B7);color:#6B4226}.b-rec{background:#FFF3E0;color:#E65100}.ck{position:absolute;top:16px;right:16px;width:28px;height:28px;border-radius:50%;background:var(--p);color:var(--w);display:none;align-items:center;justify-content:center;font-size:14px;font-weight:700}.c.sel .ck,.c.lck .ck{display:flex}.c.lck .ck{background:var(--g)}.ct{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;margin-bottom:4px}.cs{font-size:14px;color:#666;margin-bottom:16px}.cp{font-size:28px;font-weight:700;color:var(--n);margin-bottom:16px}.cp .sx{font-size:14px;font-weight:500;color:#888}.cp .ap{color:var(--p)}.cl{list-style:none;margin-bottom:16px}.cl li{font-size:14px;padding:4px 0;display:flex;align-items:flex-start;gap:8px}.cl li::before{content:'✓';color:var(--g);font-weight:700;flex-shrink:0}.cn{font-size:13px;color:#888;font-style:italic;margin-top:12px}.cd{font-size:14px;color:#555;margin-bottom:8px;line-height:1.5}.c.pep{background:var(--gl);border:2px solid var(--gold);animation:pepglow 2.5s ease-in-out infinite}.c.pep.sel{background:#FFF3D0;border-color:var(--gold)}@keyframes pepglow{0%,100%{box-shadow:0 0 8px rgba(212,168,67,.2),var(--sh)}50%{box-shadow:0 0 20px rgba(212,168,67,.4),var(--shh)}}.gh{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#888;margin:36px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--gbd)}.ai{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--pl);color:var(--p);font-size:16px;font-weight:700;flex-shrink:0}.c.sel .ai,.c.lck .ai{display:none}.side{width:320px;flex-shrink:0;position:sticky;top:140px;align-self:flex-start;display:none}@media(min-width:1024px){.side{display:block}}.sc{background:var(--gb);border-radius:var(--r);padding:28px;border:1px solid var(--gbd)}.sct{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:20px;color:var(--n)}.sl{display:flex;justify-content:space-between;font-size:14px;padding:6px 0;border-bottom:1px solid var(--gbd)}.sl:last-of-type{border-bottom:none}.sl .lb{color:#666}.sl .vl{font-weight:600}.sdv{height:1px;background:var(--gbd);margin:16px 0}.stot{display:flex;justify-content:space-between;font-size:18px;font-weight:700;padding:8px 0}.stot .vl{color:var(--p)}.ssi{font-size:12px;color:#AAA;text-align:center;margin-top:16px;text-transform:uppercase;letter-spacing:1px}.mbar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--w);border-top:1px solid var(--gbd);box-shadow:0 -4px 20px rgba(0,0,0,.08);z-index:200;transition:var(--t)}@media(max-width:1023px){.mbar{display:block}body{padding-bottom:80px}}.mbc{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;cursor:pointer}.mbt{display:flex;gap:24px}.mbi{text-align:center}.mbi .am{font-size:18px;font-weight:700;color:var(--n)}.mbi .lb{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.5px}.mbx{font-size:20px;color:#888;transition:var(--t)}.mbar.exp .mbx{transform:rotate(180deg)}.mbe{display:none;padding:0 24px 20px;max-height:60vh;overflow-y:auto}.mbar.exp .mbe{display:block}.btn{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;padding:14px 32px;border-radius:8px;border:none;cursor:pointer;transition:var(--t);display:inline-flex;align-items:center;gap:8px}.btn-p{background:var(--p);color:var(--w)}.btn-p:hover{background:#7A6DB7}.btn-p:disabled{background:#CCC;cursor:not-allowed}.btn-s{background:transparent;color:var(--p);border:2px solid var(--p)}.btn-s:hover{background:var(--pb)}.bnav{display:flex;justify-content:space-between;margin-top:40px;gap:16px}.suc{background:var(--gb);border-radius:var(--r);padding:32px;border:1px solid var(--gbd)}.suse{margin-bottom:24px}.sust{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#888;margin-bottom:12px}.sui{display:flex;justify-content:space-between;padding:8px 0;font-size:15px;border-bottom:1px solid #E8E8EC}.sui:last-child{border-bottom:none}.sui .inc{color:var(--g);font-weight:600;font-size:13px}.sudv{height:2px;background:var(--n);margin:24px 0}.sutr{display:flex;justify-content:space-between;font-size:22px;font-weight:700;padding:8px 0}.sutr .vl{color:var(--p)}.sufp{font-size:12px;color:#999;margin-top:20px;line-height:1.6}.fg{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:560px}@media(max-width:600px){.fg{grid-template-columns:1fr}}.fi{display:flex;flex-direction:column;gap:6px}.fi.fw{grid-column:1/-1}.fl{font-size:14px;font-weight:600;color:var(--n)}.fl .rq{color:#E53935}.fx,.fsel{font-family:'DM Sans',sans-serif;font-size:15px;padding:12px 16px;border:2px solid var(--gbd);border-radius:8px;background:var(--w);color:var(--n);transition:var(--t);outline:none}.fx:focus,.fsel:focus{border-color:var(--p)}.fx.err{border-color:#E53935}.fe{font-size:12px;color:#E53935;display:none}.fe.show{display:block}.conf{text-align:center;padding:40px 0}.conf-i{width:80px;height:80px;border-radius:50%;background:#E8F5E9;color:var(--g);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 24px}.conf h1{font-size:42px;margin-bottom:8px}.conf p{font-size:16px;color:#666;margin-bottom:32px}.conf-r{max-width:560px;margin:0 auto;text-align:left}.conf-c{margin-top:32px;font-size:14px;color:#888}.conf-c a{color:var(--p);text-decoration:none}.hid{display:none!important}.ft{background:var(--gb);border-top:1px solid var(--gbd);padding:32px 0;text-align:center;font-size:13px;color:#888;line-height:1.8}.ft a{color:var(--p);text-decoration:none}.ftl{margin-bottom:8px}.plat-box{background:var(--pb);border:1px solid var(--pl);border-radius:var(--r);padding:20px 24px;margin-bottom:24px}.plat-title{font-weight:700;font-size:14px;color:var(--n);margin-bottom:8px}.plat-line{display:flex;justify-content:space-between;font-size:14px;padding:4px 0}.plat-line .lb{color:#666}.plat-line .vl{font-weight:600;color:var(--n)}.plat-note{font-size:12px;color:#888;margin-top:8px;font-style:italic}.pp-section{margin-bottom:32px}.pp-title{font-size:18px;font-weight:700;color:var(--n);margin-bottom:4px}.pp-sub{font-size:14px;color:#666;margin-bottom:16px}.pp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}@media(max-width:768px){.pp-grid{grid-template-columns:1fr}}.pp-card{background:var(--w);border:2px solid var(--gbd);border-radius:var(--r);padding:24px 20px;cursor:pointer;transition:var(--t);position:relative;text-align:center}.pp-card:hover{box-shadow:var(--shh);transform:translateY(-2px)}.pp-card.pp-sel{border-color:var(--p);background:var(--pb)}.pp-card .pp-ck{position:absolute;top:12px;right:12px;width:24px;height:24px;border-radius:50%;background:var(--p);color:var(--w);display:none;align-items:center;justify-content:center;font-size:12px;font-weight:700}.pp-card.pp-sel .pp-ck{display:flex}.pp-badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:16px;margin-bottom:10px}.pp-b-best{background:#E8F5E9;color:#2E7D32}.pp-b-flex{background:var(--pl);color:var(--p)}.pp-b-fin{background:#FFF3E0;color:#E65100}.pp-name{font-size:16px;font-weight:700;color:var(--n);margin-bottom:8px}.pp-amount{font-size:24px;font-weight:800;color:var(--n);margin-bottom:4px}.pp-detail{font-size:13px;color:#666;line-height:1.5}.pp-detail strong{color:var(--n)}.pp-fee{font-size:12px;color:#888;margin-top:8px;font-style:italic}.pp-total{font-size:13px;font-weight:700;color:var(--p);margin-top:8px}.pp-card.pp-best{border-color:var(--g)}.pp-card.pp-best.pp-sel{border-color:var(--g);background:#F0FFF4}.promo-tag{display:flex;align-items:center;gap:8px;padding:6px 12px;background:#F0FFF4;border:1px solid #34C759;border-radius:8px;margin-bottom:6px}.promo-txt{font-size:13px;font-weight:600;color:#34C759;flex:1}</style>
 </head>
 <body>
 <header class="hdr"><div class="wrap"><div><div class="logo">GROW<span>PRO</span></div><div class="tag">Build Your Telehealth Business</div></div></div></header>
@@ -165,13 +21,11 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <span class="ti">LegitScript Certified</span><span class="ti">70+ Brands Launched</span><span class="ti">100% LegitScript Success Rate</span><span class="ti">Direct Pharmacy Access</span><span class="ti">4% Processing No Reserves</span>
 <span class="ti">LegitScript Certified</span><span class="ti">70+ Brands Launched</span><span class="ti">100% LegitScript Success Rate</span><span class="ti">Direct Pharmacy Access</span><span class="ti">4% Processing No Reserves</span>
 </div></div>
-
 <div class="wrap"><div class="main"><div class="ca">
-
 <!-- STEP 1 -->
 <div class="sec active" id="step1">
 <h1 class="h1">Choose Your Launch Path</h1>
-<p class="sub">Select the package that fits your vision. You can always upgrade later.</p>
+<p class="sub">Select the package that fits your vision.</p>
 <div class="grid g3">
 <div class="c" data-package="template" onclick="selPkg('template')">
 <div class="ck">✓</div>
@@ -227,11 +81,10 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <div class="plat-title">Required Platform Costs (all packages)</div>
 <div class="plat-line"><span class="lb">WellieMD Setup Fee</span><span class="vl">$1,500 one-time</span></div>
 <div class="plat-line"><span class="lb">WellieMD Platform</span><span class="vl">$1,000/mo</span></div>
-<div class="plat-note">These are mandatory platform fees billed separately by WellieMD.</div>
+<div class="plat-note">Mandatory platform fees billed by WellieMD.</div>
 </div>
 <div class="bnav"><div></div><button class="btn btn-p" id="s1n" disabled onclick="goTo(2)">Continue →</button></div>
 </div>
-
 <!-- STEP 2 -->
 <div class="sec" id="step2">
 <h1 class="h1">What will you offer your patients?</h1>
@@ -251,12 +104,10 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 </div>
 <div class="bnav"><button class="btn btn-s" onclick="goTo(1)">← Back</button><button class="btn btn-p" onclick="goTo(3)">Continue →</button></div>
 </div>
-
 <!-- STEP 3 -->
 <div class="sec" id="step3">
 <h1 class="h1">Supercharge your launch</h1>
 <p class="sub">Add any of these now or any time after launch. Price updates instantly.</p>
-
 <div class="gh">Launch Upgrades</div>
 <div class="grid" style="gap:16px">
 <div class="c csm" id="ftpCard" data-addon="fast_track_priority" data-price="10000" data-type="onetime" data-group="fasttrack" onclick="togAddon(this)">
@@ -296,7 +147,6 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <div class="cp"><span class="ap">+$500</span></div>
 </div>
 </div>
-
 <div class="gh">Platform &amp; CRM</div>
 <div class="grid" style="gap:16px">
 <div class="c csm" data-addon="lumi_crm" data-price="499" data-type="monthly" onclick="togAddon(this)">
@@ -306,19 +156,18 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <div class="cp"><span class="ap">+$499</span><span class="sx">/mo</span></div>
 </div>
 </div>
-
 <div class="gh">Support &amp; Consulting</div>
 <div class="grid" style="gap:16px">
 <div class="c csm" data-addon="post_launch" data-price="1000" data-type="onetime" onclick="togAddon(this)">
 <div class="ck">✓</div>
 <h3 class="ct">Post-Launch Support Package</h3>
-<p class="cd">4 weekly calls (up to 60 min each) in your first 30 days post-launch. Covers WellieMD, GHL, and pharmacy workflow.</p>
+<p class="cd">4 weekly calls in your first 30 days post-launch.</p>
 <div class="cp"><span class="ap">+$1,000</span></div>
 </div>
 <div class="c csm" data-addon="consulting" data-price="500" data-type="hourly" onclick="togAddon(this)">
 <div class="ck">✓</div>
 <h3 class="ct">GrowPro Consulting</h3>
-<p class="cd">Strategic consulting hours with Jessica for scaling, pivoting, or expanding.</p>
+<p class="cd">Strategic consulting with Jessica.</p>
 <div class="cp"><span class="ap">$500</span><span class="sx">/hr</span></div>
 </div>
 <div class="c csm" data-addon="welliemd_support" data-price="2500" data-type="monthly" data-group="support" onclick="togAddon(this)">
@@ -339,21 +188,19 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <div class="c csm" data-addon="premium_support_all" data-price="5500" data-type="monthly" data-group="support_premium" onclick="togAddon(this)">
 <div class="ck">✓</div><span class="bdg b-pop">Best Value</span>
 <h3 class="ct">Premium Tech Support All 3</h3>
-<p class="cd">WellieMD + Web + GHL combined at a discount.</p>
+<p class="cd">All 3 combined at a discount.</p>
 <div class="cp"><span class="ap">+$5,500</span><span class="sx">/mo</span></div>
 </div>
 </div>
-
 <div class="bnav"><button class="btn btn-s" onclick="goTo(2)">← Back</button><button class="btn btn-p" onclick="goTo(4)">Review My Build →</button></div>
 </div>
-
 <!-- STEP 4 -->
 <div class="sec" id="step4">
 <h1 class="h1">Your Quote Summary</h1>
-<p class="sub">Review your selections before submitting.</p>
+<p class="sub">Review your build before submitting.</p>
 <div class="suc" id="sumC"></div>
 <div style="margin:20px 0">
-<div id="promoToggle"><a href="#" onclick="event.preventDefault();document.getElementById('promoToggle').style.display='none';document.getElementById('promoBox').style.display='block';" style="font-size:14px;color:var(--p);text-decoration:none;font-weight:600">Have a promo code?</a></div>
+<div id="promoToggle"><a href="#" onclick="event.preventDefault();$i('promoToggle').style.display='none';$i('promoBox').style.display='block';" style="font-size:14px;color:var(--p);text-decoration:none;font-weight:600">Have a promo code?</a></div>
 <div id="promoBox" style="display:none">
 <div id="appliedPromos" style="margin-bottom:8px"></div>
 <div id="promoEntry" style="display:flex;gap:12px;align-items:center">
@@ -365,18 +212,51 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 </div>
 <div class="bnav"><button class="btn btn-s" onclick="goTo(3)">← Edit Build</button><button class="btn btn-p" onclick="goTo(5)">Continue to Submit →</button></div>
 </div>
-
 <!-- STEP 5 -->
 <div class="sec" id="step5">
 <div id="formV">
 <h1 class="h1">Your Build is Ready.</h1>
-<p class="sub">Enter your details to finalize your build and proceed to checkout.</p>
+<p class="sub">Enter your details to proceed to checkout.</p>
+<!-- Payment Plan Selection (Custom Build only) -->
+<div class="pp-section" id="ppSection" style="display:none">
+<div class="pp-title">Choose Your Payment Plan</div>
+<div class="pp-sub">Select your preferred payment option.</div>
+<div class="pp-grid">
+<div class="pp-card pp-best pp-sel" data-plan="pif" onclick="selPlan('pif')">
+<div class="pp-ck">✓</div>
+<div class="pp-badge pp-b-best">Best Value</div>
+<div class="pp-name">Pay in Full</div>
+<div class="pp-amount" id="ppPifAmt">$25,000</div>
+<div class="pp-detail">One payment today</div>
+<div class="pp-fee">No fees, no interest</div>
+<div class="pp-total" id="ppPifTotal">Total: $25,000</div>
+</div>
+<div class="pp-card" data-plan="split15" onclick="selPlan('split15')">
+<div class="pp-ck">✓</div>
+<div class="pp-badge pp-b-flex">0% Interest</div>
+<div class="pp-name">$15K Down</div>
+<div class="pp-amount">$15,000</div>
+<div class="pp-detail">Down today, then<br><strong id="ppSplit15Amt">2 x $5,000</strong><br>every 4 weeks</div>
+<div class="pp-fee">0% fee — same total</div>
+<div class="pp-total" id="ppSplit15Total">Total: $25,000</div>
+</div>
+<div class="pp-card" data-plan="split10" onclick="selPlan('split10')">
+<div class="pp-ck">✓</div>
+<div class="pp-badge pp-b-fin">Financing</div>
+<div class="pp-name">$10K Down</div>
+<div class="pp-amount">$10,000</div>
+<div class="pp-detail">Down today, then<br><strong id="ppSplit10Amt">2 x $8,625</strong><br>every 4 weeks</div>
+<div class="pp-fee">15% financing fee on balance</div>
+<div class="pp-total" id="ppSplit10Total">Total: $27,250</div>
+</div>
+</div>
+</div>
 <div class="fg">
 <div class="fi"><label class="fl">First Name <span class="rq">*</span></label><input type="text" class="fx" id="firstName" placeholder="First name"><span class="fe" id="fnE">First name is required</span></div>
 <div class="fi"><label class="fl">Last Name</label><input type="text" class="fx" id="lastName" placeholder="Last name"></div>
 <div class="fi"><label class="fl">Email <span class="rq">*</span></label><input type="email" class="fx" id="email" placeholder="you@company.com"><span class="fe" id="emE">Valid email is required</span></div>
 <div class="fi"><label class="fl">Phone <span style="color:#AAA;font-weight:400">(optional)</span></label><input type="tel" class="fx" id="phone" placeholder="(555) 000-0000"></div>
-<div class="fi fw"><label class="fl">Business Name <span class="rq">*</span></label><input type="text" class="fx" id="bizName" placeholder="Your business or project name"><span class="fe" id="bnE">Business name is required</span></div>
+<div class="fi fw"><label class="fl">Business Name <span class="rq">*</span></label><input type="text" class="fx" id="bizName" placeholder="Business name"><span class="fe" id="bnE">Business name is required</span></div>
 <div class="fi fw"><label class="fl">How did you hear about us?</label><select class="fsel" id="source"><option value="">Select one...</option><option value="Brad Lea Podcast">Brad Lea Podcast</option><option value="Referral">Referral</option><option value="Social Media">Social Media</option><option value="Google">Google</option><option value="Other">Other</option></select></div>
 </div>
 <div class="bnav"><button class="btn btn-s" onclick="goTo(4)">← Back</button><button class="btn btn-p" onclick="submitForm()">Submit & Pay →</button></div>
@@ -390,7 +270,6 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <div class="conf-c"><a href="mailto:hello@kickstartsocial.co">hello@kickstartsocial.co</a> | <a href="https://growpro.co" target="_blank">growpro.co</a></div>
 </div>
 </div>
-
 </div>
 <aside class="side" id="sidebar"><div class="sc">
 <div class="sct">Your Build</div>
@@ -401,7 +280,6 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <div class="ssi" id="sSI">Step 1 of 5</div>
 </div></aside>
 </div></div>
-
 <div class="mbar" id="mBar">
 <div class="mbc" onclick="togMB()">
 <div class="mbt">
@@ -412,28 +290,29 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 </div>
 <div class="mbe" id="mExp"></div>
 </div>
-
 <footer class="ft"><div class="wrap">
 <div class="ftl"><a href="https://growpro.co" target="_blank">growpro.co</a> | <a href="https://kickstartsocial.co" target="_blank">kickstartsocial.co</a> | <a href="mailto:hello@kickstartsocial.co">hello@kickstartsocial.co</a></div>
-<p>Pricing subject to change at the sole discretion of GrowPro by Kickstart Social LLC. All prices are starting rates. Ad spend is separate and billed directly.</p>
+<p>Pricing subject to change. Ad spend billed separately.</p>
 </div></footer>
-
 <script>
+function $i(id){return document.getElementById(id)}
+function $q(s){return document.querySelectorAll(s)}
+function $1(s){return document.querySelector(s)}
 var WEBHOOK_URL="YOUR_GHL_WEBHOOK_URL_HERE";
 var STRIPE_API_URL="https://growpro-stripe-api.vercel.app/api/create-checkout";
 var pkg=null,treats=[],addons=[],step=1;
 var activePromos=[];
+var payPlan='pif'; // 'pif', 'split15', 'split10'
 var PROMO_CODES={
-  'WELLIE500':{type:'wellie_discount',desc:'WellieMD Setup reduced to $500',savings:1000},
-  'FREELABS':{type:'free_addon',target:'elective_labs',desc:'Free Elective Labs Program',savings:2500},
-  'FREEHRT':{type:'free_treat',target:'hrt',desc:'Free HRT Addition',savings:2500},
-  'PEPTIDE50':{type:'discount_addon',target:'peptide_package',pct:50,desc:'50% off Peptide Package',savings:2500}
+'WELLIE500':{type:'wellie_discount',desc:'WellieMD Setup reduced to $500',savings:1000},
+'FREELABS':{type:'free_addon',target:'elective_labs',desc:'Free Elective Labs Program',savings:2500},
+'FREEHRT':{type:'free_treat',target:'hrt',desc:'Free HRT Addition',savings:2500},
+'PEPTIDE50':{type:'discount_addon',target:'peptide_package',pct:50,desc:'50% off Peptide Package',savings:2500}
 };
 var pkgPrices={template:8500,custom:25000,operator:35000};
 var pkgNames={template:'Template Launch',custom:'Custom Build',operator:'Operator Suite'};
 var treatPrice=2500;
 var treatNames={hrt:'HRT (Men & Women)'};
-// Operator Suite includes these automatically
 var operatorIncludes=['fast_track_priority','peptide_package','branded_medication'];
 var operatorIncludesTreat=['hrt'];
 var addonNames={
@@ -445,353 +324,393 @@ consulting:"GrowPro Consulting ($500/hr)",
 welliemd_support:"WellieMD Tech Support",web_support:"Web Support",ghl_support:"GHL Support",
 premium_support_all:"Premium Tech Support All 3"
 };
-
 function selPkg(p){
-  pkg=p;
-  document.querySelectorAll('#step1 .c[data-package]').forEach(c=>c.classList.remove('sel'));
-  document.querySelector('[data-package="'+p+'"]').classList.add('sel');
-  document.getElementById('s1n').disabled=false;
-  applyOperatorLocks();
-  updatePrice();
+pkg=p;
+$q('#step1 .c[data-package]').forEach(c=>c.classList.remove('sel'));
+$1('[data-package="'+p+'"]').classList.add('sel');
+$i('s1n').disabled=false;
+applyOperatorLocks();
+updatePrice();
 }
-
 function applyOperatorLocks(){
-  var isOp=pkg==='operator';
-  // HRT card
-  var hrt=document.getElementById('hrtCard');
-  if(isOp){
-    hrt.classList.add('lck');hrt.classList.add('sel');hrt.onclick=null;
-    if(treats.indexOf('hrt')===-1) treats.push('hrt');
-  } else {
-    hrt.classList.remove('lck');hrt.onclick=function(){togTreat(hrt)};
-  }
-  // Addon cards
-  operatorIncludes.forEach(function(aid){
-    var card=document.querySelector('[data-addon="'+aid+'"]');
-    if(!card) return;
-    if(isOp){
-      card.classList.add('lck');card.classList.add('sel');card.onclick=null;
-      if(addons.indexOf(aid)===-1) addons.push(aid);
-    } else {
-      card.classList.remove('lck');
-      card.onclick=function(){togAddon(card)};
-    }
-  });
-  // Hide fast track standard for operator (already has priority)
-  var fts=document.getElementById('ftsCard');
-  if(isOp){fts.classList.add('dis');fts.classList.remove('sel');addons=addons.filter(function(a){return a!=='fast_track_standard'})}
-  else{fts.classList.remove('dis')}
+var isOp=pkg==='operator';
+var hrt=$i('hrtCard');
+if(isOp){
+hrt.classList.add('lck');hrt.classList.add('sel');hrt.onclick=null;
+if(treats.indexOf('hrt')===-1) treats.push('hrt');
+} else {
+hrt.classList.remove('lck');hrt.onclick=function(){togTreat(hrt)};
 }
-
+operatorIncludes.forEach(function(aid){
+var card=$1('[data-addon="'+aid+'"]');
+if(!card) return;
+if(isOp){
+card.classList.add('lck');card.classList.add('sel');card.onclick=null;
+if(addons.indexOf(aid)===-1) addons.push(aid);
+} else {
+card.classList.remove('lck');
+card.onclick=function(){togAddon(card)};
+}
+});
+var fts=$i('ftsCard');
+if(isOp){fts.classList.add('dis');fts.classList.remove('sel');addons=addons.filter(function(a){return a!=='fast_track_standard'})}
+else{fts.classList.remove('dis')}
+}
 function togTreat(card){
-  if(card.classList.contains('lck')) return;
-  var t=card.dataset.treatment;
-  if(card.classList.contains('sel')){
-    card.classList.remove('sel');treats=treats.filter(function(x){return x!==t});
-  } else {
-    card.classList.add('sel');treats.push(t);
-  }
-  updatePrice();
+if(card.classList.contains('lck')) return;
+var t=card.dataset.treatment;
+if(card.classList.contains('sel')){
+card.classList.remove('sel');treats=treats.filter(function(x){return x!==t});
+} else {
+card.classList.add('sel');treats.push(t);
 }
-
+updatePrice();
+}
 function togAddon(card){
-  if(card.classList.contains('lck')||card.classList.contains('dis')) return;
-  var a=card.dataset.addon,gr=card.dataset.group,isSel=card.classList.contains('sel');
-  if(isSel){card.classList.remove('sel');addons=addons.filter(function(x){return x!==a});updatePrice();return}
-  if(gr==='fasttrack'){document.querySelectorAll('[data-group="fasttrack"]').forEach(function(c){if(!c.classList.contains('lck')){c.classList.remove('sel');addons=addons.filter(function(x){return x!==c.dataset.addon})}})}
-  if(gr==='support'){var pc=document.querySelector('[data-addon="premium_support_all"]');if(pc&&pc.classList.contains('sel')){pc.classList.remove('sel');addons=addons.filter(function(x){return x!=='premium_support_all'})}}
-  if(gr==='support_premium'){document.querySelectorAll('[data-group="support"]').forEach(function(c){c.classList.remove('sel');addons=addons.filter(function(x){return x!==c.dataset.addon})})}
-  card.classList.add('sel');addons.push(a);updatePrice();
+if(card.classList.contains('lck')||card.classList.contains('dis')) return;
+var a=card.dataset.addon,gr=card.dataset.group,isSel=card.classList.contains('sel');
+if(isSel){card.classList.remove('sel');addons=addons.filter(function(x){return x!==a});updatePrice();return}
+if(gr==='fasttrack'){$q('[data-group="fasttrack"]').forEach(function(c){if(!c.classList.contains('lck')){c.classList.remove('sel');addons=addons.filter(function(x){return x!==c.dataset.addon})}})}
+if(gr==='support'){var pc=$1('[data-addon="premium_support_all"]');if(pc&&pc.classList.contains('sel')){pc.classList.remove('sel');addons=addons.filter(function(x){return x!=='premium_support_all'})}}
+if(gr==='support_premium'){$q('[data-group="support"]').forEach(function(c){c.classList.remove('sel');addons=addons.filter(function(x){return x!==c.dataset.addon})})}
+card.classList.add('sel');addons.push(a);updatePrice();
 }
-
 function hasPromo(type,target){
-  return activePromos.some(function(p){return target?p.promo.type===type&&p.promo.target===target:p.promo.type===type});
+return activePromos.some(function(p){return target?p.promo.type===type&&p.promo.target===target:p.promo.type===type});
 }
 function getPromo(type,target){
-  for(var i=0;i<activePromos.length;i++){if(target?activePromos[i].promo.type===type&&activePromos[i].promo.target===target:activePromos[i].promo.type===type) return activePromos[i]}
-  return null;
+for(var i=0;i<activePromos.length;i++){if(target?activePromos[i].promo.type===type&&activePromos[i].promo.target===target:activePromos[i].promo.type===type) return activePromos[i]}
+return null;
 }
 function renderAppliedPromos(){
-  var el=document.getElementById('appliedPromos');
-  if(activePromos.length===0){el.innerHTML='';return}
-  var h='';
-  activePromos.forEach(function(ap,i){
-    h+='<div style="display:flex;align-items:center;gap:8px;padding:6px 12px;background:#F0FFF4;border:1px solid #34C759;border-radius:8px;margin-bottom:6px">';
-    h+='<span style="font-size:13px;font-weight:600;color:#34C759;flex:1">'+ap.code+': '+ap.promo.desc+' (-'+fmt(ap.promo.savings)+')</span>';
-    h+='<a href="#" onclick="event.preventDefault();removePromo('+i+')" style="color:#E53935;font-size:12px;font-weight:600;text-decoration:none">Remove</a>';
-    h+='</div>';
-  });
-  el.innerHTML=h;
+var el=$i('appliedPromos');
+if(activePromos.length===0){el.innerHTML='';return}
+var h='';
+activePromos.forEach(function(ap,i){
+h+='<div class="promo-tag">';
+h+='<span class="promo-txt">'+ap.code+': '+ap.promo.desc+' (-'+fmt(ap.promo.savings)+')</span>';
+h+='<a href="#" onclick="event.preventDefault();removePromo('+i+')" style="color:#E53935;font-size:12px;font-weight:600;text-decoration:none">Remove</a>';
+h+='</div>';
+});
+el.innerHTML=h;
 }
 function removePromo(idx){
-  activePromos.splice(idx,1);
-  renderAppliedPromos();
-  updatePrice();buildSum();
+activePromos.splice(idx,1);
+renderAppliedPromos();
+updatePrice();buildSum();
 }
 function applyPromo(){
-  var code=document.getElementById('promoInput').value.trim().toUpperCase();
-  var msg=document.getElementById('promoMsg');
-  if(!code){msg.style.color='#E53935';msg.textContent='Enter a code';return}
-  var promo=PROMO_CODES[code];
-  if(!promo){msg.style.color='#E53935';msg.textContent='Invalid code';return}
-  // Check if already applied
-  if(activePromos.some(function(p){return p.code===code})){msg.style.color='#E53935';msg.textContent='Code already applied';return}
-  // Validate the promo applies to something in the build
-  if(promo.type==='free_addon'||promo.type==='discount_addon'){
-    if(addons.indexOf(promo.target)===-1){msg.style.color='#E53935';msg.textContent='Add '+addonNames[promo.target]+' to your build first';return}
-  }
-  if(promo.type==='free_treat'){
-    if(treats.indexOf(promo.target)===-1){msg.style.color='#E53935';msg.textContent='Add '+treatNames[promo.target]+' to your build first';return}
-  }
-  activePromos.push({code:code,promo:promo});
-  msg.style.color='#34C759';msg.textContent='Applied!';
-  document.getElementById('promoInput').value='';
-  setTimeout(function(){msg.textContent=''},2000);
-  renderAppliedPromos();
-  updatePrice();buildSum();
+var code=$i('promoInput').value.trim().toUpperCase();
+var msg=$i('promoMsg');
+if(!code){msg.style.color='#E53935';msg.textContent='Enter a code';return}
+var promo=PROMO_CODES[code];
+if(!promo){msg.style.color='#E53935';msg.textContent='Invalid code';return}
+if(activePromos.some(function(p){return p.code===code})){msg.style.color='#E53935';msg.textContent='Code already applied';return}
+if(promo.type==='free_addon'||promo.type==='discount_addon'){
+if(addons.indexOf(promo.target)===-1){msg.style.color='#E53935';msg.textContent='Add '+addonNames[promo.target]+' to your build first';return}
 }
-
+if(promo.type==='free_treat'){
+if(treats.indexOf(promo.target)===-1){msg.style.color='#E53935';msg.textContent='Add '+treatNames[promo.target]+' to your build first';return}
+}
+activePromos.push({code:code,promo:promo});
+msg.style.color='#34C759';msg.textContent='Applied!';
+$i('promoInput').value='';
+setTimeout(function(){msg.textContent=''},2000);
+renderAppliedPromos();
+updatePrice();buildSum();
+}
 function calcTotals(){
-  var ot=0,mo=1000; // WellieMD $1000/mo mandatory
-  var wellieSetup=1500;
-  if(hasPromo('wellie_discount')) wellieSetup=500;
-  if(pkg){
-    ot+=pkgPrices[pkg];
-    ot+=wellieSetup;
-  }
-  // Treatments (only charge for non-operator-included)
-  treats.forEach(function(t){
-    if(pkg==='operator'&&operatorIncludesTreat.indexOf(t)!==-1) return;
-    if(hasPromo('free_treat',t)) return;
-    ot+=treatPrice;
-  });
-  // Addons
-  addons.forEach(function(a){
-    if(pkg==='operator'&&operatorIncludes.indexOf(a)!==-1) return;
-    var card=document.querySelector('[data-addon="'+a+'"]');
-    if(!card) return;
-    var price=parseInt(card.dataset.price),type=card.dataset.type;
-    if(hasPromo('free_addon',a)) return;
-    var dp=getPromo('discount_addon',a);
-    if(dp) price=Math.round(price*(1-dp.promo.pct/100));
-    if(type==='monthly') mo+=price;
-    else if(type!=='hourly') ot+=price;
-  });
-  return{ot:ot,mo:mo};
+var ot=0,mo=1000; // WellieMD $1000/mo mandatory
+var wellieSetup=1500;
+if(hasPromo('wellie_discount')) wellieSetup=500;
+if(pkg){
+ot+=pkgPrices[pkg];
+ot+=wellieSetup;
 }
-
+treats.forEach(function(t){
+if(pkg==='operator'&&operatorIncludesTreat.indexOf(t)!==-1) return;
+if(hasPromo('free_treat',t)) return;
+ot+=treatPrice;
+});
+addons.forEach(function(a){
+if(pkg==='operator'&&operatorIncludes.indexOf(a)!==-1) return;
+var card=$1('[data-addon="'+a+'"]');
+if(!card) return;
+var price=parseInt(card.dataset.price),type=card.dataset.type;
+if(hasPromo('free_addon',a)) return;
+var dp=getPromo('discount_addon',a);
+if(dp) price=Math.round(price*(1-dp.promo.pct/100));
+if(type==='monthly') mo+=price;
+else if(type!=='hourly') ot+=price;
+});
+return{ot:ot,mo:mo};
+}
 function fmt(n){return '$'+n.toLocaleString('en-US')}
-
 function updatePrice(){
-  var t=calcTotals();
-  document.getElementById('sOT').textContent=fmt(t.ot);
-  document.getElementById('sMO').textContent=fmt(t.mo)+'/mo';
-  document.getElementById('mOT').textContent=fmt(t.ot);
-  document.getElementById('mMO').textContent=fmt(t.mo)+'/mo';
-  updateSB();
+var t=calcTotals();
+$i('sOT').textContent=fmt(t.ot);
+$i('sMO').textContent=fmt(t.mo)+'/mo';
+$i('mOT').textContent=fmt(t.ot);
+$i('mMO').textContent=fmt(t.mo)+'/mo';
+updateSB();
 }
-
 function updateSB(){
-  var h='';
-  if(pkg){h+='<div class="sl"><span class="lb">'+pkgNames[pkg]+'</span><span class="vl">'+fmt(pkgPrices[pkg])+'</span></div>'}
-  var wellieSetup=1500;
-  if(hasPromo('wellie_discount')) wellieSetup=500;
-  h+='<div class="sl"><span class="lb">WellieMD Setup</span><span class="vl">'+(hasPromo('wellie_discount')?'<s style="color:#AAA;font-size:12px">$1,500</s> $500':'$1,500')+'</span></div>';
-  treats.forEach(function(t){
-    var inc=pkg==='operator'&&operatorIncludesTreat.indexOf(t)!==-1;
-    var promoFree=hasPromo('free_treat',t);
-    var priceStr=inc?'Included':promoFree?'<s style="color:#AAA;font-size:12px">+'+fmt(treatPrice)+'</s> <span style="color:#34C759;font-weight:700">FREE</span>':'+'+fmt(treatPrice);
-    h+='<div class="sl"><span class="lb">'+treatNames[t]+'</span><span class="vl">'+priceStr+'</span></div>';
-  });
-  addons.forEach(function(a){
-    var card=document.querySelector('[data-addon="'+a+'"]');if(!card) return;
-    var origPrice=parseInt(card.dataset.price),type=card.dataset.type;
-    var inc=pkg==='operator'&&operatorIncludes.indexOf(a)!==-1;
-    var suffix=type==='monthly'?'/mo':type==='hourly'?'/hr':'';
-    var promoFree=hasPromo('free_addon',a);
-    var dpObj=getPromo('discount_addon',a);
-    var promoDisc=!!dpObj;
-    var dispPrice=promoDisc?Math.round(origPrice*(1-dpObj.promo.pct/100)):origPrice;
-    var priceStr;
-    if(inc) priceStr='Included';
-    else if(promoFree) priceStr='<s style="color:#AAA;font-size:12px">'+fmt(origPrice)+suffix+'</s> <span style="color:#34C759;font-weight:700">FREE</span>';
-    else if(promoDisc) priceStr='<s style="color:#AAA;font-size:12px">'+fmt(origPrice)+suffix+'</s> '+fmt(dispPrice)+suffix;
-    else priceStr=fmt(origPrice)+suffix;
-    h+='<div class="sl"><span class="lb">'+addonNames[a]+'</span><span class="vl">'+priceStr+'</span></div>';
-  });
-  if(!h) h='<div class="sl"><span class="lb">Select a package...</span></div>';
-  document.getElementById('sbC').innerHTML=h;
-  document.getElementById('mExp').innerHTML=h?'<div style="padding-top:8px">'+h+'</div>':'';
+var h='';
+if(pkg){h+='<div class="sl"><span class="lb">'+pkgNames[pkg]+'</span><span class="vl">'+fmt(pkgPrices[pkg])+'</span></div>'}
+var wellieSetup=1500;
+if(hasPromo('wellie_discount')) wellieSetup=500;
+h+='<div class="sl"><span class="lb">WellieMD Setup</span><span class="vl">'+(hasPromo('wellie_discount')?'<s style="color:#AAA;font-size:12px">$1,500</s> $500':'$1,500')+'</span></div>';
+treats.forEach(function(t){
+var inc=pkg==='operator'&&operatorIncludesTreat.indexOf(t)!==-1;
+var promoFree=hasPromo('free_treat',t);
+var priceStr=inc?'Included':promoFree?'<s style="color:#AAA;font-size:12px">+'+fmt(treatPrice)+'</s> <span style="color:#34C759;font-weight:700">FREE</span>':'+'+fmt(treatPrice);
+h+='<div class="sl"><span class="lb">'+treatNames[t]+'</span><span class="vl">'+priceStr+'</span></div>';
+});
+addons.forEach(function(a){
+var card=$1('[data-addon="'+a+'"]');if(!card) return;
+var origPrice=parseInt(card.dataset.price),type=card.dataset.type;
+var inc=pkg==='operator'&&operatorIncludes.indexOf(a)!==-1;
+var suffix=type==='monthly'?'/mo':type==='hourly'?'/hr':'';
+var promoFree=hasPromo('free_addon',a);
+var dpObj=getPromo('discount_addon',a);
+var promoDisc=!!dpObj;
+var dispPrice=promoDisc?Math.round(origPrice*(1-dpObj.promo.pct/100)):origPrice;
+var priceStr;
+if(inc) priceStr='Included';
+else if(promoFree) priceStr='<s style="color:#AAA;font-size:12px">'+fmt(origPrice)+suffix+'</s> <span style="color:#34C759;font-weight:700">FREE</span>';
+else if(promoDisc) priceStr='<s style="color:#AAA;font-size:12px">'+fmt(origPrice)+suffix+'</s> '+fmt(dispPrice)+suffix;
+else priceStr=fmt(origPrice)+suffix;
+h+='<div class="sl"><span class="lb">'+addonNames[a]+'</span><span class="vl">'+priceStr+'</span></div>';
+});
+if(!h) h='<div class="sl"><span class="lb">Select a package...</span></div>';
+$i('sbC').innerHTML=h;
+$i('mExp').innerHTML=h?'<div style="padding-top:8px">'+h+'</div>':'';
 }
-
 function goTo(s){
-  if(s===2&&!pkg) return;
-  document.querySelectorAll('.sec').forEach(function(x){x.classList.remove('active')});
-  document.getElementById('step'+s).classList.add('active');
-  document.querySelectorAll('.pst').forEach(function(ps,i){
-    var n=i+1;ps.classList.remove('active','completed');
-    if(n===s) ps.classList.add('active');
-    else if(n<s){ps.classList.add('completed');ps.querySelector('.pdot').innerHTML='✓'}
-    else ps.querySelector('.pdot').textContent=n;
-  });
-  document.querySelectorAll('.pcon').forEach(function(c,i){if(i<s-1) c.classList.add('completed');else c.classList.remove('completed')});
-  document.getElementById('sSI').textContent='Step '+s+' of 5';
-  var sb=document.getElementById('sidebar'),mb=document.getElementById('mBar');
-  if(s===1){sb.style.display='none';mb.style.display='none'}
-  else{if(window.innerWidth>=1024) sb.style.display='block';if(window.innerWidth<1024) mb.style.display='block'}
-  step=s;
-  if(s===4) buildSum();
-  window.scrollTo({top:0,behavior:'smooth'});
+if(s===2&&!pkg) return;
+$q('.sec').forEach(function(x){x.classList.remove('active')});
+document.getElementById('step'+s).classList.add('active');
+$q('.pst').forEach(function(ps,i){
+var n=i+1;ps.classList.remove('active','completed');
+if(n===s) ps.classList.add('active');
+else if(n<s){ps.classList.add('completed');ps.querySelector('.pdot').innerHTML='✓'}
+else ps.querySelector('.pdot').textContent=n;
+});
+$q('.pcon').forEach(function(c,i){if(i<s-1) c.classList.add('completed');else c.classList.remove('completed')});
+$i('sSI').textContent='Step '+s+' of 5';
+var sb=$i('sidebar'),mb=$i('mBar');
+if(s===1){sb.style.display='none';mb.style.display='none'}
+else{if(window.innerWidth>=1024) sb.style.display='block';if(window.innerWidth<1024) mb.style.display='block'}
+step=s;
+if(s===4) buildSum();
+if(s===5) updatePayPlans();
+window.scrollTo({top:0,behavior:'smooth'});
 }
-
-function togMB(){document.getElementById('mBar').classList.toggle('exp')}
-
+function togMB(){$i('mBar').classList.toggle('exp')}
 function buildSum(){
-  var t=calcTotals(),h='';
-  h+='<div class="suse"><div class="sust">Package</div>';
-  if(pkg) h+='<div class="sui"><span>'+pkgNames[pkg]+'</span><span>'+fmt(pkgPrices[pkg])+'</span></div>';
-  var wellieSetup=1500;
-  if(hasPromo('wellie_discount')) wellieSetup=500;
-  h+='<div class="sui"><span>WellieMD Setup Fee</span><span>'+(hasPromo('wellie_discount')?'<s style="color:#AAA">$1,500</s> $500':fmt(wellieSetup))+'</span></div>';
-  h+='</div>';
-  h+='<div class="suse"><div class="sust">Treatments</div>';
-  h+='<div class="sui"><span>Semaglutide GLP-1</span><span class="inc">Included</span></div>';
-  h+='<div class="sui"><span>Tirzepatide GLP-1/GIP</span><span class="inc">Included</span></div>';
-  h+='<div class="sui"><span>NAD+</span><span class="inc">Included</span></div>';
-  h+='<div class="sui"><span>Sermorelin</span><span class="inc">Included</span></div>';
-  treats.forEach(function(tr){
-    var inc=pkg==='operator'&&operatorIncludesTreat.indexOf(tr)!==-1;
-    var promoFree=hasPromo('free_treat',tr);
-    h+='<div class="sui"><span>'+treatNames[tr]+'</span><span'+(inc?' class="inc"':'')+'>'+( inc?'Included':promoFree?'<s style="color:#AAA">+'+fmt(treatPrice)+'</s> FREE':'+'+fmt(treatPrice))+'</span></div>';
-  });
-  h+='</div>';
-  var otA=addons.filter(function(a){var c=document.querySelector('[data-addon="'+a+'"]');return c&&c.dataset.type==='onetime'});
-  var moA=addons.filter(function(a){var c=document.querySelector('[data-addon="'+a+'"]');return c&&(c.dataset.type==='monthly')});
-  var hrA=addons.filter(function(a){var c=document.querySelector('[data-addon="'+a+'"]');return c&&c.dataset.type==='hourly'});
-  if(otA.length>0){
-    h+='<div class="suse"><div class="sust">Add-Ons (One-Time)</div>';
-    otA.forEach(function(a){var c=document.querySelector('[data-addon="'+a+'"]');var inc=pkg==='operator'&&operatorIncludes.indexOf(a)!==-1;
-    var origPrice=parseInt(c.dataset.price);
-    var promoFree=hasPromo('free_addon',a);
-    var dpObj=getPromo('discount_addon',a);
-    var promoDisc=!!dpObj;
-    var dispPrice=promoDisc?Math.round(origPrice*(1-dpObj.promo.pct/100)):origPrice;
-    var priceStr=inc?'Included':promoFree?'<s style="color:#AAA">+'+fmt(origPrice)+'</s> FREE':promoDisc?'<s style="color:#AAA">+'+fmt(origPrice)+'</s> +'+fmt(dispPrice):'+'+fmt(origPrice);
-    h+='<div class="sui"><span>'+addonNames[a]+'</span><span'+(inc?' class="inc"':'')+'>'+priceStr+'</span></div>'});
-    h+='</div>';
-  }
-  if(moA.length>0){
-    h+='<div class="suse"><div class="sust">Add-Ons (Monthly)</div>';
-    moA.forEach(function(a){var c=document.querySelector('[data-addon="'+a+'"]');
-    h+='<div class="sui"><span>'+addonNames[a]+'</span><span>+'+fmt(parseInt(c.dataset.price))+'/mo</span></div>'});
-    h+='</div>';
-  }
-  if(hrA.length>0){
-    h+='<div class="suse"><div class="sust">Consulting</div>';
-    hrA.forEach(function(a){h+='<div class="sui"><span>'+addonNames[a]+'</span><span>As needed</span></div>'});
-    h+='</div>';
-  }
-  h+='<div class="suse"><div class="sust">Platform (Monthly)</div>';
-  h+='<div class="sui"><span>WellieMD Platform</span><span>$1,000/mo</span></div>';
-  h+='</div>';
-  h+='<div class="sudv"></div>';
-  h+='<div class="sutr"><span>ONE-TIME TOTAL</span><span class="vl">'+fmt(t.ot)+'</span></div>';
-  h+='<div class="sutr"><span>MONTHLY RECURRING</span><span class="vl">'+fmt(t.mo)+'/mo</span></div>';
-  h+='<p class="sufp">Ad spend not included. Billed separately per invoice. Consulting billed hourly as used. Pricing subject to change at sole discretion of GrowPro by Kickstart Social LLC.</p>';
-  document.getElementById('sumC').innerHTML=h;
+var t=calcTotals(),h='';
+h+='<div class="suse"><div class="sust">Package</div>';
+if(pkg) h+='<div class="sui"><span>'+pkgNames[pkg]+'</span><span>'+fmt(pkgPrices[pkg])+'</span></div>';
+var wellieSetup=1500;
+if(hasPromo('wellie_discount')) wellieSetup=500;
+h+='<div class="sui"><span>WellieMD Setup Fee</span><span>'+(hasPromo('wellie_discount')?'<s style="color:#AAA">$1,500</s> $500':fmt(wellieSetup))+'</span></div>';
+h+='</div>';
+h+='<div class="suse"><div class="sust">Treatments</div>';
+h+='<div class="sui"><span>Semaglutide GLP-1</span><span class="inc">Included</span></div>';
+h+='<div class="sui"><span>Tirzepatide GLP-1/GIP</span><span class="inc">Included</span></div>';
+h+='<div class="sui"><span>NAD+</span><span class="inc">Included</span></div>';
+h+='<div class="sui"><span>Sermorelin</span><span class="inc">Included</span></div>';
+treats.forEach(function(tr){
+var inc=pkg==='operator'&&operatorIncludesTreat.indexOf(tr)!==-1;
+var promoFree=hasPromo('free_treat',tr);
+h+='<div class="sui"><span>'+treatNames[tr]+'</span><span'+(inc?' class="inc"':'')+'>'+( inc?'Included':promoFree?'<s style="color:#AAA">+'+fmt(treatPrice)+'</s> FREE':'+'+fmt(treatPrice))+'</span></div>';
+});
+h+='</div>';
+var otA=addons.filter(function(a){var c=$1('[data-addon="'+a+'"]');return c&&c.dataset.type==='onetime'});
+var moA=addons.filter(function(a){var c=$1('[data-addon="'+a+'"]');return c&&(c.dataset.type==='monthly')});
+var hrA=addons.filter(function(a){var c=$1('[data-addon="'+a+'"]');return c&&c.dataset.type==='hourly'});
+if(otA.length>0){
+h+='<div class="suse"><div class="sust">Add-Ons (One-Time)</div>';
+otA.forEach(function(a){var c=$1('[data-addon="'+a+'"]');var inc=pkg==='operator'&&operatorIncludes.indexOf(a)!==-1;
+var origPrice=parseInt(c.dataset.price);
+var promoFree=hasPromo('free_addon',a);
+var dpObj=getPromo('discount_addon',a);
+var promoDisc=!!dpObj;
+var dispPrice=promoDisc?Math.round(origPrice*(1-dpObj.promo.pct/100)):origPrice;
+var priceStr=inc?'Included':promoFree?'<s style="color:#AAA">+'+fmt(origPrice)+'</s> FREE':promoDisc?'<s style="color:#AAA">+'+fmt(origPrice)+'</s> +'+fmt(dispPrice):'+'+fmt(origPrice);
+h+='<div class="sui"><span>'+addonNames[a]+'</span><span'+(inc?' class="inc"':'')+'>'+priceStr+'</span></div>'});
+h+='</div>';
 }
-
+if(moA.length>0){
+h+='<div class="suse"><div class="sust">Add-Ons (Monthly)</div>';
+moA.forEach(function(a){var c=$1('[data-addon="'+a+'"]');
+h+='<div class="sui"><span>'+addonNames[a]+'</span><span>+'+fmt(parseInt(c.dataset.price))+'/mo</span></div>'});
+h+='</div>';
+}
+if(hrA.length>0){
+h+='<div class="suse"><div class="sust">Consulting</div>';
+hrA.forEach(function(a){h+='<div class="sui"><span>'+addonNames[a]+'</span><span>As needed</span></div>'});
+h+='</div>';
+}
+h+='<div class="suse"><div class="sust">Platform (Monthly)</div>';
+h+='<div class="sui"><span>WellieMD Platform</span><span>$1,000/mo</span></div>';
+h+='</div>';
+h+='<div class="sudv"></div>';
+h+='<div class="sutr"><span>ONE-TIME TOTAL</span><span class="vl">'+fmt(t.ot)+'</span></div>';
+h+='<div class="sutr"><span>MONTHLY RECURRING</span><span class="vl">'+fmt(t.mo)+'/mo</span></div>';
+h+='<p class="sufp">Ad spend not included. Billed separately per invoice. Consulting billed hourly as used. Pricing subject to change.</p>';
+$i('sumC').innerHTML=h;
+}
 function submitForm(){
-  var fn=document.getElementById('firstName').value.trim(),em=document.getElementById('email').value.trim(),bn=document.getElementById('bizName').value.trim(),ok=true;
-  document.getElementById('firstName').classList.remove('err');document.getElementById('email').classList.remove('err');document.getElementById('bizName').classList.remove('err');
-  document.getElementById('fnE').classList.remove('show');document.getElementById('emE').classList.remove('show');document.getElementById('bnE').classList.remove('show');
-  if(!fn){document.getElementById('firstName').classList.add('err');document.getElementById('fnE').classList.add('show');ok=false}
-  if(!em||em.indexOf('@')===-1||em.indexOf('.')===-1){document.getElementById('email').classList.add('err');document.getElementById('emE').classList.add('show');ok=false}
-  if(!bn){document.getElementById('bizName').classList.add('err');document.getElementById('bnE').classList.add('show');ok=false}
-  if(!ok) return;
-  var t=calcTotals();
-  var otList=addons.filter(function(a){var c=document.querySelector('[data-addon="'+a+'"]');return c&&c.dataset.type==='onetime'}).map(function(a){return addonNames[a]});
-  var moList=addons.filter(function(a){var c=document.querySelector('[data-addon="'+a+'"]');return c&&c.dataset.type==='monthly'}).map(function(a){return addonNames[a]});
-  var payload={
-    first_name:fn,last_name:document.getElementById('lastName').value.trim(),
-    email:em,phone:document.getElementById('phone').value.trim(),
-    business_name:bn,promo_codes:activePromos.map(function(p){return p.code}).join(',')||'none',
-    source:document.getElementById('source').value,
-    package:pkgNames[pkg],package_price:pkgPrices[pkg],
-    treatments_added:treats.map(function(x){return treatNames[x]}),
-    addons_one_time:otList,addons_monthly:moList,
-    welliemd_setup:1500,welliemd_monthly:1000,
-    total_one_time:t.ot,total_monthly:t.mo,
-    configurator_type:'launch'
-  };
-  if(WEBHOOK_URL&&WEBHOOK_URL!=="YOUR_GHL_WEBHOOK_URL_HERE"){
-    fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(function(e){console.log('Webhook error:',e)});
-  } else {console.log('Webhook payload:',JSON.stringify(payload,null,2))}
-  document.getElementById('formV').classList.add('hid');
-  document.getElementById('confV').classList.remove('hid');
-  document.getElementById('sidebar').style.display='none';
-  document.getElementById('mBar').style.display='none';
-  buildSum();
-  document.getElementById('confSum').innerHTML=document.getElementById('sumC').innerHTML;
-  // Build line items for Stripe
-  var stripeItems=[];
-  if(pkg){stripeItems.push({name:pkgNames[pkg],amount_cents:pkgPrices[pkg]*100})}
-  var wellieSetupCents=150000;
-  if(hasPromo('wellie_discount')) wellieSetupCents=50000;
-  var welliePromo=getPromo('wellie_discount');
-  stripeItems.push({name:'WellieMD Setup Fee'+(welliePromo?' (Promo: '+welliePromo.code+')':''),amount_cents:wellieSetupCents});
-  treats.forEach(function(tr){
-    if(pkg==='operator'&&operatorIncludesTreat.indexOf(tr)!==-1) return;
-    if(hasPromo('free_treat',tr)) return;
-    stripeItems.push({name:treatNames[tr],amount_cents:treatPrice*100});
-  });
-  addons.forEach(function(a){
-    if(pkg==='operator'&&operatorIncludes.indexOf(a)!==-1) return;
-    var card=document.querySelector('[data-addon="'+a+'"]');if(!card) return;
-    var price=parseInt(card.dataset.price),type=card.dataset.type;
-    var addonPrice=price;
-    if(hasPromo('free_addon',a)) addonPrice=0;
-    var dpS=getPromo('discount_addon',a);
-    if(dpS) addonPrice=Math.round(price*(1-dpS.promo.pct/100));
-    var promoLabel='';
-    if(hasPromo('free_addon',a)){var fp=getPromo('free_addon',a);promoLabel=' (Promo: '+fp.code+')'}
-    if(dpS) promoLabel=' (Promo: '+dpS.code+')';
-    if(type==='onetime'&&addonPrice>0) stripeItems.push({name:addonNames[a]+promoLabel,amount_cents:addonPrice*100});
-  });
-  var payBtn=document.getElementById('stripePayBtn');
-  payBtn.textContent='Pay Now — '+fmt(t.ot)+' →';
-  payBtn.onclick=function(e){
-    e.preventDefault();
-    payBtn.textContent='Creating checkout...';
-    payBtn.style.opacity='0.7';
-    fetch(STRIPE_API_URL,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        email:em,
-        description:'GrowPro Launch — '+pkgNames[pkg]+' — '+bn,
-        metadata:{business_name:bn,customer_name:fn+' '+(document.getElementById('lastName').value.trim()),promo_codes:activePromos.map(function(p){return p.code}).join(',')||'none',phone:document.getElementById('phone').value.trim(),source:document.getElementById('source').value},
-        line_items:stripeItems,
-        mode:'payment',
-        success_url:window.location.origin+'/launch?success=true',
-        cancel_url:window.location.href
-      })
-    }).then(function(r){return r.json()}).then(function(d){
-      if(d.url){window.location.href=d.url}
-      else{payBtn.textContent='Pay Now — '+fmt(t.ot)+' →';payBtn.style.opacity='1';alert('Error: '+(d.error||'Unknown error'))}
-    }).catch(function(err){
-      payBtn.textContent='Pay Now — '+fmt(t.ot)+' →';payBtn.style.opacity='1';
-      alert('Connection error. Please try again.');
-    });
-  };
-  document.querySelectorAll('.pst').forEach(function(ps){ps.classList.remove('active');ps.classList.add('completed');ps.querySelector('.pdot').innerHTML='✓'});
-  document.querySelectorAll('.pcon').forEach(function(c){c.classList.add('completed')});
+var fn=$i('firstName').value.trim(),em=$i('email').value.trim(),bn=$i('bizName').value.trim(),ok=true;
+$i('firstName').classList.remove('err');$i('email').classList.remove('err');$i('bizName').classList.remove('err');
+$i('fnE').classList.remove('show');$i('emE').classList.remove('show');$i('bnE').classList.remove('show');
+if(!fn){$i('firstName').classList.add('err');$i('fnE').classList.add('show');ok=false}
+if(!em||em.indexOf('@')===-1||em.indexOf('.')===-1){$i('email').classList.add('err');$i('emE').classList.add('show');ok=false}
+if(!bn){$i('bizName').classList.add('err');$i('bnE').classList.add('show');ok=false}
+if(!ok) return;
+var t=calcTotals();
+var otList=addons.filter(function(a){var c=$1('[data-addon="'+a+'"]');return c&&c.dataset.type==='onetime'}).map(function(a){return addonNames[a]});
+var moList=addons.filter(function(a){var c=$1('[data-addon="'+a+'"]');return c&&c.dataset.type==='monthly'}).map(function(a){return addonNames[a]});
+var planInfo=getStripeItemsForPlan(t,em,fn,bn);
+var payload={
+first_name:fn,last_name:$i('lastName').value.trim(),
+email:em,phone:$i('phone').value.trim(),
+business_name:bn,promo_codes:activePromos.map(function(p){return p.code}).join(',')||'none',
+source:$i('source').value,
+package:pkgNames[pkg],package_price:pkgPrices[pkg],
+payment_plan:payPlan==='pif'?'Pay in Full':payPlan==='split15'?'$15K Down - 0%':payPlan==='split10'?'$10K Down - 15%':'Pay in Full',
+treatments_added:treats.map(function(x){return treatNames[x]}),
+addons_one_time:otList,addons_monthly:moList,
+welliemd_setup:1500,welliemd_monthly:1000,
+total_one_time:t.ot,total_monthly:t.mo,
+configurator_type:'launch'
+};
+if(WEBHOOK_URL&&WEBHOOK_URL!=="YOUR_GHL_WEBHOOK_URL_HERE"){
+fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(function(e){console.log('Webhook error:',e)});
+} else {console.log('Webhook payload:',JSON.stringify(payload,null,2))}
+$i('formV').classList.add('hid');
+$i('confV').classList.remove('hid');
+$i('sidebar').style.display='none';
+$i('mBar').style.display='none';
+buildSum();
+$i('confSum').innerHTML=$i('sumC').innerHTML;
+var stripeItems=[];
+var checkoutMode='payment';
+var btnLabel='';
+if(planInfo){
+stripeItems=planInfo.items;
+checkoutMode=planInfo.mode;
+btnLabel='Pay Now — '+fmt(planInfo.down)+' down →';
+var ppHtml='<div class="suse" style="background:#FFF8E7;border:1px solid #E8D5B7;border-radius:12px;padding:16px 20px;margin-top:16px"><div class="sust" style="color:#6B4226">Payment Plan: '+planInfo.planLabel+'</div>';
+ppHtml+='<div class="sui"><span>Down Payment (today)</span><span><strong>'+fmt(planInfo.down)+'</strong></span></div>';
+ppHtml+='<div class="sui"><span>Installment 1 (week 4)</span><span>'+fmt(planInfo.installment)+'</span></div>';
+ppHtml+='<div class="sui"><span>Installment 2 (week 8)</span><span>'+fmt(planInfo.installment)+'</span></div>';
+ppHtml+='<div class="sui" style="font-weight:700"><span>Total</span><span>'+fmt(planInfo.totalWithFee)+'</span></div>';
+if(payPlan==='split10') ppHtml+='<div style="font-size:12px;color:#888;margin-top:8px;font-style:italic">Includes 15% financing fee on balance</div>';
+ppHtml+='<div style="font-size:12px;color:#34C759;margin-top:4px;font-weight:600">Auto-payments charged every 4 weeks</div>';
+ppHtml+='</div>';
+$i('confSum').innerHTML+=ppHtml;
+} else {
+if(pkg){stripeItems.push({name:pkgNames[pkg],amount_cents:pkgPrices[pkg]*100})}
+var wellieSetupCents=150000;
+if(hasPromo('wellie_discount')) wellieSetupCents=50000;
+var welliePromo=getPromo('wellie_discount');
+stripeItems.push({name:'WellieMD Setup Fee'+(welliePromo?' (Promo: '+welliePromo.code+')':''),amount_cents:wellieSetupCents});
+treats.forEach(function(tr){
+if(pkg==='operator'&&operatorIncludesTreat.indexOf(tr)!==-1) return;
+if(hasPromo('free_treat',tr)) return;
+stripeItems.push({name:treatNames[tr],amount_cents:treatPrice*100});
+});
+addons.forEach(function(a){
+if(pkg==='operator'&&operatorIncludes.indexOf(a)!==-1) return;
+var card=$1('[data-addon="'+a+'"');if(!card) return;
+var price=parseInt(card.dataset.price),type=card.dataset.type;
+var addonPrice=price;
+if(hasPromo('free_addon',a)) addonPrice=0;
+var dpS=getPromo('discount_addon',a);
+if(dpS) addonPrice=Math.round(price*(1-dpS.promo.pct/100));
+var promoLabel='';
+if(hasPromo('free_addon',a)){var fp=getPromo('free_addon',a);promoLabel=' (Promo: '+fp.code+')'}
+if(dpS) promoLabel=' (Promo: '+dpS.code+')';
+if(type==='onetime'&&addonPrice>0) stripeItems.push({name:addonNames[a]+promoLabel,amount_cents:addonPrice*100});
+});
+btnLabel='Pay Now — '+fmt(t.ot)+' →';
 }
-
+var payBtn=$i('stripePayBtn');
+payBtn.textContent=btnLabel;
+payBtn.onclick=function(e){
+e.preventDefault();
+payBtn.textContent='Creating checkout...';
+payBtn.style.opacity='0.7';
+var planDesc=payPlan==='pif'?'Pay in Full':payPlan==='split15'?'$15K Down 0%':'$10K Down 15%';
+fetch(STRIPE_API_URL,{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({
+email:em,
+description:'GrowPro Launch — '+pkgNames[pkg]+' — '+bn+' — '+planDesc,
+metadata:{business_name:bn,customer_name:fn+' '+($i('lastName').value.trim()),promo_codes:activePromos.map(function(p){return p.code}).join(',')||'none',phone:$i('phone').value.trim(),source:$i('source').value,payment_plan:planDesc,build_total:t.ot},
+line_items:stripeItems,
+mode:checkoutMode,
+success_url:window.location.origin+'/launch?success=true',
+cancel_url:window.location.href
+})
+}).then(function(r){return r.json()}).then(function(d){
+if(d.url){window.location.href=d.url}
+else{payBtn.textContent=btnLabel;payBtn.style.opacity='1';alert('Error: '+(d.error||'Unknown error'))}
+}).catch(function(err){
+payBtn.textContent=btnLabel;payBtn.style.opacity='1';
+alert('Connection error. Please try again.');
+});
+};
+$q('.pst').forEach(function(ps){ps.classList.remove('active');ps.classList.add('completed');ps.querySelector('.pdot').innerHTML='✓'});
+$q('.pcon').forEach(function(c){c.classList.add('completed')});
+}
+function selPlan(plan){
+payPlan=plan;
+$q('.pp-card').forEach(function(c){c.classList.remove('pp-sel')});
+$1('[data-plan="'+plan+'"]').classList.add('pp-sel');
+}
+function updatePayPlans(){
+var t=calcTotals();
+var ot=t.ot;
+var ppSec=$i('ppSection');
+if(pkg!=='custom'){ppSec.style.display='none';payPlan='pif';return}
+ppSec.style.display='block';
+$i('ppPifAmt').textContent=fmt(ot);
+$i('ppPifTotal').textContent='Total: '+fmt(ot);
+var bal15=ot-15000;
+var inst15=Math.ceil(bal15/2);
+$i('ppSplit15Amt').textContent='2 x '+fmt(inst15);
+$i('ppSplit15Total').textContent='Total: '+fmt(ot);
+var bal10=ot-10000;
+var bal10Fee=Math.round(bal10*1.15);
+var inst10=Math.ceil(bal10Fee/2);
+$i('ppSplit10Amt').textContent='2 x '+fmt(inst10);
+$i('ppSplit10Total').textContent='Total: '+fmt(10000+bal10Fee);
+}
+function getStripeItemsForPlan(t,em,fn,bn){
+var ot=t.ot;
+if(payPlan==='pif'||pkg!=='custom'){
+return null; // use default logic
+}
+var down=payPlan==='split15'?15000:10000;
+var bal=ot-down;
+var feeRate=payPlan==='split10'?0.15:0;
+var balWithFee=Math.round(bal*(1+feeRate));
+var installment=Math.ceil(balWithFee/2);
+var planLabel=payPlan==='split15'?'$15K Down — 0% Interest':'$10K Down — 15% Financing';
+var items=[
+{name:pkgNames[pkg]+' — Down Payment ('+planLabel+')',amount_cents:down*100,recurring:false}
+];
+items.push({name:pkgNames[pkg]+' — Installment ('+planLabel+')',amount_cents:installment*100,recurring:true});
+return{items:items,mode:'subscription',installment:installment,down:down,planLabel:planLabel,totalWithFee:down+balWithFee};
+}
 document.addEventListener('DOMContentLoaded',function(){
-  document.getElementById('sidebar').style.display='none';
-  document.getElementById('mBar').style.display='none';
-  updatePrice();
+$i('sidebar').style.display='none';
+$i('mBar').style.display='none';
+updatePrice();
 });
 </script>
 </body>

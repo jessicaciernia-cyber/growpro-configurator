@@ -594,17 +594,30 @@ function updatePrice(){
 function updateSB(){
   var h='';
   if(pkg){h+='<div class="sl"><span class="lb">'+pkgNames[pkg]+'</span><span class="vl">'+fmt(pkgPrices[pkg])+'</span></div>'}
-  h+='<div class="sl"><span class="lb">WellieMD Setup</span><span class="vl">$1,500</span></div>';
+  var wellieSetup=1500;
+  if(hasPromo('wellie_discount')) wellieSetup=500;
+  h+='<div class="sl"><span class="lb">WellieMD Setup</span><span class="vl">'+(hasPromo('wellie_discount')?'<s style="color:#AAA;font-size:12px">$1,500</s> $500':'$1,500')+'</span></div>';
   treats.forEach(function(t){
     var inc=pkg==='operator'&&operatorIncludesTreat.indexOf(t)!==-1;
-    h+='<div class="sl"><span class="lb">'+treatNames[t]+'</span><span class="vl">'+(inc?'Included':'+'+fmt(treatPrice))+'</span></div>';
+    var promoFree=hasPromo('free_treat',t);
+    var priceStr=inc?'Included':promoFree?'<s style="color:#AAA;font-size:12px">+'+fmt(treatPrice)+'</s> <span style="color:#34C759;font-weight:700">FREE</span>':'+'+fmt(treatPrice);
+    h+='<div class="sl"><span class="lb">'+treatNames[t]+'</span><span class="vl">'+priceStr+'</span></div>';
   });
   addons.forEach(function(a){
     var card=document.querySelector('[data-addon="'+a+'"]');if(!card) return;
-    var price=parseInt(card.dataset.price),type=card.dataset.type;
+    var origPrice=parseInt(card.dataset.price),type=card.dataset.type;
     var inc=pkg==='operator'&&operatorIncludes.indexOf(a)!==-1;
     var suffix=type==='monthly'?'/mo':type==='hourly'?'/hr':'';
-    h+='<div class="sl"><span class="lb">'+addonNames[a]+'</span><span class="vl">'+(inc?'Included':fmt(price)+suffix)+'</span></div>';
+    var promoFree=hasPromo('free_addon',a);
+    var dpObj=getPromo('discount_addon',a);
+    var promoDisc=!!dpObj;
+    var dispPrice=promoDisc?Math.round(origPrice*(1-dpObj.promo.pct/100)):origPrice;
+    var priceStr;
+    if(inc) priceStr='Included';
+    else if(promoFree) priceStr='<s style="color:#AAA;font-size:12px">'+fmt(origPrice)+suffix+'</s> <span style="color:#34C759;font-weight:700">FREE</span>';
+    else if(promoDisc) priceStr='<s style="color:#AAA;font-size:12px">'+fmt(origPrice)+suffix+'</s> '+fmt(dispPrice)+suffix;
+    else priceStr=fmt(origPrice)+suffix;
+    h+='<div class="sl"><span class="lb">'+addonNames[a]+'</span><span class="vl">'+priceStr+'</span></div>';
   });
   if(!h) h='<div class="sl"><span class="lb">Select a package...</span></div>';
   document.getElementById('sbC').innerHTML=h;

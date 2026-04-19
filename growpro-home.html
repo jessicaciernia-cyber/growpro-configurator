@@ -4,17 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GrowPro — Build Your Telehealth Business</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:#FFF;color:#0D1B2A;line-height:1.6;overflow-x:hidden}
-h1,h2,h3,.df{font-family:'Cormorant Garamond',serif}
+body{font-family:'Inter',sans-serif;background:#FFF;color:#0D1B2A;line-height:1.6;overflow-x:hidden}
 :root{--p:#8B7EC8;--pl:#E8E4F5;--pb:#F4F2FA;--n:#0D1B2A;--gb:#F7F7F9;--gbd:#E5E5EA;--g:#34C759;--gold:#D4A843;--gl:#FFF8E7;--w:#FFF;--sh:0 2px 12px rgba(13,27,42,0.06);--shh:0 4px 20px rgba(13,27,42,0.1);--r:12px;--t:0.3s ease}
 .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
 .hdr{padding:20px 0;border-bottom:1px solid var(--gbd);background:var(--w)}
 .hdr .wrap{display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:'DM Sans',sans-serif;font-weight:700;font-size:28px;letter-spacing:4px;color:var(--n)}
+.logo{font-weight:800;font-size:28px;letter-spacing:4px;color:var(--n)}
 .logo span{color:var(--p)}
 .tag{font-size:14px;color:#888;letter-spacing:1px}
 .tbar{background:var(--n);color:var(--w);padding:10px 0;overflow:hidden;font-size:13px;font-weight:500;letter-spacing:.5px}
@@ -22,11 +21,19 @@ h1,h2,h3,.df{font-family:'Cormorant Garamond',serif}
 .ti{padding:0 32px;flex-shrink:0}
 .ti::before{content:'✦';margin-right:12px;color:var(--p)}
 @keyframes sctrust{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.hero{padding:80px 0 60px;text-align:center}
-.hero h1{font-size:52px;font-weight:600;color:var(--n);margin-bottom:16px;line-height:1.1}
+.hero{padding:80px 0 40px;text-align:center}
+.hero h1{font-size:52px;font-weight:800;color:var(--n);margin-bottom:16px;line-height:1.1;letter-spacing:-1px}
 .hero h1 span{color:var(--p)}
-.hero p{font-size:18px;color:#666;max-width:640px;margin:0 auto 48px}
+.hero p{font-size:18px;color:#666;max-width:640px;margin:0 auto 48px;font-weight:400}
 @media(max-width:768px){.hero h1{font-size:36px}.hero p{font-size:16px}}
+.stats{display:flex;justify-content:center;gap:48px;padding:32px 0 48px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat .num{font-size:42px;font-weight:800;color:var(--p);letter-spacing:-1px}
+.stat .lbl{font-size:13px;color:#888;text-transform:uppercase;letter-spacing:1px;font-weight:600}
+@media(max-width:600px){.stats{gap:24px}.stat .num{font-size:32px}}
+.img-banner{width:100%;max-width:960px;margin:0 auto 48px;display:flex;gap:16px;padding:0 24px;justify-content:center}
+.img-banner img{border-radius:16px;object-fit:cover;height:200px;flex:1;max-width:300px}
+@media(max-width:768px){.img-banner{flex-direction:column;align-items:center}.img-banner img{width:100%;max-width:400px;height:160px}}
 .paths{display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:960px;margin:0 auto;padding:0 24px 80px}
 @media(max-width:768px){.paths{grid-template-columns:1fr;gap:24px}}
 .path{background:var(--w);border:2px solid var(--gbd);border-radius:16px;padding:40px 32px;text-align:center;transition:var(--t);cursor:pointer;position:relative;box-shadow:var(--sh)}
@@ -34,37 +41,26 @@ h1,h2,h3,.df{font-family:'Cormorant Garamond',serif}
 .path-icon{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 24px}
 .p1-icon{background:var(--pl);color:var(--p)}
 .p2-icon{background:var(--gl);color:var(--gold)}
-.path h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;margin-bottom:8px;color:var(--n)}
-.path .phase{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--p);margin-bottom:16px}
-.path .p2 .phase{color:var(--gold)}
+.path h2{font-size:28px;font-weight:800;margin-bottom:8px;color:var(--n);letter-spacing:-0.5px}
+.bdg{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:4px 12px;border-radius:20px;margin-bottom:16px}
+.b-new{background:var(--pl);color:var(--p)}
+.b-grow{background:var(--gl);color:#8B6914}
 .path p{font-size:15px;color:#666;margin-bottom:24px;line-height:1.6}
 .path .price{font-size:14px;color:#888;margin-bottom:24px}
-.path .price strong{font-size:20px;color:var(--n);font-weight:700}
+.path .price strong{font-size:20px;color:var(--n);font-weight:800}
 .path ul{list-style:none;text-align:left;margin-bottom:28px}
 .path ul li{font-size:14px;padding:6px 0;display:flex;align-items:flex-start;gap:8px;color:#555}
 .path ul li::before{content:'✓';color:var(--g);font-weight:700;flex-shrink:0}
-.path-btn{display:inline-block;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;padding:14px 36px;border-radius:8px;text-decoration:none;transition:var(--t)}
+.path-btn{display:inline-block;font-size:16px;font-weight:700;padding:14px 36px;border-radius:8px;text-decoration:none;transition:var(--t)}
 .btn-launch{background:var(--p);color:var(--w)}
 .btn-launch:hover{background:#7A6DB7}
 .btn-mkt{background:var(--n);color:var(--w)}
 .btn-mkt:hover{background:#1A2D42}
-.bdg{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:4px 12px;border-radius:20px;margin-bottom:16px}
-.b-new{background:var(--pl);color:var(--p)}
-.b-grow{background:var(--gl);color:#8B6914}
-.divider{text-align:center;padding:0 24px;position:relative}
-.divider::before{content:'';position:absolute;top:50%;left:24px;right:24px;height:1px;background:var(--gbd)}
-.div-text{background:var(--w);padding:0 20px;position:relative;font-size:14px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:2px}
-@media(max-width:768px){.divider{display:none}}
 .bottom{text-align:center;padding:0 24px 80px}
 .bottom p{font-size:15px;color:#888;max-width:600px;margin:0 auto}
 .bottom a{color:var(--p);text-decoration:none;font-weight:600}
 .ft{background:var(--gb);border-top:1px solid var(--gbd);padding:32px 0;text-align:center;font-size:13px;color:#888;line-height:1.8}
 .ft a{color:var(--p);text-decoration:none}
-.stats{display:flex;justify-content:center;gap:48px;padding:40px 0;flex-wrap:wrap}
-.stat{text-align:center}
-.stat .num{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:700;color:var(--p)}
-.stat .lbl{font-size:13px;color:#888;text-transform:uppercase;letter-spacing:1px}
-@media(max-width:600px){.stats{gap:24px}.stat .num{font-size:32px}}
 </style>
 </head>
 <body>
@@ -85,9 +81,14 @@ h1,h2,h3,.df{font-family:'Cormorant Garamond',serif}
 <div class="wrap"><div class="stats">
 <div class="stat"><div class="num">70+</div><div class="lbl">Brands Launched</div></div>
 <div class="stat"><div class="num">100%</div><div class="lbl">LegitScript Success</div></div>
-<div class="stat"><div class="num">$170K+</div><div class="lbl">Largest Deal Signed</div></div>
 <div class="stat"><div class="num">4-6wk</div><div class="lbl">Fast Track Launch</div></div>
 </div></div>
+
+<div class="img-banner">
+<img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663361679442/YKbextatsjzgCOlO.jpg" alt="Medical vial">
+<img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663361679442/sHGTVGVxZTQvyaIm.jpg" alt="Peptide therapy">
+<img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663361679442/megRYZIlBQyrHSfB.jpg" alt="Semaglutide injection">
+</div>
 
 <div class="paths">
 <div class="path" onclick="window.location.href='/launch'">

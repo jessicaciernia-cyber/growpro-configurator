@@ -11,7 +11,22 @@
 .sig-check input{margin-top:3px;accent-color:var(--p);width:18px;height:18px;flex-shrink:0}
 .sig-check label{font-size:13px;color:#555;cursor:pointer;line-height:1.5}
 .sig-err{font-size:12px;color:#E53935;margin-top:8px;display:none}
-.sig-err.show{display:block}</style><header class="hdr"><div class="wrap"><div><div class="logo">GROW<span>PRO</span></div><div class="tag">Build Your Telehealth Brand</div></div></div></header>
+.sig-err.show{display:block}.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+@media(max-width:768px){.gal-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.gal-grid{grid-template-columns:1fr}}
+.gal-tile{position:relative;border:2px solid var(--gbd);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:var(--t);background:var(--w)}
+.gal-tile:hover{box-shadow:var(--shh);transform:translateY(-2px)}
+.gal-tile.gal-sel{border-color:var(--p);box-shadow:0 0 0 3px var(--pl)}
+.gal-tile .gal-heart{position:absolute;top:8px;right:8px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:16px;z-index:2;transition:var(--t);color:#CCC;border:1px solid var(--gbd)}
+.gal-tile.gal-sel .gal-heart{background:var(--p);color:var(--w);border-color:var(--p)}
+.gal-tile .gal-img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top;display:block}
+.gal-tile .gal-info{padding:10px 12px;display:flex;align-items:center;justify-content:space-between}
+.gal-tile .gal-name{font-size:13px;font-weight:600;color:var(--n)}
+.gal-tile .gal-visit{font-size:11px;color:var(--p);text-decoration:none;font-weight:600}
+.gal-counter{text-align:center;margin:16px 0;font-size:15px;color:#666}
+.gal-counter strong{color:var(--p);font-size:20px}
+.gal-note{text-align:center;padding:16px;background:var(--pb);border-radius:var(--r);border:1px solid var(--pl);margin-top:16px;font-size:14px;color:#555;line-height:1.6}
+</style><header class="hdr"><div class="wrap"><div><div class="logo">GROW<span>PRO</span></div><div class="tag">Build Your Telehealth Brand</div></div></div></header>
 <nav class="pbar"><div class="wrap"><div class="psteps">
 <div class="pst active" data-step="1"><div class="pdot">1</div><span class="plbl">Launch Path</span></div><div class="pcon"></div>
 <div class="pst" data-step="2"><div class="pdot">2</div><span class="plbl">Treatments</span></div><div class="pcon"></div>
@@ -86,7 +101,30 @@
 <div class="plat-line"><span class="lb">WellieMD</span><span class="vl">$1,000/mo</span></div>
 <div class="plat-note">Mandatory platform fees billed by WellieMD.</div>
 </div>
-<div class="bnav"><div></div><button class="btn btn-p" id="s1n" disabled onclick="goTo(2)">Continue →</button></div>
+<div class="bnav"><div></div><button class="btn btn-p" id="s1n" disabled onclick="goToFromStep1()">Continue →</button></div>
+</div>
+
+
+<div class="sec" id="step1b">
+<h1 class="h1">Pick Your Favorites</h1>
+<p class="sub">Tap up to 3 templates you love. Your final pick is made on the kick-off call.</p>
+<div class="gal-counter"><strong id="galCount">0</strong> of 3 selected</div>
+<div class="gal-grid">
+<div class="gal-tile" data-tpl="OurView Health" onclick="togGal(this)"><div class="gal-heart">&#9825;</div><img class="gal-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663361679442/FdBKFGqmIYWTgICh.webp" alt="OurView Health" loading="lazy"><div class="gal-info"><div class="gal-name">OurView Health</div><a href="https://ourviewhealth.com" target="_blank" class="gal-visit" onclick="event.stopPropagation()">Preview &rarr;</a></div></div>
+<div class="gal-tile" data-tpl="MD Meds" onclick="togGal(this)"><div class="gal-heart">&#9825;</div><img class="gal-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663361679442/shdbGAHsGNXWWTRW.webp" alt="MD Meds" loading="lazy"><div class="gal-info"><div class="gal-name">MD Meds</div><a href="https://mdmeds.com" target="_blank" class="gal-visit" onclick="event.stopPropagation()">Preview &rarr;</a></div></div>
+<div class="gal-tile" data-tpl="Ignite Meds" onclick="togGal(this)"><div class="gal-heart">&#9825;</div><img class="gal-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663361679442/aNwKxbJfBTtXNBxX.webp" alt="Ignite Meds" loading="lazy"><div class="gal-info"><div class="gal-name">Ignite Meds</div><a href="https://ignitemeds.com" target="_blank" class="gal-visit" onclick="event.stopPropagation()">Preview &rarr;</a></div></div>
+<div class="gal-tile" data-tpl="Avara RX" onclick="togGal(this)"><div class="gal-heart">&#9825;</div><img class="gal-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663361679442/sZVyndidSYGLSbUv.webp" alt="Avara RX" loading="lazy"><div class="gal-info"><div class="gal-name">Avara RX</div><a href="https://avararx.com" target="_blank" class="gal-visit" onclick="event.stopPropagation()">Preview &rarr;</a></div></div>
+<div class="gal-tile" data-tpl="Evoke Meds" onclick="togGal(this)"><div class="gal-heart">&#9825;</div><img class="gal-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663361679442/AHzHabYyevwItkhy.webp" alt="Evoke Meds" loading="lazy"><div class="gal-info"><div class="gal-name">Evoke Meds</div><a href="https://evokemeds.com" target="_blank" class="gal-visit" onclick="event.stopPropagation()">Preview &rarr;</a></div></div>
+<div class="gal-tile" data-tpl="Genesis Lifestyle" onclick="togGal(this)"><div class="gal-heart">&#9825;</div><img class="gal-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663361679442/SukalYkhCHstgBav.webp" alt="Genesis Lifestyle" loading="lazy"><div class="gal-info"><div class="gal-name">Genesis Lifestyle</div><a href="https://genesislifestyle.com" target="_blank" class="gal-visit" onclick="event.stopPropagation()">Preview &rarr;</a></div></div>
+<div class="gal-tile" data-tpl="Wellspring Longevity" onclick="togGal(this)"><div class="gal-heart">&#9825;</div><img class="gal-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663361679442/jreyBwFZPAbUFqzO.webp" alt="Wellspring" loading="lazy"><div class="gal-info"><div class="gal-name">Wellspring Longevity</div><a href="https://startwellspring.com" target="_blank" class="gal-visit" onclick="event.stopPropagation()">Preview &rarr;</a></div></div>
+<div class="gal-tile" data-tpl="Yevo Society" onclick="togGal(this)"><div class="gal-heart">&#9825;</div><img class="gal-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663361679442/ThnHMMaRbOZskMKC.png" alt="Yevo Society" loading="lazy"><div class="gal-info"><div class="gal-name">Yevo Society</div><a href="https://yevosociety.com" target="_blank" class="gal-visit" onclick="event.stopPropagation()">Preview &rarr;</a></div></div>
+<div class="gal-tile" data-tpl="New Body RX" onclick="togGal(this)"><div class="gal-heart">&#9825;</div><img class="gal-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663361679442/vNJcFVBPwsnTpySV.webp" alt="New Body RX" loading="lazy"><div class="gal-info"><div class="gal-name">New Body RX</div><a href="https://newbodyrx.com" target="_blank" class="gal-visit" onclick="event.stopPropagation()">Preview &rarr;</a></div></div>
+<div class="gal-tile" data-tpl="MOD Longevity" onclick="togGal(this)"><div class="gal-heart">&#9825;</div><img class="gal-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663361679442/ivIgvOnCGLNCbhec.webp" alt="MOD Longevity" loading="lazy"><div class="gal-info"><div class="gal-name">MOD Longevity</div><a href="https://modlongevity.com" target="_blank" class="gal-visit" onclick="event.stopPropagation()">Preview &rarr;</a></div></div>
+<div class="gal-tile" data-tpl="AulCare MD" onclick="togGal(this)"><div class="gal-heart">&#9825;</div><img class="gal-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663361679442/dcjfmlGhJabkHlvg.png" alt="AulCare MD" loading="lazy"><div class="gal-info"><div class="gal-name">AulCare MD</div><a href="https://aulcaremd.com" target="_blank" class="gal-visit" onclick="event.stopPropagation()">Preview &rarr;</a></div></div>
+<div class="gal-tile" data-tpl="Prime Meds" onclick="togGal(this)"><div class="gal-heart">&#9825;</div><img class="gal-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663361679442/DhiEvIpokwhXmzcs.png" alt="Prime Meds" loading="lazy"><div class="gal-info"><div class="gal-name">Prime Meds</div><a href="https://joinprimemeds.com" target="_blank" class="gal-visit" onclick="event.stopPropagation()">Preview &rarr;</a></div></div>
+</div>
+<div class="gal-note">Every site is custom-built with your branding, treatments, and market positioning. These are just starting points.</div>
+<div class="bnav"><button class="btn btn-s" onclick="goTo(1)">&#8592; Back</button><button class="btn btn-p" onclick="goTo(2)">Continue &#8594;</button></div>
 </div>
 
 <div class="sec" id="step2">
@@ -320,7 +358,21 @@ var WEBHOOK_URL="https://services.leadconnectorhq.com/hooks/us7NjUIDufkMTLkmIPXQ
 var STRIPE_API_URL="https://growpro-stripe-api.vercel.app/api/create-checkout";
 var pkg=null,treats=[],addons=[],step=1;
 var activePromos=[];
-var payPlan='pif'; // 'pif', 'split15', 'split10'
+var payPlan='pif';
+var galPicks=[];
+function togGal(el){
+var tpl=el.dataset.tpl;
+if(el.classList.contains('gal-sel')){
+el.classList.remove('gal-sel');el.querySelector('.gal-heart').innerHTML='&#9825;';
+galPicks=galPicks.filter(function(x){return x!==tpl});
+} else {
+if(galPicks.length>=3) return;
+el.classList.add('gal-sel');el.querySelector('.gal-heart').innerHTML='&#9829;';
+galPicks.push(tpl);
+}
+$i('galCount').textContent=galPicks.length;
+}
+ // 'pif', 'split15', 'split10'
 var PROMO_CODES={
 'WELLIE500':{type:'wellie_discount',desc:'WellieMD Setup reduced to $500',savings:1000},
 'FREELABS':{type:'free_addon',target:'elec_labs',desc:'Free Elective Labs',savings:2500},
@@ -506,7 +558,26 @@ if(!h) h='<div class="sl"><span class="lb">Select a package...</span></div>';
 $i('sbC').innerHTML=h;
 $i('mExp').innerHTML=h?'<div style="padding-top:8px">'+h+'</div>':'';
 }
+
+function goToFromStep1(){
+if(!pkg) return;
+if(pkg==='template'){goTo('1b');return}
+goTo(2);
+}
 function goTo(s){
+if(s==='1b'){
+$q('.sec').forEach(function(x){x.classList.remove('active')});
+$i('step1b').classList.add('active');
+$q('.pst').forEach(function(ps,i){ps.classList.remove('active','completed');if(i===0){ps.classList.add('completed');ps.querySelector('.pdot').innerHTML='&#10003;'}else{ps.querySelector('.pdot').textContent=i+1}});
+$q('.pcon').forEach(function(c){c.classList.remove('completed')});
+$i('sSI').textContent='Browse Templates';
+var sb=$i('sidebar'),mb=$i('mBar');
+if(window.innerWidth>=1024) sb.style.display='block';
+if(window.innerWidth<1024) mb.style.display='block';
+step='1b';
+window.scrollTo({top:0,behavior:'smooth'});
+return;
+}
 if(s===2&&!pkg) return;
 $q('.sec').forEach(function(x){x.classList.remove('active')});
 document.getElementById('step'+s).classList.add('active');
@@ -607,6 +678,7 @@ addons_one_time:otList,addons_monthly:moList,
 welliemd_setup:1500,welliemd_monthly:1000,
 total_one_time:t.ot,total_monthly:t.mo,
 configurator_type:'launch',
+template_favorites:galPicks.length>0?galPicks.join(', '):'None selected',
 agreement_accepted:true,
 agreement_version:'v1.0',
 date_signed:new Date().toISOString(),
@@ -670,18 +742,17 @@ e.preventDefault();
 payBtn.textContent='Processing...';
 payBtn.style.opacity='0.7';
 var planDesc=payPlan==='pif'?'Pay in Full':payPlan==='split15'?'$15K Down 5%':'$10K Down 15%';
+var fetchBody={email:em,description:'GrowPro Launch — '+pkgNames[pkg]+' — '+bn+' — '+planDesc,metadata:{business_name:bn,customer_name:fn+' '+($i('lastName').value.trim()),promo_codes:activePromos.map(function(p){return p.code}).join(',')||'none',phone:$i('phone').value.trim(),source:$i('source').value,payment_plan:planDesc,build_total:t.ot},success_url:window.location.origin+'/launch?success=true',cancel_url:window.location.href};
+if(planInfo){
+fetchBody.payment_plan={down_payment_cents:planInfo.down*100,installment_cents:planInfo.installment*100,installment_count:2,interval_days:28,plan_label:planInfo.planLabel};
+} else {
+fetchBody.line_items=stripeItems;
+fetchBody.mode=checkoutMode;
+}
 fetch(STRIPE_API_URL,{
 method:'POST',
 headers:{'Content-Type':'application/json'},
-body:JSON.stringify({
-email:em,
-description:'GrowPro Launch — '+pkgNames[pkg]+' — '+bn+' — '+planDesc,
-metadata:{business_name:bn,customer_name:fn+' '+($i('lastName').value.trim()),promo_codes:activePromos.map(function(p){return p.code}).join(',')||'none',phone:$i('phone').value.trim(),source:$i('source').value,payment_plan:planDesc,build_total:t.ot},
-line_items:stripeItems,
-mode:checkoutMode,
-success_url:window.location.origin+'/launch?success=true',
-cancel_url:window.location.href
-})
+body:JSON.stringify(fetchBody)
 }).then(function(r){return r.json()}).then(function(d){
 if(d.url){window.location.href=d.url}
 else{payBtn.textContent=btnLabel;payBtn.style.opacity='1';alert('Error: '+(d.error||'Unknown error'))}
@@ -732,7 +803,7 @@ var items=[
 {name:pkgNames[pkg]+' — Down Payment ('+planLabel+')',amount_cents:down*100,recurring:false}
 ];
 items.push({name:pkgNames[pkg]+' — Installment ('+planLabel+')',amount_cents:installment*100,recurring:true});
-return{items:items,mode:'subscription',installment:installment,down:down,planLabel:planLabel,totalWithFee:down+balWithFee};
+return{items:items,mode:'subscription',installment:installment,down:down,planLabel:planLabel,totalWithFee:down+balWithFee,trialDays:28};
 }
 document.addEventListener('DOMContentLoaded',function(){
 $i('sidebar').style.display='none';

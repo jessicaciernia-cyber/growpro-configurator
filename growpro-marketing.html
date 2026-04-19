@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GrowPro — Marketing Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:#FFF;color:#0D1B2A;line-height:1.6;overflow-x:hidden}
+h1,h2,h3,.display-font{font-family:'Cormorant Garamond',serif}
+:root{--p:#8B7EC8;--pl:#E8E4F5;--pb:#F4F2FA;--n:#0D1B2A;--gb:#F7F7F9;--gbd:#E5E5EA;--g:#34C759;--gold:#D4A843;--gl:#FFF8E7;--w:#FFF;--sh:0 2px 12px rgba(13,27,42,0.06);--shh:0 4px 20px rgba(13,27,42,0.1);--r:12px;--t:0.3s ease}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.hdr{padding:20px 0;border-bottom:1px solid var(--gbd);background:var(--w);position:sticky;top:0;z-index:100}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'DM Sans',sans-serif;font-weight:700;font-size:24px;letter-spacing:4px;color:var(--n)}
+.logo span{color:var(--p)}
+.tag{font-size:13px;color:#888;letter-spacing:1px}
+.pbar{background:var(--w);border-bottom:1px solid var(--gbd);padding:16px 0;position:sticky;top:65px;z-index:99}
+.psteps{display:flex;justify-content:center;gap:8px;align-items:center}
+.pst{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#AAA;transition:var(--t)}
+.pst.active{color:var(--p);font-weight:600}
+.pst.completed{color:var(--p)}
+.pdot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;background:var(--gb);color:#AAA;border:2px solid var(--gbd);transition:var(--t);flex-shrink:0}
+.pst.active .pdot{background:var(--p);color:var(--w);border-color:var(--p)}
+.pst.completed .pdot{background:var(--p);color:var(--w);border-color:var(--p)}
+.pcon{width:60px;height:2px;background:var(--gbd);flex-shrink:0}
+.pcon.completed{background:var(--p)}
+.plbl{display:none}
+@media(min-width:768px){.plbl{display:inline}}
+.tbar{background:var(--n);color:var(--w);padding:10px 0;overflow:hidden;font-size:13px;font-weight:500;letter-spacing:.5px}
+.tbi{display:flex;animation:sctrust 20s linear infinite;white-space:nowrap}
+.ti{padding:0 32px;flex-shrink:0}
+.ti::before{content:'✦';margin-right:12px;color:var(--p)}
+@keyframes sctrust{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.main{display:flex;gap:32px;padding:40px 0 120px}
+.ca{flex:1;min-width:0}
+.sec{display:none;animation:fadeIn .4s ease}
+.sec.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.h1{font-size:36px;font-weight:600;margin-bottom:8px;color:var(--n);line-height:1.2}
+.sub{font-size:16px;color:#666;margin-bottom:32px;max-width:600px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:1fr 1fr}
+@media(max-width:768px){.g2{grid-template-columns:1fr}}
+.c{background:var(--w);border:2px solid var(--gbd);border-radius:var(--r);padding:24px;cursor:pointer;transition:var(--t);position:relative;box-shadow:var(--sh)}
+.c:hover{box-shadow:var(--shh);transform:translateY(-2px)}
+.c.sel{border-color:var(--p);background:var(--pb)}
+.c.lck{cursor:default;opacity:.85;background:#F0FFF0;border-color:#C8E6C9}
+.c.lck:hover{transform:none;box-shadow:var(--sh)}
+.csm{padding:20px}
+.bdg{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:4px 12px;border-radius:20px;margin-bottom:12px}
+.b-core{background:var(--pl);color:var(--p)}
+.b-pop{background:#E8F5E9;color:#2E7D32}
+.b-save{background:var(--gl);color:#8B6914}
+.b-rec{background:#FFF3E0;color:#E65100}
+.b-fs{background:linear-gradient(135deg,#F5E6D3,#E8D5B7);color:#6B4226}
+.ck{position:absolute;top:16px;right:16px;width:28px;height:28px;border-radius:50%;background:var(--p);color:var(--w);display:none;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.c.sel .ck,.c.lck .ck{display:flex}
+.c.lck .ck{background:var(--g)}
+.ct{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:4px}
+.cs{font-size:14px;color:#666;margin-bottom:12px}
+.cp{font-size:24px;font-weight:700;color:var(--n);margin-bottom:12px}
+.cp .sx{font-size:14px;font-weight:500;color:#888}
+.cp .ap{color:var(--p)}
+.cl{list-style:none;margin-bottom:12px}
+.cl li{font-size:13px;padding:3px 0;display:flex;align-items:flex-start;gap:8px}
+.cl li::before{content:'✓';color:var(--g);font-weight:700;flex-shrink:0}
+.cn{font-size:13px;color:#888;font-style:italic}
+.cd{font-size:14px;color:#555;margin-bottom:8px;line-height:1.5}
+.gh{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#888;margin:32px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--gbd)}
+.ai{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--pl);color:var(--p);font-size:16px;font-weight:700;flex-shrink:0}
+.c.sel .ai{display:none}
+.side{width:320px;flex-shrink:0;position:sticky;top:140px;align-self:flex-start;display:none}
+@media(min-width:1024px){.side{display:block}}
+.sc{background:var(--gb);border-radius:var(--r);padding:28px;border:1px solid var(--gbd)}
+.sct{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:20px;color:var(--n)}
+.sl{display:flex;justify-content:space-between;font-size:14px;padding:6px 0;border-bottom:1px solid var(--gbd)}
+.sl:last-of-type{border-bottom:none}
+.sl .lb{color:#666}
+.sl .vl{font-weight:600}
+.sdv{height:1px;background:var(--gbd);margin:16px 0}
+.stot{display:flex;justify-content:space-between;font-size:18px;font-weight:700;padding:8px 0}
+.stot .vl{color:var(--p)}
+.ssi{font-size:12px;color:#AAA;text-align:center;margin-top:16px;text-transform:uppercase;letter-spacing:1px}
+.mbar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--w);border-top:1px solid var(--gbd);box-shadow:0 -4px 20px rgba(0,0,0,.08);z-index:200;transition:var(--t)}
+@media(max-width:1023px){.mbar{display:block}body{padding-bottom:80px}}
+.mbc{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;cursor:pointer}
+.mbt{display:flex;gap:24px}
+.mbi{text-align:center}
+.mbi .am{font-size:18px;font-weight:700;color:var(--n)}
+.mbi .lb{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.5px}
+.mbx{font-size:20px;color:#888;transition:var(--t)}
+.mbar.exp .mbx{transform:rotate(180deg)}
+.mbe{display:none;padding:0 24px 20px;max-height:60vh;overflow-y:auto}
+.mbar.exp .mbe{display:block}
+.btn{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;padding:14px 32px;border-radius:8px;border:none;cursor:pointer;transition:var(--t);display:inline-flex;align-items:center;gap:8px}
+.btn-p{background:var(--p);color:var(--w)}
+.btn-p:hover{background:#7A6DB7}
+.btn-p:disabled{background:#CCC;cursor:not-allowed}
+.btn-s{background:transparent;color:var(--p);border:2px solid var(--p)}
+.btn-s:hover{background:var(--pb)}
+.bnav{display:flex;justify-content:space-between;margin-top:40px;gap:16px}
+.suc{background:var(--gb);border-radius:var(--r);padding:32px;border:1px solid var(--gbd)}
+.suse{margin-bottom:24px}
+.sust{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#888;margin-bottom:12px}
+.sui{display:flex;justify-content:space-between;padding:8px 0;font-size:15px;border-bottom:1px solid #E8E8EC}
+.sui:last-child{border-bottom:none}
+.sui .inc{color:var(--g);font-weight:600;font-size:13px}
+.sudv{height:2px;background:var(--n);margin:24px 0}
+.sutr{display:flex;justify-content:space-between;font-size:22px;font-weight:700;padding:8px 0}
+.sutr .vl{color:var(--p)}
+.sufp{font-size:12px;color:#999;margin-top:20px;line-height:1.6}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:560px}
+@media(max-width:600px){.fg{grid-template-columns:1fr}}
+.fi{display:flex;flex-direction:column;gap:6px}
+.fi.fw{grid-column:1/-1}
+.fl{font-size:14px;font-weight:600;color:var(--n)}
+.fl .rq{color:#E53935}
+.fx,.fsel{font-family:'DM Sans',sans-serif;font-size:15px;padding:12px 16px;border:2px solid var(--gbd);border-radius:8px;background:var(--w);color:var(--n);transition:var(--t);outline:none}
+.fx:focus,.fsel:focus{border-color:var(--p)}
+.fx.err{border-color:#E53935}
+.fe{font-size:12px;color:#E53935;display:none}
+.fe.show{display:block}
+.conf{text-align:center;padding:40px 0}
+.conf-i{width:80px;height:80px;border-radius:50%;background:#E8F5E9;color:var(--g);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 24px}
+.conf h1{font-size:42px;margin-bottom:8px}
+.conf p{font-size:16px;color:#666;margin-bottom:32px}
+.conf-r{max-width:560px;margin:0 auto;text-align:left}
+.conf-c{margin-top:32px;font-size:14px;color:#888}
+.conf-c a{color:var(--p);text-decoration:none}
+.hid{display:none!important}
+.ft{background:var(--gb);border-top:1px solid var(--gbd);padding:32px 0;text-align:center;font-size:13px;color:#888;line-height:1.8}
+.ft a{color:var(--p);text-decoration:none}
+.core-box{background:var(--pb);border:2px solid var(--p);border-radius:var(--r);padding:28px;margin-bottom:32px}
+.core-box .ct{font-size:28px;margin-bottom:8px}
+.core-box .cp{font-size:32px}
+.stack-card{background:linear-gradient(135deg,#F5E6D3,#E8D5B7);border:2px solid var(--gold);border-radius:var(--r);padding:24px;cursor:pointer;transition:var(--t);margin-bottom:16px}
+.stack-card:hover{box-shadow:var(--shh)}
+.stack-card.sel{border-color:var(--p);background:var(--pb)}
+.note-box{background:#FFF8E7;border:1px solid #E8D5B7;border-radius:8px;padding:16px;margin-top:16px;font-size:13px;color:#8B6914}
+</style>
+</head>
+<body>
+<header class="hdr"><div class="wrap"><div><div class="logo">GROW<span>PRO</span></div><div class="tag">Marketing Builder</div></div></div></header>
+<nav class="pbar"><div class="wrap"><div class="psteps">
+<div class="pst active" data-step="1"><div class="pdot">1</div><span class="plbl">Core Package</span></div><div class="pcon"></div>
+<div class="pst" data-step="2"><div class="pdot">2</div><span class="plbl">Add-Ons</span></div><div class="pcon"></div>
+<div class="pst" data-step="3"><div class="pdot">3</div><span class="plbl">Review</span></div><div class="pcon"></div>
+<div class="pst" data-step="4"><div class="pdot">4</div><span class="plbl">Get Started</span></div>
+</div></div></nav>
+<div class="tbar"><div class="tbi">
+<span class="ti">Healthcare Marketing Specialists</span><span class="ti">70+ Brands Launched</span><span class="ti">Meta + Google + TikTok</span><span class="ti">Influencer Management</span><span class="ti">Full Funnel Strategy</span>
+<span class="ti">Healthcare Marketing Specialists</span><span class="ti">70+ Brands Launched</span><span class="ti">Meta + Google + TikTok</span><span class="ti">Influencer Management</span><span class="ti">Full Funnel Strategy</span>
+<span class="ti">Healthcare Marketing Specialists</span><span class="ti">70+ Brands Launched</span><span class="ti">Meta + Google + TikTok</span><span class="ti">Influencer Management</span><span class="ti">Full Funnel Strategy</span>
+</div></div>
+
+<div class="wrap"><div class="main"><div class="ca">
+
+<!-- STEP 1: Core Package -->
+<div class="sec active" id="step1">
+<h1 class="h1">Start with the Foundation</h1>
+<p class="sub">Every marketing engagement begins with our Brand Activation Core. This is your launchpad — then stack add-ons to match your goals.</p>
+<div class="core-box">
+<span class="bdg b-core">Required Base Package</span>
+<h3 class="ct">Brand Activation Core</h3>
+<p class="cs">Social setup, 5 micro-influencers, UGC content library, Meta ad warm-up, posting 5x/week — the full foundation.</p>
+<div class="cp">$3,500 <span class="sx">/mo (90-day minimum)</span></div>
+<ul class="cl">
+<li>Instagram + TikTok setup &amp; optimization</li>
+<li>Content pillars + brand voice established</li>
+<li>Posting 5x per week for duration of contract</li>
+<li>5 micro-influencer campaigns (60-day)</li>
+<li>Rights to all UGC content for ads</li>
+<li>UGC + branded content library build</li>
+<li>Meta ad account setup + warm-up</li>
+<li>1 landing page build included</li>
+<li>Onboarding meeting with creative team</li>
+</ul>
+</div>
+<div class="note-box">This is your required base. On the next step, you'll stack add-ons to build your custom marketing plan. Recommended ad spend: $150-200/day.</div>
+<div class="bnav"><div></div><button class="btn btn-p" onclick="goTo(2)">Choose Add-Ons →</button></div>
+</div>
+
+<!-- STEP 2: Add-Ons -->
+<div class="sec" id="step2">
+<h1 class="h1">Stack Your Marketing Add-Ons</h1>
+<p class="sub">Select any combination. All pricing is in addition to the $3,500/mo core. Price updates live.</p>
+
+<div class="gh">Influencer &amp; Content</div>
+<div class="grid">
+<div class="c csm" data-addon="extra_influencers" data-price="3250" data-type="monthly" onclick="togAddon(this)">
+<div class="ck">✓</div><span class="bdg b-pop">Popular</span>
+<h3 class="ct">Extra Influencers (+7 more = 12 total)</h3>
+<p class="cd">UGC database, creator sourcing, contracting, content calendar, campaign setup, influencer comms, commission tracking.</p>
+<div class="cp"><span class="ap">+$3,250</span><span class="sx">/mo</span></div>
+</div>
+</div>
+
+<div class="gh">Paid Advertising</div>
+<div class="grid">
+<div class="c csm" data-addon="secondary_ads" data-price="1800" data-type="monthly" onclick="togAddon(this)">
+<div class="ck">✓</div>
+<h3 class="ct">Secondary Ad Platform</h3>
+<p class="cd">Google, Pinterest, or X. Account setup, landing page, pixel mapping, campaign structure, optimization + reporting, ad creation &amp; testing. 90-day minimum.</p>
+<div class="cp"><span class="ap">+$1,800</span><span class="sx">/mo per platform</span></div>
+</div>
+</div>
+
+<div class="gh">Email &amp; Automation</div>
+<div class="grid">
+<div class="c csm" data-addon="email_marketing" data-price="3000" data-type="monthly" data-onetime="1500" onclick="togAddon(this)">
+<div class="ck">✓</div><span class="bdg b-rec">High ROI</span>
+<h3 class="ct">Full Funnel Email Marketing</h3>
+<p class="cd">Lead gen ads, welcome flow, customer vs non-customer flows, 24 emails over 3 months, funnel logic, segmentation, CRM linking. Includes all Figma templates.</p>
+<div class="cp"><span class="ap">+$3,000</span><span class="sx">/mo + $1,500 one-time design fee</span></div>
+<p class="cn" id="emailNote">Design fee waived with Full Stack</p>
+</div>
+</div>
+
+<div class="gh">Social Media</div>
+<div class="grid">
+<div class="c csm" data-addon="social_management" data-price="2500" data-type="monthly" onclick="togAddon(this)">
+<div class="ck">✓</div>
+<h3 class="ct">Comprehensive Social Media Management</h3>
+<p class="cd">Full management of Instagram/Facebook &amp; TikTok. Posting 5x/day, story posting 5x/week, DM management, community building, advanced reel creation, grid planning, repurposing to 2 additional platforms.</p>
+<div class="cp"><span class="ap">+$2,500</span><span class="sx">/mo</span></div>
+</div>
+</div>
+
+<div class="gh">SEO &amp; Content</div>
+<div class="grid">
+<div class="c csm" data-addon="seo_blog" data-price="3000" data-type="monthly" onclick="togAddon(this)">
+<div class="ck">✓</div><span class="bdg b-pop">High Impact</span>
+<h3 class="ct">SEO Blog Writing (30 posts/mo)</h3>
+<p class="cd">30 high-intent, long-form SEO blog posts per month. Keyword research, buyer-stage mapping, on-page SEO, conversion formatting, strategic CTAs, publishing calendar.</p>
+<div class="cp"><span class="ap">+$3,000</span><span class="sx">/mo</span></div>
+</div>
+</div>
+
+<div class="gh">Quiz Funnels &amp; Landing Pages</div>
+<div class="grid g2">
+<div class="c csm" data-addon="quiz_single" data-price="1500" data-type="onetime" data-group="quiz" onclick="togAddon(this)">
+<div class="ck">✓</div>
+<h3 class="ct">Single Lifestyle Quiz</h3>
+<p class="cd">Custom quiz routing patients to products based on goals. Logic branching included.</p>
+<div class="cp"><span class="ap">+$1,500</span></div>
+</div>
+<div class="c csm" data-addon="quiz_dual" data-price="3000" data-type="onetime" data-group="quiz" onclick="togAddon(this)">
+<div class="ck">✓</div><span class="bdg b-save">Best Value</span>
+<h3 class="ct">Dual Quiz Bundle</h3>
+<p class="cd">Two quiz forms (e.g., GLP-1 + metabolic). Best value for dual-program brands.</p>
+<div class="cp"><span class="ap">+$3,000</span></div>
+</div>
+<div class="c csm" data-addon="quiz_triple" data-price="4000" data-type="onetime" data-group="quiz" onclick="togAddon(this)">
+<div class="ck">✓</div><span class="bdg b-save">Save $500</span>
+<h3 class="ct">Triple Quiz Bundle</h3>
+<p class="cd">Three quiz forms. Saves $500 vs buying individually.</p>
+<div class="cp"><span class="ap">+$4,000</span></div>
+</div>
+<div class="c csm" data-addon="extra_quiz" data-price="1200" data-type="onetime" onclick="togAddon(this)">
+<div class="ck">✓</div>
+<h3 class="ct">Additional Quiz Form</h3>
+<p class="cd">Each additional quiz beyond triple bundle.</p>
+<div class="cp"><span class="ap">+$1,200</span></div>
+</div>
+<div class="c csm" data-addon="extra_landing" data-price="3500" data-type="onetime" onclick="togAddon(this)">
+<div class="ck">✓</div>
+<h3 class="ct">Additional Landing Page</h3>
+<p class="cd">Custom landing page for ad campaigns, product launches, or lead gen. Includes copy, design, and integration.</p>
+<div class="cp"><span class="ap">+$3,500</span></div>
+</div>
+</div>
+
+<div style="margin-top:32px;padding:24px;background:linear-gradient(135deg,#F5E6D3,#E8D5B7);border:2px solid var(--gold);border-radius:var(--r);cursor:pointer" onclick="selectFullStack()">
+<span class="bdg b-fs">Maximum Growth</span>
+<h3 class="ct" style="font-size:26px">Full Stack — All Add-Ons</h3>
+<p class="cd">Core + Extra Influencers + Secondary Ads + Email + Social + SEO Blog. Email design fee waived (save $1,500).</p>
+<div class="cp" style="font-size:28px"><span class="ap">$16,550</span><span class="sx">/mo total (save $1,500)</span></div>
+</div>
+
+<div class="bnav"><button class="btn btn-s" onclick="goTo(1)">← Back</button><button class="btn btn-p" onclick="goTo(3)">Review My Plan →</button></div>
+</div>
+
+<!-- STEP 3: Review -->
+<div class="sec" id="step3">
+<h1 class="h1">Your Marketing Plan</h1>
+<p class="sub">Review your selections before submitting.</p>
+<div class="suc" id="sumC"></div>
+<div class="bnav"><button class="btn btn-s" onclick="goTo(2)">← Edit Plan</button><button class="btn btn-p" onclick="goTo(4)">Continue to Submit →</button></div>
+</div>
+
+<!-- STEP 4: Submit -->
+<div class="sec" id="step4">
+<div id="formV">
+<h1 class="h1">Your Marketing Plan is Ready.</h1>
+<p class="sub">Enter your details and we'll send your personalized marketing proposal.</p>
+<div class="fg">
+<div class="fi"><label class="fl">First Name <span class="rq">*</span></label><input type="text" class="fx" id="firstName" placeholder="First name"><span class="fe" id="fnE">First name is required</span></div>
+<div class="fi"><label class="fl">Last Name</label><input type="text" class="fx" id="lastName" placeholder="Last name"></div>
+<div class="fi"><label class="fl">Email <span class="rq">*</span></label><input type="email" class="fx" id="email" placeholder="you@company.com"><span class="fe" id="emE">Valid email is required</span></div>
+<div class="fi"><label class="fl">Phone <span style="color:#AAA;font-weight:400">(optional)</span></label><input type="tel" class="fx" id="phone" placeholder="(555) 000-0000"></div>
+<div class="fi fw"><label class="fl">How did you hear about us?</label><select class="fsel" id="source"><option value="">Select one...</option><option value="Brad Lea Podcast">Brad Lea Podcast</option><option value="Referral">Referral</option><option value="Social Media">Social Media</option><option value="Google">Google</option><option value="Other">Other</option></select></div>
+</div>
+<div class="bnav"><button class="btn btn-s" onclick="goTo(3)">← Back</button><button class="btn btn-p" onclick="submitForm()">Send My Quote →</button></div>
+</div>
+<div class="conf hid" id="confV">
+<div class="conf-i">✓</div>
+<h1 class="display-font">You are in.</h1>
+<p>We'll be in touch shortly with your personalized marketing proposal.</p>
+<div style="margin:24px 0"><a id="stripePayBtn" href="#" target="_blank" class="btn btn-p" style="font-size:18px;padding:18px 48px;background:#34C759;text-decoration:none;display:inline-block">💳 Pay Now →</a><p style="font-size:13px;color:#888;margin-top:8px">Secure payment via Stripe. Your first month will be pre-filled.</p></div>
+<div class="conf-r"><div class="suc" id="confSum"></div></div>
+<div class="conf-c"><a href="mailto:hello@kickstartsocial.co">hello@kickstartsocial.co</a> | <a href="https://growpro.co" target="_blank">growpro.co</a></div>
+</div>
+</div>
+
+</div>
+<aside class="side" id="sidebar"><div class="sc">
+<div class="sct">Your Marketing Plan</div>
+<div id="sbC"><div class="sl"><span class="lb">Brand Activation Core</span><span class="vl">$3,500/mo</span></div></div>
+<div class="sdv"></div>
+<div class="stot"><span>One-Time</span><span class="vl" id="sOT">$0</span></div>
+<div class="stot"><span>Monthly</span><span class="vl" id="sMO">$3,500/mo</span></div>
+<div class="ssi" id="sSI">Step 1 of 4</div>
+</div></aside>
+</div></div>
+
+<div class="mbar" id="mBar">
+<div class="mbc" onclick="togMB()">
+<div class="mbt">
+<div class="mbi"><div class="am" id="mOT">$0</div><div class="lb">One-Time</div></div>
+<div class="mbi"><div class="am" id="mMO">$3,500/mo</div><div class="lb">Monthly</div></div>
+</div>
+<div class="mbx">▲</div>
+</div>
+<div class="mbe" id="mExp"></div>
+</div>
+
+<footer class="ft"><div class="wrap">
+<a href="https://growpro.co" target="_blank">growpro.co</a> | <a href="https://kickstartsocial.co" target="_blank">kickstartsocial.co</a> | <a href="mailto:hello@kickstartsocial.co">hello@kickstartsocial.co</a>
+<p style="margin-top:8px">Ad spend not included. Billed separately. 90-day minimum on all marketing packages. Pricing subject to change at sole discretion of GrowPro by Kickstart Social LLC.</p>
+</div></footer>
+
+<script>
+var WEBHOOK_URL="YOUR_GHL_WEBHOOK_URL_HERE";
+var STRIPE_MARKETING_URL="https://buy.stripe.com/14AeVd2OM9qSgS3bJ55sA05";
+var addons=[],step=1,isFullStack=false;
+var corePrice=3500;
+var fullStackMonthly=16550;
+var addonNames={
+extra_influencers:"Extra Influencers (+7 more)",secondary_ads:"Secondary Ad Platform",
+email_marketing:"Full Funnel Email Marketing",social_management:"Comprehensive Social Management",
+seo_blog:"SEO Blog Writing (30/mo)",quiz_single:"Single Lifestyle Quiz",
+quiz_dual:"Dual Quiz Bundle",quiz_triple:"Triple Quiz Bundle",
+extra_quiz:"Additional Quiz Form",extra_landing:"Additional Landing Page"
+};
+var fullStackAddons=['extra_influencers','secondary_ads','email_marketing','social_management','seo_blog'];
+
+function togAddon(card){
+  var a=card.dataset.addon,gr=card.dataset.group,isSel=card.classList.contains('sel');
+  if(isFullStack&&fullStackAddons.indexOf(a)!==-1) return;
+  if(isSel){card.classList.remove('sel');addons=addons.filter(function(x){return x!==a});updatePrice();return}
+  if(gr==='quiz'){document.querySelectorAll('[data-group="quiz"]').forEach(function(c){c.classList.remove('sel');addons=addons.filter(function(x){return x!==c.dataset.addon})})}
+  card.classList.add('sel');addons.push(a);
+  if(isFullStack){checkFullStackState()}
+  updatePrice();
+}
+
+function selectFullStack(){
+  if(isFullStack){
+    isFullStack=false;
+    fullStackAddons.forEach(function(a){var c=document.querySelector('[data-addon="'+a+'"]');if(c){c.classList.remove('sel','lck');c.onclick=function(){togAddon(c)};addons=addons.filter(function(x){return x!==a})}});
+  } else {
+    isFullStack=true;
+    fullStackAddons.forEach(function(a){var c=document.querySelector('[data-addon="'+a+'"]');if(c){c.classList.add('sel','lck');c.onclick=null;if(addons.indexOf(a)===-1) addons.push(a)}});
+  }
+  updatePrice();
+}
+
+function checkFullStackState(){
+  var allSel=fullStackAddons.every(function(a){return addons.indexOf(a)!==-1});
+  if(!allSel&&isFullStack){isFullStack=false;fullStackAddons.forEach(function(a){var c=document.querySelector('[data-addon="'+a+'"]');if(c){c.classList.remove('lck');c.onclick=function(){togAddon(c)}}})}
+}
+
+function calcTotals(){
+  var ot=0,mo=corePrice;
+  if(isFullStack){
+    mo=fullStackMonthly;
+    addons.forEach(function(a){
+      if(fullStackAddons.indexOf(a)!==-1) return;
+      var card=document.querySelector('[data-addon="'+a+'"]');if(!card) return;
+      var price=parseInt(card.dataset.price),type=card.dataset.type;
+      if(type==='monthly') mo+=price; else ot+=price;
+    });
+  } else {
+    var hasEmail=addons.indexOf('email_marketing')!==-1;
+    addons.forEach(function(a){
+      var card=document.querySelector('[data-addon="'+a+'"]');if(!card) return;
+      var price=parseInt(card.dataset.price),type=card.dataset.type;
+      var otp=card.dataset.onetime?parseInt(card.dataset.onetime):0;
+      if(type==='monthly'){mo+=price;if(otp) ot+=otp}
+      else ot+=price;
+    });
+  }
+  return{ot:ot,mo:mo};
+}
+
+function fmt(n){return '$'+n.toLocaleString('en-US')}
+
+function updatePrice(){
+  var t=calcTotals();
+  document.getElementById('sOT').textContent=fmt(t.ot);
+  document.getElementById('sMO').textContent=fmt(t.mo)+'/mo';
+  document.getElementById('mOT').textContent=fmt(t.ot);
+  document.getElementById('mMO').textContent=fmt(t.mo)+'/mo';
+  updateSB();
+}
+
+function updateSB(){
+  var h='<div class="sl"><span class="lb">Brand Activation Core</span><span class="vl">$3,500/mo</span></div>';
+  if(isFullStack){
+    h='<div class="sl"><span class="lb">Full Stack (All Add-Ons)</span><span class="vl">'+fmt(fullStackMonthly)+'/mo</span></div>';
+  }
+  addons.forEach(function(a){
+    if(isFullStack&&fullStackAddons.indexOf(a)!==-1) return;
+    var card=document.querySelector('[data-addon="'+a+'"]');if(!card) return;
+    var price=parseInt(card.dataset.price),type=card.dataset.type;
+    var suffix=type==='monthly'?'/mo':'';
+    h+='<div class="sl"><span class="lb">'+addonNames[a]+'</span><span class="vl">'+fmt(price)+suffix+'</span></div>';
+    if(card.dataset.onetime&&!isFullStack){h+='<div class="sl"><span class="lb" style="font-size:12px;color:#888">↳ Design fee</span><span class="vl" style="font-size:12px">$'+card.dataset.onetime+'</span></div>'}
+  });
+  document.getElementById('sbC').innerHTML=h;
+  document.getElementById('mExp').innerHTML='<div style="padding-top:8px">'+h+'</div>';
+}
+
+function goTo(s){
+  document.querySelectorAll('.sec').forEach(function(x){x.classList.remove('active')});
+  document.getElementById('step'+s).classList.add('active');
+  document.querySelectorAll('.pst').forEach(function(ps,i){
+    var n=i+1;ps.classList.remove('active','completed');
+    if(n===s) ps.classList.add('active');
+    else if(n<s){ps.classList.add('completed');ps.querySelector('.pdot').innerHTML='✓'}
+    else ps.querySelector('.pdot').textContent=n;
+  });
+  document.querySelectorAll('.pcon').forEach(function(c,i){if(i<s-1) c.classList.add('completed');else c.classList.remove('completed')});
+  document.getElementById('sSI').textContent='Step '+s+' of 4';
+  var sb=document.getElementById('sidebar'),mb=document.getElementById('mBar');
+  if(s===1){sb.style.display='none';mb.style.display='none'}
+  else{if(window.innerWidth>=1024) sb.style.display='block';if(window.innerWidth<1024) mb.style.display='block'}
+  step=s;if(s===3) buildSum();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function togMB(){document.getElementById('mBar').classList.toggle('exp')}
+
+function buildSum(){
+  var t=calcTotals(),h='';
+  h+='<div class="suse"><div class="sust">Base Package</div>';
+  if(isFullStack){h+='<div class="sui"><span>Full Stack (All Add-Ons)</span><span>'+fmt(fullStackMonthly)+'/mo</span></div>'}
+  else{h+='<div class="sui"><span>Brand Activation Core</span><span>$3,500/mo</span></div>'}
+  h+='</div>';
+  var moA=addons.filter(function(a){if(isFullStack&&fullStackAddons.indexOf(a)!==-1) return false;var c=document.querySelector('[data-addon="'+a+'"]');return c&&c.dataset.type==='monthly'});
+  var otA=addons.filter(function(a){var c=document.querySelector('[data-addon="'+a+'"]');return c&&c.dataset.type==='onetime'});
+  if(isFullStack){
+    h+='<div class="suse"><div class="sust">Included in Full Stack</div>';
+    fullStackAddons.forEach(function(a){h+='<div class="sui"><span>'+addonNames[a]+'</span><span class="inc">Included</span></div>'});
+    h+='</div>';
+  }
+  if(moA.length>0){
+    h+='<div class="suse"><div class="sust">Monthly Add-Ons</div>';
+    moA.forEach(function(a){var c=document.querySelector('[data-addon="'+a+'"]');h+='<div class="sui"><span>'+addonNames[a]+'</span><span>+'+fmt(parseInt(c.dataset.price))+'/mo</span></div>'});
+    h+='</div>';
+  }
+  if(otA.length>0){
+    h+='<div class="suse"><div class="sust">One-Time Add-Ons</div>';
+    otA.forEach(function(a){var c=document.querySelector('[data-addon="'+a+'"]');h+='<div class="sui"><span>'+addonNames[a]+'</span><span>+'+fmt(parseInt(c.dataset.price))+'</span></div>'});
+    h+='</div>';
+  }
+  var hasEmailOT=addons.indexOf('email_marketing')!==-1&&!isFullStack;
+  if(hasEmailOT){h+='<div class="suse"><div class="sust">Design Fees</div><div class="sui"><span>Email Design Fee</span><span>$1,500</span></div></div>'}
+  h+='<div class="sudv"></div>';
+  h+='<div class="sutr"><span>ONE-TIME TOTAL</span><span class="vl">'+fmt(t.ot)+'</span></div>';
+  h+='<div class="sutr"><span>MONTHLY RECURRING</span><span class="vl">'+fmt(t.mo)+'/mo</span></div>';
+  h+='<p class="sufp">Ad spend not included. 90-day minimum on all marketing packages. Pricing subject to change at sole discretion of GrowPro by Kickstart Social LLC.</p>';
+  document.getElementById('sumC').innerHTML=h;
+}
+
+function submitForm(){
+  var fn=document.getElementById('firstName').value.trim(),em=document.getElementById('email').value.trim(),ok=true;
+  document.getElementById('firstName').classList.remove('err');document.getElementById('email').classList.remove('err');
+  document.getElementById('fnE').classList.remove('show');document.getElementById('emE').classList.remove('show');
+  if(!fn){document.getElementById('firstName').classList.add('err');document.getElementById('fnE').classList.add('show');ok=false}
+  if(!em||em.indexOf('@')===-1||em.indexOf('.')===-1){document.getElementById('email').classList.add('err');document.getElementById('emE').classList.add('show');ok=false}
+  if(!ok) return;
+  var t=calcTotals();
+  var payload={
+    first_name:fn,last_name:document.getElementById('lastName').value.trim(),
+    email:em,phone:document.getElementById('phone').value.trim(),
+    source:document.getElementById('source').value,
+    package_type:isFullStack?'Full Stack':'Brand Activation Core',
+    addons_selected:addons.map(function(a){return addonNames[a]}),
+    is_full_stack:isFullStack,
+    total_one_time:t.ot,total_monthly:t.mo,
+    configurator_type:'marketing'
+  };
+  if(WEBHOOK_URL&&WEBHOOK_URL!=="YOUR_GHL_WEBHOOK_URL_HERE"){
+    fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(function(e){console.log('Webhook error:',e)});
+  } else {console.log('Webhook payload:',JSON.stringify(payload,null,2))}
+  document.getElementById('formV').classList.add('hid');
+  document.getElementById('confV').classList.remove('hid');
+  document.getElementById('sidebar').style.display='none';
+  document.getElementById('mBar').style.display='none';
+  buildSum();
+  document.getElementById('confSum').innerHTML=document.getElementById('sumC').innerHTML;
+  var stripeUrl=STRIPE_MARKETING_URL+'?prefilled_email='+encodeURIComponent(em);
+  document.getElementById('stripePayBtn').href=stripeUrl;
+  document.getElementById('stripePayBtn').textContent='💳 Pay Now — '+fmt(t.mo)+'/mo →';
+  document.querySelectorAll('.pst').forEach(function(ps){ps.classList.remove('active');ps.classList.add('completed');ps.querySelector('.pdot').innerHTML='✓'});
+  document.querySelectorAll('.pcon').forEach(function(c){c.classList.add('completed')});
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('sidebar').style.display='none';
+  document.getElementById('mBar').style.display='none';
+  updatePrice();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GrowPro — Copy Helper for Webflow</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#1a1a2e;color:#fff;padding:40px 20px;min-height:100vh}
+.wrap{max-width:800px;margin:0 auto}
+h1{font-size:32px;margin-bottom:8px;text-align:center}
+.sub{text-align:center;color:#aaa;margin-bottom:40px;font-size:16px}
+.card{background:#16213e;border-radius:16px;padding:32px;margin-bottom:24px;border:1px solid #333}
+.card h2{font-size:22px;margin-bottom:4px}
+.card .info{color:#aaa;font-size:14px;margin-bottom:16px}
+.card .size{display:inline-block;background:#8B7EC8;color:#fff;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:600;margin-bottom:16px}
+.btn{display:block;width:100%;padding:18px;border:none;border-radius:12px;font-size:18px;font-weight:700;cursor:pointer;transition:all 0.3s}
+.btn-launch{background:#8B7EC8;color:#fff}
+.btn-launch:hover{background:#7A6DB7}
+.btn-marketing{background:#34C759;color:#fff}
+.btn-marketing:hover{background:#2DB84E}
+.btn-home{background:#D4A843;color:#fff}
+.btn-home:hover{background:#C49A38}
+.copied{background:#22c55e !important;color:#fff !important}
+.note{text-align:center;color:#888;font-size:13px;margin-top:32px;line-height:1.6}
+.steps{background:#0f3460;border-radius:12px;padding:20px;margin-top:16px;font-size:14px;line-height:1.8;color:#ccc}
+.steps strong{color:#fff}
+.steps ol{padding-left:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>GrowPro Webflow Copy Helper</h1>
+<p class="sub">Click each button to copy the code, then paste into Webflow</p>
+
+<div class="card">
+<h2>1. Launch Configurator</h2>
+<p class="info">The main build configurator — Template / Custom Build / Operator Suite</p>
+<span class="size" id="launchSize">Loading...</span>
+<button class="btn btn-launch" id="copyLaunch" onclick="copyCode('launch')">📋 Copy Launch Configurator Code</button>
+</div>
+
+<div class="card">
+<h2>2. Marketing Configurator</h2>
+<p class="info">Brand Activation Core + marketing add-ons</p>
+<span class="size" id="marketingSize">Loading...</span>
+<button class="btn btn-marketing" id="copyMarketing" onclick="copyCode('marketing')">📋 Copy Marketing Configurator Code</button>
+</div>
+
+<div class="card">
+<h2>3. Home / Landing Page</h2>
+<p class="info">The page where visitors choose between Launch and Marketing</p>
+<span class="size" id="homeSize">Loading...</span>
+<button class="btn btn-home" id="copyHome" onclick="copyCode('home')">📋 Copy Landing Page Code</button>
+</div>
+
+<div class="steps">
+<strong>How to paste into Webflow:</strong>
+<ol>
+<li>Click the button above to copy the code</li>
+<li>In Webflow Designer, click the <strong>+</strong> button (top-left)</li>
+<li>Drag a <strong>Code Embed</strong> block onto your page</li>
+<li>Press <strong>Ctrl+V</strong> (or Cmd+V on Mac) to paste</li>
+<li>Click <strong>Save & Close</strong></li>
+<li>Click <strong>Publish</strong> to see it live</li>
+<li><strong>Each configurator goes on its own Webflow page!</strong></li>
+</ol>
+</div>
+
+<p class="note">Each file is under 50,000 characters — fits in a single Webflow embed block.<br>The configurator only renders on the published site, not in the Designer.</p>
+</div>
+
+<script>
+var codes={launch:null,marketing:null,home:null};
+var files={launch:'growpro-launch.html',marketing:'growpro-marketing.html',home:'growpro-home.html'};
+
+Object.keys(files).forEach(function(key){
+  fetch(files[key]).then(function(r){return r.text()}).then(function(t){
+    codes[key]=t;
+    document.getElementById(key+'Size').textContent=t.length.toLocaleString()+' / 50,000 chars';
+  });
+});
+
+function copyCode(key){
+  if(!codes[key]){alert('Still loading...');return}
+  navigator.clipboard.writeText(codes[key]).then(function(){
+    var btn=document.getElementById('copy'+key.charAt(0).toUpperCase()+key.slice(1));
+    btn.textContent='✅ COPIED! Now paste into Webflow';
+    btn.classList.add('copied');
+    setTimeout(function(){
+      btn.textContent='📋 Copy '+key.charAt(0).toUpperCase()+key.slice(1)+' Code';
+      btn.classList.remove('copied');
+    },3000);
+  });
+}
+</script>
+</body>
+</html>

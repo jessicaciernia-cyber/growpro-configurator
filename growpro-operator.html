@@ -637,21 +637,16 @@ function submitForm(){
   buildSum();
   document.getElementById('confSum').innerHTML=document.getElementById('sumC').innerHTML;
 
-  // Build Stripe line items
+  // Bundle setup + first month into one upfront charge
+  var firstPay=tots.setup+tots.mo;
   var stripeItems=[];
-  // Setup fee as one-time
-  if(tots.setup>0){
-    stripeItems.push({name:t.name+' — Setup Fee',amount_cents:tots.setup*100,recurring:false});
-  }
-  // Monthly as recurring
-  stripeItems.push({name:t.name+' — Monthly',amount_cents:tots.mo*100,recurring:true});
-
-  var hasOneTime=stripeItems.some(function(i){return !i.recurring&&i.amount_cents>0});
-  var hasRecurring=stripeItems.some(function(i){return i.recurring});
-  var checkoutMode=hasRecurring?'subscription':'payment';
+  stripeItems.push({name:t.name+' — First Payment (Setup + Month 1)',amount_cents:firstPay*100,recurring:false});
+  stripeItems.push({name:t.name+' — Monthly (Month 2+)',amount_cents:tots.mo*100,recurring:true});
+  var checkoutMode='subscription';
+  var trialDays=30;
 
   var payBtn=document.getElementById('stripePayBtn');
-  payBtn.textContent='Pay Now — '+fmt(tots.mo)+'/mo →';
+  payBtn.textContent='Pay Now — '+fmt(firstPay)+' today →';
   payBtn.onclick=function(e){
     e.preventDefault();
     payBtn.textContent='Creating checkout...';
@@ -665,14 +660,15 @@ function submitForm(){
         metadata:{business_name:bn,customer_name:fn+' '+(document.getElementById('lastName').value.trim()),phone:document.getElementById('phone').value.trim(),source:document.getElementById('source').value,tier:t.name,promo_codes:activePromos.map(function(p){return p.code}).join(',')||'none',term:t.term},
         line_items:stripeItems,
         mode:checkoutMode,
+        trial_days:trialDays,
         success_url:window.location.origin+'/operator?success=true',
         cancel_url:window.location.href
       })
     }).then(function(r){return r.json()}).then(function(d){
       if(d.url){window.location.href=d.url}
-      else{payBtn.textContent='Pay Now — '+fmt(tots.mo)+'/mo →';payBtn.style.opacity='1';alert('Error: '+(d.error||'Unknown error'))}
+      else{payBtn.textContent='Pay Now — '+fmt(firstPay)+' today →';payBtn.style.opacity='1';alert('Error: '+(d.error||'Unknown error'))}
     }).catch(function(err){
-      payBtn.textContent='Pay Now — '+fmt(tots.mo)+'/mo →';payBtn.style.opacity='1';
+      payBtn.textContent='Pay Now — '+fmt(firstPay)+' today →';payBtn.style.opacity='1';
       alert('Connection error. Please try again.');
     });
   };

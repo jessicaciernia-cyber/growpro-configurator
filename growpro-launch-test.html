@@ -129,7 +129,7 @@
 
 <div class="sec" id="step2">
 <h1 class="h1">What will you offer your patients?</h1>
-<p class="sub">Your core 4 are included free. Add HRT to expand your treatment menu.</p>
+<p class="sub">Your core 4 are included free. Expand your menu with HRT, branded meds, or peptides.</p>
 <div class="grid g3">
 <div class="c csm lck"><div class="ck">✓</div><h3 class="ct">Semaglutide GLP-1</h3><div class="cp"><span class="sx" style="font-size:16px;color:var(--g);font-weight:600">Included</span></div></div>
 <div class="c csm lck"><div class="ck">✓</div><h3 class="ct">Tirzepatide GLP-1/GIP</h3><div class="cp"><span class="sx" style="font-size:16px;color:var(--g);font-weight:600">Included</span></div></div>
@@ -141,6 +141,21 @@
 <h3 class="ct">HRT (Men &amp; Women)</h3>
 <p class="cd">Testosterone, ED, Progesterone, Estradiol — full hormone therapy</p>
 <div class="cp"><span class="ap">+$2,500</span></div>
+</div>
+<div class="c csm" id="brandTrCard" data-treatment="branded_med" onclick="togTreat(this)">
+<div class="ck">✓</div>
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="ai">+</span></div>
+<h3 class="ct">Brand Name Medication Pathway</h3>
+<p class="cd">Your own branded medication names, packaging language, and provider protocol setup.</p>
+<div class="cp"><span class="ap">+$2,500</span></div>
+</div>
+<div class="c csm pep" id="pepTrCard" data-treatment="peptide_pkg" onclick="togTreat(this)">
+<div class="ck">✓</div>
+<span class="bdg b-hv">High Value</span>
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="ai">+</span></div>
+<h3 class="ct">Peptide Package</h3>
+<p class="cd">Full peptide infrastructure for all 25 reclassifying peptides. Be ready when the regulatory window opens.</p>
+<div class="cp"><span class="ap">+$5,000</span></div>
 </div>
 </div>
 <div class="bnav"><button class="btn btn-s" onclick="goTo(1)">← Back</button><button class="btn btn-p" onclick="goTo(3)">Continue →</button></div>
@@ -163,18 +178,8 @@
 <p class="cd">Priority queue. Live in approximately 8 weeks. Paid in full at signing.</p>
 <div class="cp"><span class="ap">+$5,000</span></div>
 </div>
-<div class="c csm pep" id="pepCard" data-addon="peptide_pkg" data-price="5000" data-type="onetime" onclick="togAddon(this)">
-<div class="ck">✓</div><span class="bdg b-hv">High Value</span>
-<h3 class="ct">Peptide Package</h3>
-<p class="cd">Full peptide infrastructure for all 25 reclassifying peptides. Be ready when the regulatory window opens. Or choose $500/peptide à la carte.</p>
-<div class="cp"><span class="ap">+$5,000</span> <span class="sx">or $500/peptide</span></div>
-</div>
-<div class="c csm" id="brandCard" data-addon="branded_med" data-price="2500" data-type="onetime" onclick="togAddon(this)">
-<div class="ck">✓</div>
-<h3 class="ct">Branded Meds</h3>
-<p class="cd">Your own branded medication names, packaging language, and provider protocol setup.</p>
-<div class="cp"><span class="ap">+$2,500</span></div>
-</div>
+
+
 <div class="c csm" data-addon="elec_labs" data-price="2500" data-type="onetime" onclick="togAddon(this)">
 <div class="ck">✓</div>
 <h3 class="ct">Elective Labs</h3>
@@ -377,18 +382,18 @@ var PROMO_CODES={
 'WELLIE500':{type:'wellie_discount',desc:'WellieMD Setup reduced to $500',savings:1000},
 'FREELABS':{type:'free_addon',target:'elec_labs',desc:'Free Elective Labs',savings:2500},
 'FREEHRT':{type:'free_treat',target:'hrt',desc:'Free HRT Addition',savings:2500},
-'PEPTIDE50':{type:'discount_addon',target:'peptide_pkg',pct:50,desc:'50% off Peptide Package',savings:2500},
+'PEPTIDE50':{type:'free_treat',target:'peptide_pkg',desc:'50% off Peptide Package',savings:2500},
 'BUILD5K':{type:'build_discount',desc:'$5,000 Off Build',savings:5000}
 };
 var pkgPrices={template:8500,custom:25000,operator:35000};
 var pkgNames={template:'Template Launch',custom:'Custom Build',operator:'Operator Suite'};
-var treatPrice=2500;
-var treatNames={hrt:'HRT (Men & Women)'};
-var operatorIncludes=['fast_track','peptide_pkg','branded_med'];
-var operatorIncludesTreat=['hrt'];
+var treatPrices={hrt:2500,branded_med:2500,peptide_pkg:5000};
+var treatNames={hrt:'HRT (Men & Women)',branded_med:'Brand Name Medication Pathway',peptide_pkg:'Peptide Package'};
+var operatorIncludes=['fast_track'];
+var operatorIncludesTreat=['hrt','branded_med','peptide_pkg'];
 var addonNames={
 fast_track:"Fast Track Priority (4-6 weeks)",fast_track_standard:"Fast Track Standard (8 weeks)",
-peptide_pkg:"Peptide Package",branded_med:"Branded Meds",
+
 elec_labs:"Elective Labs",additional_page:"Additional Product Page",
 lumi_crm:"Lumi CRM",post_launch:"Post-Launch Support Package",
 consulting:"GrowPro Consulting ($500/hr)",
@@ -405,13 +410,16 @@ updatePrice();
 }
 function applyOperatorLocks(){
 var isOp=pkg==='operator';
-var hrt=$i('hrtCard');
+var trCards=[{id:'hrtCard',key:'hrt'},{id:'brandTrCard',key:'branded_med'},{id:'pepTrCard',key:'peptide_pkg'}];
+trCards.forEach(function(tc){
+var el=$i(tc.id);if(!el)return;
 if(isOp){
-hrt.classList.add('lck');hrt.classList.add('sel');hrt.onclick=null;
-if(treats.indexOf('hrt')===-1) treats.push('hrt');
+el.classList.add('lck');el.classList.add('sel');el.onclick=null;
+if(treats.indexOf(tc.key)===-1) treats.push(tc.key);
 } else {
-hrt.classList.remove('lck');hrt.onclick=function(){togTreat(hrt)};
+el.classList.remove('lck');el.onclick=function(){togTreat(el)};
 }
+});
 operatorIncludes.forEach(function(aid){
 var card=$1('[data-addon="'+aid+'"]');
 if(!card) return;
@@ -502,7 +510,7 @@ ot+=wellieSetup;
 treats.forEach(function(t){
 if(pkg==='operator'&&operatorIncludesTreat.indexOf(t)!==-1) return;
 if(hasPromo('free_treat',t)) return;
-ot+=treatPrice;
+ot+=treatPrices[t]||2500;
 });
 addons.forEach(function(a){
 if(pkg==='operator'&&operatorIncludes.indexOf(a)!==-1) return;
@@ -535,7 +543,7 @@ h+='<div class="sl"><span class="lb">WellieMD Setup</span><span class="vl">'+(ha
 treats.forEach(function(t){
 var inc=pkg==='operator'&&operatorIncludesTreat.indexOf(t)!==-1;
 var promoFree=hasPromo('free_treat',t);
-var priceStr=inc?'Included':promoFree?'<s style="color:#AAA;font-size:12px">+'+fmt(treatPrice)+'</s> <span style="color:#34C759;font-weight:700">FREE</span>':'+'+fmt(treatPrice);
+var tp=treatPrices[t]||2500;var priceStr=inc?'Included':promoFree?'<s style="color:#AAA;font-size:12px">+'+fmt(tp)+'</s> <span style="color:#34C759;font-weight:700">FREE</span>':'+'+fmt(tp);
 h+='<div class="sl"><span class="lb">'+treatNames[t]+'</span><span class="vl">'+priceStr+'</span></div>';
 });
 addons.forEach(function(a){
@@ -614,7 +622,7 @@ h+='<div class="sui"><span>Sermorelin</span><span class="inc">Included</span></d
 treats.forEach(function(tr){
 var inc=pkg==='operator'&&operatorIncludesTreat.indexOf(tr)!==-1;
 var promoFree=hasPromo('free_treat',tr);
-h+='<div class="sui"><span>'+treatNames[tr]+'</span><span'+(inc?' class="inc"':'')+'>'+( inc?'Included':promoFree?'<s style="color:#AAA">+'+fmt(treatPrice)+'</s> FREE':'+'+fmt(treatPrice))+'</span></div>';
+var trp=treatPrices[tr]||2500;h+='<div class="sui"><span>'+treatNames[tr]+'</span><span'+(inc?' class="inc"':'')+'>'+( inc?'Included':promoFree?'<s style="color:#AAA">+'+fmt(trp)+'</s> FREE':'+'+fmt(trp))+'</span></div>';
 });
 h+='</div>';
 var otA=addons.filter(function(a){var c=$1('[data-addon="'+a+'"]');return c&&c.dataset.type==='onetime'});
@@ -718,7 +726,7 @@ stripeItems.push({name:'WellieMD Setup Fee'+(welliePromo?' (Promo: '+welliePromo
 treats.forEach(function(tr){
 if(pkg==='operator'&&operatorIncludesTreat.indexOf(tr)!==-1) return;
 if(hasPromo('free_treat',tr)) return;
-stripeItems.push({name:treatNames[tr],amount_cents:treatPrice*100});
+stripeItems.push({name:treatNames[tr],amount_cents:(treatPrices[tr]||2500)*100});
 });
 addons.forEach(function(a){
 if(pkg==='operator'&&operatorIncludes.indexOf(a)!==-1) return;

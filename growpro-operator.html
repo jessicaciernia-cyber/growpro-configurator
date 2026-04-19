@@ -672,13 +672,13 @@ function submitForm(){
   buildSum();
   document.getElementById('confSum').innerHTML=document.getElementById('sumC').innerHTML;
 
-  // Bundle setup + first month into one upfront charge
+  // Setup fee as one-time, monthly starts immediately
   var firstPay=tots.setup+tots.mo;
   var stripeItems=[];
-  stripeItems.push({name:t.name+' — First Payment (Setup + Month 1)',amount_cents:firstPay*100,recurring:false});
-  stripeItems.push({name:t.name+' — Monthly (Month 2+)',amount_cents:tots.mo*100,recurring:true});
+  if(tots.setup>0){stripeItems.push({name:t.name+' — Setup Fee',amount_cents:tots.setup*100,recurring:false});}
+  stripeItems.push({name:t.name+' — Monthly',amount_cents:tots.mo*100,recurring:true});
   var checkoutMode='subscription';
-  var trialDays=30;
+  var trialDays=0;
 
   var payBtn=document.getElementById('stripePayBtn');
   payBtn.textContent='Pay Now — '+fmt(firstPay)+' today →';

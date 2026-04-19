@@ -359,7 +359,7 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <div class="sec" id="step5">
 <div id="formV">
 <h1 class="h1">Your Build is Ready.</h1>
-<p class="sub">Enter your details and we'll send your personalized quote.</p>
+<p class="sub">Enter your details to finalize your build and proceed to checkout.</p>
 <div class="fg">
 <div class="fi"><label class="fl">First Name <span class="rq">*</span></label><input type="text" class="fx" id="firstName" placeholder="First name"><span class="fe" id="fnE">First name is required</span></div>
 <div class="fi"><label class="fl">Last Name</label><input type="text" class="fx" id="lastName" placeholder="Last name"></div>
@@ -367,13 +367,13 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <div class="fi"><label class="fl">Phone <span style="color:#AAA;font-weight:400">(optional)</span></label><input type="tel" class="fx" id="phone" placeholder="(555) 000-0000"></div>
 <div class="fi fw"><label class="fl">How did you hear about us?</label><select class="fsel" id="source"><option value="">Select one...</option><option value="Brad Lea Podcast">Brad Lea Podcast</option><option value="Referral">Referral</option><option value="Social Media">Social Media</option><option value="Google">Google</option><option value="Other">Other</option></select></div>
 </div>
-<div class="bnav"><button class="btn btn-s" onclick="goTo(4)">← Back</button><button class="btn btn-p" onclick="submitForm()">Send My Quote →</button></div>
+<div class="bnav"><button class="btn btn-s" onclick="goTo(4)">← Back</button><button class="btn btn-p" onclick="submitForm()">Submit & Pay →</button></div>
 </div>
 <div class="conf hid" id="confV">
 <div class="conf-i">✓</div>
 <h1 class="display-font">You are in.</h1>
-<p>We'll be in touch shortly with your personalized quote.</p>
-<div style="margin:24px 0"><a id="stripePayBtn" href="#" target="_blank" class="btn btn-p" style="font-size:18px;padding:18px 48px;background:#34C759;text-decoration:none;display:inline-block">Pay Now →</a><p style="font-size:13px;color:#888;margin-top:8px">Secure payment via Stripe. Your quote total will be pre-filled.</p></div>
+<p>Review your build below and click Pay Now to complete your purchase.</p>
+<div style="margin:24px 0"><a id="stripePayBtn" href="#" class="btn btn-p" style="font-size:18px;padding:18px 48px;background:#34C759;text-decoration:none;display:inline-block;cursor:pointer">Pay Now →</a><p style="font-size:13px;color:#888;margin-top:8px">Secure checkout via Stripe. Your exact build total will be charged.</p></div>
 <div class="conf-r"><div class="suc" id="confSum"></div></div>
 <div class="conf-c"><a href="mailto:hello@kickstartsocial.co">hello@kickstartsocial.co</a> | <a href="https://growpro.co" target="_blank">growpro.co</a></div>
 </div>
@@ -408,7 +408,7 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 
 <script>
 var WEBHOOK_URL="YOUR_GHL_WEBHOOK_URL_HERE";
-var STRIPE_LAUNCH_URL="https://buy.stripe.com/4gM4gz2OMcD431d14r5sA04";
+var STRIPE_API_URL="https://9090-ig985ut72xu8yg7tqhfaj-0149429e.us2.manus.computer/create-checkout";
 var pkg=null,treats=[],addons=[],step=1;
 var pkgPrices={template:8500,custom:25000,operator:35000};
 var pkgNames={template:'Template Launch',custom:'Custom Build',operator:'Operator Suite'};
@@ -637,9 +637,45 @@ function submitForm(){
   document.getElementById('mBar').style.display='none';
   buildSum();
   document.getElementById('confSum').innerHTML=document.getElementById('sumC').innerHTML;
-  var stripeUrl=STRIPE_LAUNCH_URL+'?prefilled_email='+encodeURIComponent(em);
-  document.getElementById('stripePayBtn').href=stripeUrl;
-  document.getElementById('stripePayBtn').textContent='Pay Now — '+fmt(t.ot)+' →';
+  // Build line items for Stripe
+  var stripeItems=[];
+  if(pkg){stripeItems.push({name:pkgNames[pkg],amount_cents:pkgPrices[pkg]*100})}
+  stripeItems.push({name:'WellieMD Setup Fee',amount_cents:150000});
+  treats.forEach(function(tr){
+    if(pkg==='operator'&&operatorIncludesTreat.indexOf(tr)!==-1) return;
+    stripeItems.push({name:treatNames[tr],amount_cents:treatPrice*100});
+  });
+  addons.forEach(function(a){
+    if(pkg==='operator'&&operatorIncludes.indexOf(a)!==-1) return;
+    var card=document.querySelector('[data-addon="'+a+'"]');if(!card) return;
+    var price=parseInt(card.dataset.price),type=card.dataset.type;
+    if(type==='onetime') stripeItems.push({name:addonNames[a],amount_cents:price*100});
+  });
+  var payBtn=document.getElementById('stripePayBtn');
+  payBtn.textContent='Pay Now — '+fmt(t.ot)+' →';
+  payBtn.onclick=function(e){
+    e.preventDefault();
+    payBtn.textContent='Creating checkout...';
+    payBtn.style.opacity='0.7';
+    fetch(STRIPE_API_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        email:em,
+        description:'GrowPro Launch — '+pkgNames[pkg],
+        line_items:stripeItems,
+        mode:'payment',
+        success_url:window.location.origin+'/launch?success=true',
+        cancel_url:window.location.href
+      })
+    }).then(function(r){return r.json()}).then(function(d){
+      if(d.url){window.location.href=d.url}
+      else{payBtn.textContent='Pay Now — '+fmt(t.ot)+' →';payBtn.style.opacity='1';alert('Error: '+(d.error||'Unknown error'))}
+    }).catch(function(err){
+      payBtn.textContent='Pay Now — '+fmt(t.ot)+' →';payBtn.style.opacity='1';
+      alert('Connection error. Please try again.');
+    });
+  };
   document.querySelectorAll('.pst').forEach(function(ps){ps.classList.remove('active');ps.classList.add('completed');ps.querySelector('.pdot').innerHTML='✓'});
   document.querySelectorAll('.pcon').forEach(function(c){c.classList.add('completed')});
 }

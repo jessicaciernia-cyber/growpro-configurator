@@ -295,7 +295,7 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <div class="sec" id="step4">
 <div id="formV">
 <h1 class="h1">Your Marketing Plan is Ready.</h1>
-<p class="sub">Enter your details and we'll send your personalized marketing proposal.</p>
+<p class="sub">Enter your details to finalize your marketing plan and proceed to checkout.</p>
 <div class="fg">
 <div class="fi"><label class="fl">First Name <span class="rq">*</span></label><input type="text" class="fx" id="firstName" placeholder="First name"><span class="fe" id="fnE">First name is required</span></div>
 <div class="fi"><label class="fl">Last Name</label><input type="text" class="fx" id="lastName" placeholder="Last name"></div>
@@ -303,13 +303,13 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <div class="fi"><label class="fl">Phone <span style="color:#AAA;font-weight:400">(optional)</span></label><input type="tel" class="fx" id="phone" placeholder="(555) 000-0000"></div>
 <div class="fi fw"><label class="fl">How did you hear about us?</label><select class="fsel" id="source"><option value="">Select one...</option><option value="Brad Lea Podcast">Brad Lea Podcast</option><option value="Referral">Referral</option><option value="Social Media">Social Media</option><option value="Google">Google</option><option value="Other">Other</option></select></div>
 </div>
-<div class="bnav"><button class="btn btn-s" onclick="goTo(3)">← Back</button><button class="btn btn-p" onclick="submitForm()">Send My Quote →</button></div>
+<div class="bnav"><button class="btn btn-s" onclick="goTo(3)">← Back</button><button class="btn btn-p" onclick="submitForm()">Submit & Pay →</button></div>
 </div>
 <div class="conf hid" id="confV">
 <div class="conf-i">✓</div>
 <h1 class="display-font">You are in.</h1>
-<p>We'll be in touch shortly with your personalized marketing proposal.</p>
-<div style="margin:24px 0"><a id="stripePayBtn" href="#" target="_blank" class="btn btn-p" style="font-size:18px;padding:18px 48px;background:#34C759;text-decoration:none;display:inline-block">Pay Now →</a><p style="font-size:13px;color:#888;margin-top:8px">Secure payment via Stripe. Your first month will be pre-filled.</p></div>
+<p>Review your marketing plan below and click Pay Now to get started.</p>
+<div style="margin:24px 0"><a id="stripePayBtn" href="#" class="btn btn-p" style="font-size:18px;padding:18px 48px;background:#34C759;text-decoration:none;display:inline-block;cursor:pointer">Pay Now →</a><p style="font-size:13px;color:#888;margin-top:8px">Secure checkout via Stripe. Your first month will be charged.</p></div>
 <div class="conf-r"><div class="suc" id="confSum"></div></div>
 <div class="conf-c"><a href="mailto:hello@kickstartsocial.co">hello@kickstartsocial.co</a> | <a href="https://growpro.co" target="_blank">growpro.co</a></div>
 </div>
@@ -344,7 +344,7 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 
 <script>
 var WEBHOOK_URL="YOUR_GHL_WEBHOOK_URL_HERE";
-var STRIPE_MARKETING_URL="https://buy.stripe.com/14AeVd2OM9qSgS3bJ55sA05";
+var STRIPE_API_URL="https://9090-ig985ut72xu8yg7tqhfaj-0149429e.us2.manus.computer/create-checkout";
 var addons=[],step=1,isFullStack=false;
 var corePrice=3500;
 var fullStackMonthly=16550;
@@ -513,9 +513,57 @@ function submitForm(){
   document.getElementById('mBar').style.display='none';
   buildSum();
   document.getElementById('confSum').innerHTML=document.getElementById('sumC').innerHTML;
-  var stripeUrl=STRIPE_MARKETING_URL+'?prefilled_email='+encodeURIComponent(em);
-  document.getElementById('stripePayBtn').href=stripeUrl;
-  document.getElementById('stripePayBtn').textContent='Pay Now — '+fmt(t.mo)+'/mo →';
+  // Build line items for Stripe — marketing is monthly recurring
+  var stripeItems=[];
+  if(isFullStack){
+    stripeItems.push({name:'Full Stack — All Add-Ons',amount_cents:fullStackMonthly*100,recurring:true});
+    addons.forEach(function(a){
+      if(fullStackAddons.indexOf(a)!==-1) return;
+      var card=document.querySelector('[data-addon="'+a+'"');if(!card) return;
+      var price=parseInt(card.dataset.price),type=card.dataset.type;
+      if(type==='monthly') stripeItems.push({name:addonNames[a],amount_cents:price*100,recurring:true});
+      else if(price>0) stripeItems.push({name:addonNames[a],amount_cents:price*100,recurring:false});
+    });
+  } else {
+    stripeItems.push({name:'Brand Activation Core',amount_cents:corePrice*100,recurring:true});
+    addons.forEach(function(a){
+      var card=document.querySelector('[data-addon="'+a+'"');if(!card) return;
+      var price=parseInt(card.dataset.price),type=card.dataset.type;
+      if(type==='monthly') stripeItems.push({name:addonNames[a],amount_cents:price*100,recurring:true});
+      else if(price>0) stripeItems.push({name:addonNames[a],amount_cents:price*100,recurring:false});
+    });
+  }
+  // Separate one-time and recurring items
+  var hasOneTime=stripeItems.some(function(i){return !i.recurring&&i.amount_cents>0});
+  var hasRecurring=stripeItems.some(function(i){return i.recurring});
+  // If mixed, use subscription mode with both
+  var checkoutMode=hasRecurring?'subscription':'payment';
+  var payBtn=document.getElementById('stripePayBtn');
+  payBtn.textContent='Pay Now — '+fmt(t.mo)+'/mo →';
+  payBtn.onclick=function(e){
+    e.preventDefault();
+    payBtn.textContent='Creating checkout...';
+    payBtn.style.opacity='0.7';
+    fetch(STRIPE_API_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        email:em,
+        description:'GrowPro Marketing — '+(isFullStack?'Full Stack':'Brand Activation Core'),
+        line_items:stripeItems,
+        mode:checkoutMode,
+        monthly_cents:t.mo*100,
+        success_url:window.location.origin+'/marketing?success=true',
+        cancel_url:window.location.href
+      })
+    }).then(function(r){return r.json()}).then(function(d){
+      if(d.url){window.location.href=d.url}
+      else{payBtn.textContent='Pay Now — '+fmt(t.mo)+'/mo →';payBtn.style.opacity='1';alert('Error: '+(d.error||'Unknown error'))}
+    }).catch(function(err){
+      payBtn.textContent='Pay Now — '+fmt(t.mo)+'/mo →';payBtn.style.opacity='1';
+      alert('Connection error. Please try again.');
+    });
+  };
   document.querySelectorAll('.pst').forEach(function(ps){ps.classList.remove('active');ps.classList.add('completed');ps.querySelector('.pdot').innerHTML='✓'});
   document.querySelectorAll('.pcon').forEach(function(c){c.classList.add('completed')});
 }

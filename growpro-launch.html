@@ -352,6 +352,17 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <h1 class="h1">Your Quote Summary</h1>
 <p class="sub">Review your selections before submitting.</p>
 <div class="suc" id="sumC"></div>
+<div style="margin:20px 0">
+<div id="promoToggle"><a href="#" onclick="event.preventDefault();document.getElementById('promoToggle').style.display='none';document.getElementById('promoBox').style.display='block';" style="font-size:14px;color:var(--p);text-decoration:none;font-weight:600">Have a promo code?</a></div>
+<div id="promoBox" style="display:none">
+<div id="appliedPromos" style="margin-bottom:8px"></div>
+<div id="promoEntry" style="display:flex;gap:12px;align-items:center">
+<input type="text" class="fx" id="promoInput" placeholder="Enter code" style="flex:1;max-width:240px;text-transform:uppercase">
+<button class="btn btn-s" style="padding:12px 24px" onclick="applyPromo()">Apply</button>
+<span id="promoMsg" style="font-size:13px;font-weight:600"></span>
+</div>
+</div>
+</div>
 <div class="bnav"><button class="btn btn-s" onclick="goTo(3)">← Edit Build</button><button class="btn btn-p" onclick="goTo(5)">Continue to Submit →</button></div>
 </div>
 
@@ -365,6 +376,7 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <div class="fi"><label class="fl">Last Name</label><input type="text" class="fx" id="lastName" placeholder="Last name"></div>
 <div class="fi"><label class="fl">Email <span class="rq">*</span></label><input type="email" class="fx" id="email" placeholder="you@company.com"><span class="fe" id="emE">Valid email is required</span></div>
 <div class="fi"><label class="fl">Phone <span style="color:#AAA;font-weight:400">(optional)</span></label><input type="tel" class="fx" id="phone" placeholder="(555) 000-0000"></div>
+<div class="fi fw"><label class="fl">Business Name <span class="rq">*</span></label><input type="text" class="fx" id="bizName" placeholder="Your business or project name"><span class="fe" id="bnE">Business name is required</span></div>
 <div class="fi fw"><label class="fl">How did you hear about us?</label><select class="fsel" id="source"><option value="">Select one...</option><option value="Brad Lea Podcast">Brad Lea Podcast</option><option value="Referral">Referral</option><option value="Social Media">Social Media</option><option value="Google">Google</option><option value="Other">Other</option></select></div>
 </div>
 <div class="bnav"><button class="btn btn-s" onclick="goTo(4)">← Back</button><button class="btn btn-p" onclick="submitForm()">Submit & Pay →</button></div>
@@ -410,6 +422,13 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 var WEBHOOK_URL="YOUR_GHL_WEBHOOK_URL_HERE";
 var STRIPE_API_URL="https://growpro-stripe-api.vercel.app/api/create-checkout";
 var pkg=null,treats=[],addons=[],step=1;
+var activePromos=[];
+var PROMO_CODES={
+  'WELLIE500':{type:'wellie_discount',desc:'WellieMD Setup reduced to $500',savings:1000},
+  'FREELABS':{type:'free_addon',target:'elective_labs',desc:'Free Elective Labs Program',savings:2500},
+  'FREEHRT':{type:'free_treat',target:'hrt',desc:'Free HRT Addition',savings:2500},
+  'PEPTIDE50':{type:'discount_addon',target:'peptide_package',pct:50,desc:'50% off Peptide Package',savings:2500}
+};
 var pkgPrices={template:8500,custom:25000,operator:35000};
 var pkgNames={template:'Template Launch',custom:'Custom Build',operator:'Operator Suite'};
 var treatPrice=2500;
@@ -485,15 +504,65 @@ function togAddon(card){
   card.classList.add('sel');addons.push(a);updatePrice();
 }
 
+function hasPromo(type,target){
+  return activePromos.some(function(p){return target?p.promo.type===type&&p.promo.target===target:p.promo.type===type});
+}
+function getPromo(type,target){
+  for(var i=0;i<activePromos.length;i++){if(target?activePromos[i].promo.type===type&&activePromos[i].promo.target===target:activePromos[i].promo.type===type) return activePromos[i]}
+  return null;
+}
+function renderAppliedPromos(){
+  var el=document.getElementById('appliedPromos');
+  if(activePromos.length===0){el.innerHTML='';return}
+  var h='';
+  activePromos.forEach(function(ap,i){
+    h+='<div style="display:flex;align-items:center;gap:8px;padding:6px 12px;background:#F0FFF4;border:1px solid #34C759;border-radius:8px;margin-bottom:6px">';
+    h+='<span style="font-size:13px;font-weight:600;color:#34C759;flex:1">'+ap.code+': '+ap.promo.desc+' (-'+fmt(ap.promo.savings)+')</span>';
+    h+='<a href="#" onclick="event.preventDefault();removePromo('+i+')" style="color:#E53935;font-size:12px;font-weight:600;text-decoration:none">Remove</a>';
+    h+='</div>';
+  });
+  el.innerHTML=h;
+}
+function removePromo(idx){
+  activePromos.splice(idx,1);
+  renderAppliedPromos();
+  updatePrice();buildSum();
+}
+function applyPromo(){
+  var code=document.getElementById('promoInput').value.trim().toUpperCase();
+  var msg=document.getElementById('promoMsg');
+  if(!code){msg.style.color='#E53935';msg.textContent='Enter a code';return}
+  var promo=PROMO_CODES[code];
+  if(!promo){msg.style.color='#E53935';msg.textContent='Invalid code';return}
+  // Check if already applied
+  if(activePromos.some(function(p){return p.code===code})){msg.style.color='#E53935';msg.textContent='Code already applied';return}
+  // Validate the promo applies to something in the build
+  if(promo.type==='free_addon'||promo.type==='discount_addon'){
+    if(addons.indexOf(promo.target)===-1){msg.style.color='#E53935';msg.textContent='Add '+addonNames[promo.target]+' to your build first';return}
+  }
+  if(promo.type==='free_treat'){
+    if(treats.indexOf(promo.target)===-1){msg.style.color='#E53935';msg.textContent='Add '+treatNames[promo.target]+' to your build first';return}
+  }
+  activePromos.push({code:code,promo:promo});
+  msg.style.color='#34C759';msg.textContent='Applied!';
+  document.getElementById('promoInput').value='';
+  setTimeout(function(){msg.textContent=''},2000);
+  renderAppliedPromos();
+  updatePrice();buildSum();
+}
+
 function calcTotals(){
   var ot=0,mo=1000; // WellieMD $1000/mo mandatory
+  var wellieSetup=1500;
+  if(hasPromo('wellie_discount')) wellieSetup=500;
   if(pkg){
     ot+=pkgPrices[pkg];
-    ot+=1500; // WellieMD setup mandatory
+    ot+=wellieSetup;
   }
   // Treatments (only charge for non-operator-included)
   treats.forEach(function(t){
     if(pkg==='operator'&&operatorIncludesTreat.indexOf(t)!==-1) return;
+    if(hasPromo('free_treat',t)) return;
     ot+=treatPrice;
   });
   // Addons
@@ -502,6 +571,9 @@ function calcTotals(){
     var card=document.querySelector('[data-addon="'+a+'"]');
     if(!card) return;
     var price=parseInt(card.dataset.price),type=card.dataset.type;
+    if(hasPromo('free_addon',a)) return;
+    var dp=getPromo('discount_addon',a);
+    if(dp) price=Math.round(price*(1-dp.promo.pct/100));
     if(type==='monthly') mo+=price;
     else if(type!=='hourly') ot+=price;
   });
@@ -565,7 +637,9 @@ function buildSum(){
   var t=calcTotals(),h='';
   h+='<div class="suse"><div class="sust">Package</div>';
   if(pkg) h+='<div class="sui"><span>'+pkgNames[pkg]+'</span><span>'+fmt(pkgPrices[pkg])+'</span></div>';
-  h+='<div class="sui"><span>WellieMD Setup Fee</span><span>$1,500</span></div>';
+  var wellieSetup=1500;
+  if(hasPromo('wellie_discount')) wellieSetup=500;
+  h+='<div class="sui"><span>WellieMD Setup Fee</span><span>'+(hasPromo('wellie_discount')?'<s style="color:#AAA">$1,500</s> $500':fmt(wellieSetup))+'</span></div>';
   h+='</div>';
   h+='<div class="suse"><div class="sust">Treatments</div>';
   h+='<div class="sui"><span>Semaglutide GLP-1</span><span class="inc">Included</span></div>';
@@ -574,7 +648,8 @@ function buildSum(){
   h+='<div class="sui"><span>Sermorelin</span><span class="inc">Included</span></div>';
   treats.forEach(function(tr){
     var inc=pkg==='operator'&&operatorIncludesTreat.indexOf(tr)!==-1;
-    h+='<div class="sui"><span>'+treatNames[tr]+'</span><span'+(inc?' class="inc"':'')+'>'+( inc?'Included':'+'+fmt(treatPrice))+'</span></div>';
+    var promoFree=hasPromo('free_treat',tr);
+    h+='<div class="sui"><span>'+treatNames[tr]+'</span><span'+(inc?' class="inc"':'')+'>'+( inc?'Included':promoFree?'<s style="color:#AAA">+'+fmt(treatPrice)+'</s> FREE':'+'+fmt(treatPrice))+'</span></div>';
   });
   h+='</div>';
   var otA=addons.filter(function(a){var c=document.querySelector('[data-addon="'+a+'"]');return c&&c.dataset.type==='onetime'});
@@ -583,7 +658,13 @@ function buildSum(){
   if(otA.length>0){
     h+='<div class="suse"><div class="sust">Add-Ons (One-Time)</div>';
     otA.forEach(function(a){var c=document.querySelector('[data-addon="'+a+'"]');var inc=pkg==='operator'&&operatorIncludes.indexOf(a)!==-1;
-    h+='<div class="sui"><span>'+addonNames[a]+'</span><span'+(inc?' class="inc"':'')+'>'+( inc?'Included':'+'+fmt(parseInt(c.dataset.price)))+'</span></div>'});
+    var origPrice=parseInt(c.dataset.price);
+    var promoFree=hasPromo('free_addon',a);
+    var dpObj=getPromo('discount_addon',a);
+    var promoDisc=!!dpObj;
+    var dispPrice=promoDisc?Math.round(origPrice*(1-dpObj.promo.pct/100)):origPrice;
+    var priceStr=inc?'Included':promoFree?'<s style="color:#AAA">+'+fmt(origPrice)+'</s> FREE':promoDisc?'<s style="color:#AAA">+'+fmt(origPrice)+'</s> +'+fmt(dispPrice):'+'+fmt(origPrice);
+    h+='<div class="sui"><span>'+addonNames[a]+'</span><span'+(inc?' class="inc"':'')+'>'+priceStr+'</span></div>'});
     h+='</div>';
   }
   if(moA.length>0){
@@ -608,11 +689,12 @@ function buildSum(){
 }
 
 function submitForm(){
-  var fn=document.getElementById('firstName').value.trim(),em=document.getElementById('email').value.trim(),ok=true;
-  document.getElementById('firstName').classList.remove('err');document.getElementById('email').classList.remove('err');
-  document.getElementById('fnE').classList.remove('show');document.getElementById('emE').classList.remove('show');
+  var fn=document.getElementById('firstName').value.trim(),em=document.getElementById('email').value.trim(),bn=document.getElementById('bizName').value.trim(),ok=true;
+  document.getElementById('firstName').classList.remove('err');document.getElementById('email').classList.remove('err');document.getElementById('bizName').classList.remove('err');
+  document.getElementById('fnE').classList.remove('show');document.getElementById('emE').classList.remove('show');document.getElementById('bnE').classList.remove('show');
   if(!fn){document.getElementById('firstName').classList.add('err');document.getElementById('fnE').classList.add('show');ok=false}
   if(!em||em.indexOf('@')===-1||em.indexOf('.')===-1){document.getElementById('email').classList.add('err');document.getElementById('emE').classList.add('show');ok=false}
+  if(!bn){document.getElementById('bizName').classList.add('err');document.getElementById('bnE').classList.add('show');ok=false}
   if(!ok) return;
   var t=calcTotals();
   var otList=addons.filter(function(a){var c=document.querySelector('[data-addon="'+a+'"]');return c&&c.dataset.type==='onetime'}).map(function(a){return addonNames[a]});
@@ -620,6 +702,7 @@ function submitForm(){
   var payload={
     first_name:fn,last_name:document.getElementById('lastName').value.trim(),
     email:em,phone:document.getElementById('phone').value.trim(),
+    business_name:bn,promo_codes:activePromos.map(function(p){return p.code}).join(',')||'none',
     source:document.getElementById('source').value,
     package:pkgNames[pkg],package_price:pkgPrices[pkg],
     treatments_added:treats.map(function(x){return treatNames[x]}),
@@ -640,16 +723,27 @@ function submitForm(){
   // Build line items for Stripe
   var stripeItems=[];
   if(pkg){stripeItems.push({name:pkgNames[pkg],amount_cents:pkgPrices[pkg]*100})}
-  stripeItems.push({name:'WellieMD Setup Fee',amount_cents:150000});
+  var wellieSetupCents=150000;
+  if(hasPromo('wellie_discount')) wellieSetupCents=50000;
+  var welliePromo=getPromo('wellie_discount');
+  stripeItems.push({name:'WellieMD Setup Fee'+(welliePromo?' (Promo: '+welliePromo.code+')':''),amount_cents:wellieSetupCents});
   treats.forEach(function(tr){
     if(pkg==='operator'&&operatorIncludesTreat.indexOf(tr)!==-1) return;
+    if(hasPromo('free_treat',tr)) return;
     stripeItems.push({name:treatNames[tr],amount_cents:treatPrice*100});
   });
   addons.forEach(function(a){
     if(pkg==='operator'&&operatorIncludes.indexOf(a)!==-1) return;
     var card=document.querySelector('[data-addon="'+a+'"]');if(!card) return;
     var price=parseInt(card.dataset.price),type=card.dataset.type;
-    if(type==='onetime') stripeItems.push({name:addonNames[a],amount_cents:price*100});
+    var addonPrice=price;
+    if(hasPromo('free_addon',a)) addonPrice=0;
+    var dpS=getPromo('discount_addon',a);
+    if(dpS) addonPrice=Math.round(price*(1-dpS.promo.pct/100));
+    var promoLabel='';
+    if(hasPromo('free_addon',a)){var fp=getPromo('free_addon',a);promoLabel=' (Promo: '+fp.code+')'}
+    if(dpS) promoLabel=' (Promo: '+dpS.code+')';
+    if(type==='onetime'&&addonPrice>0) stripeItems.push({name:addonNames[a]+promoLabel,amount_cents:addonPrice*100});
   });
   var payBtn=document.getElementById('stripePayBtn');
   payBtn.textContent='Pay Now — '+fmt(t.ot)+' →';
@@ -662,7 +756,8 @@ function submitForm(){
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         email:em,
-        description:'GrowPro Launch — '+pkgNames[pkg],
+        description:'GrowPro Launch — '+pkgNames[pkg]+' — '+bn,
+        metadata:{business_name:bn,customer_name:fn+' '+(document.getElementById('lastName').value.trim()),promo_codes:activePromos.map(function(p){return p.code}).join(',')||'none',phone:document.getElementById('phone').value.trim(),source:document.getElementById('source').value},
         line_items:stripeItems,
         mode:'payment',
         success_url:window.location.origin+'/launch?success=true',

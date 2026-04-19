@@ -301,6 +301,7 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <div class="fi"><label class="fl">Last Name</label><input type="text" class="fx" id="lastName" placeholder="Last name"></div>
 <div class="fi"><label class="fl">Email <span class="rq">*</span></label><input type="email" class="fx" id="email" placeholder="you@company.com"><span class="fe" id="emE">Valid email is required</span></div>
 <div class="fi"><label class="fl">Phone <span style="color:#AAA;font-weight:400">(optional)</span></label><input type="tel" class="fx" id="phone" placeholder="(555) 000-0000"></div>
+<div class="fi fw"><label class="fl">Business Name <span class="rq">*</span></label><input type="text" class="fx" id="bizName" placeholder="Your business or project name"><span class="fe" id="bnE">Business name is required</span></div>
 <div class="fi fw"><label class="fl">How did you hear about us?</label><select class="fsel" id="source"><option value="">Select one...</option><option value="Brad Lea Podcast">Brad Lea Podcast</option><option value="Referral">Referral</option><option value="Social Media">Social Media</option><option value="Google">Google</option><option value="Other">Other</option></select></div>
 </div>
 <div class="bnav"><button class="btn btn-s" onclick="goTo(3)">← Back</button><button class="btn btn-p" onclick="submitForm()">Submit & Pay →</button></div>
@@ -487,16 +488,18 @@ function buildSum(){
 }
 
 function submitForm(){
-  var fn=document.getElementById('firstName').value.trim(),em=document.getElementById('email').value.trim(),ok=true;
-  document.getElementById('firstName').classList.remove('err');document.getElementById('email').classList.remove('err');
-  document.getElementById('fnE').classList.remove('show');document.getElementById('emE').classList.remove('show');
+  var fn=document.getElementById('firstName').value.trim(),em=document.getElementById('email').value.trim(),bn=document.getElementById('bizName').value.trim(),ok=true;
+  document.getElementById('firstName').classList.remove('err');document.getElementById('email').classList.remove('err');document.getElementById('bizName').classList.remove('err');
+  document.getElementById('fnE').classList.remove('show');document.getElementById('emE').classList.remove('show');document.getElementById('bnE').classList.remove('show');
   if(!fn){document.getElementById('firstName').classList.add('err');document.getElementById('fnE').classList.add('show');ok=false}
   if(!em||em.indexOf('@')===-1||em.indexOf('.')===-1){document.getElementById('email').classList.add('err');document.getElementById('emE').classList.add('show');ok=false}
+  if(!bn){document.getElementById('bizName').classList.add('err');document.getElementById('bnE').classList.add('show');ok=false}
   if(!ok) return;
   var t=calcTotals();
   var payload={
     first_name:fn,last_name:document.getElementById('lastName').value.trim(),
     email:em,phone:document.getElementById('phone').value.trim(),
+    business_name:bn,
     source:document.getElementById('source').value,
     package_type:isFullStack?'Full Stack':'Brand Activation Core',
     addons_selected:addons.map(function(a){return addonNames[a]}),
@@ -549,7 +552,8 @@ function submitForm(){
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         email:em,
-        description:'GrowPro Marketing — '+(isFullStack?'Full Stack':'Brand Activation Core'),
+        description:'GrowPro Marketing — '+(isFullStack?'Full Stack':'Brand Activation Core')+' — '+bn,
+        metadata:{business_name:bn,customer_name:fn+' '+(document.getElementById('lastName').value.trim()),phone:document.getElementById('phone').value.trim(),source:document.getElementById('source').value},
         line_items:stripeItems,
         mode:checkoutMode,
         monthly_cents:t.mo*100,

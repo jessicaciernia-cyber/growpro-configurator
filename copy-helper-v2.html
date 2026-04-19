@@ -21,11 +21,14 @@ h1{font-size:32px;margin-bottom:8px;text-align:center}
 .btn-marketing:hover{background:#2DB84E}
 .btn-home{background:#D4A843;color:#fff}
 .btn-home:hover{background:#C49A38}
-.copied{background:#22c55e !important;color:#fff !important}
+.btn-operator{background:linear-gradient(135deg,#0D1B2A,#1A2D42);color:#D4A843;border:2px solid #D4A843}
+.btn-operator:hover{background:#0D1B2A;box-shadow:0 0 20px rgba(212,168,67,0.3)}
+.copied{background:#22c55e !important;color:#fff !important;border-color:#22c55e !important}
 .note{text-align:center;color:#888;font-size:13px;margin-top:32px;line-height:1.6}
 .steps{background:#0f3460;border-radius:12px;padding:20px;margin-top:16px;font-size:14px;line-height:1.8;color:#ccc}
 .steps strong{color:#fff}
 .steps ol{padding-left:20px}
+.new-badge{display:inline-block;background:#E53935;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:0.5px;margin-left:8px;vertical-align:middle}
 </style>
 </head>
 <body>
@@ -33,23 +36,30 @@ h1{font-size:32px;margin-bottom:8px;text-align:center}
 <h1>GrowPro Webflow Copy Helper</h1>
 <p class="sub">Click each button to copy the code, then paste into Webflow</p>
 
+<div class="card" style="border-color:#D4A843">
+<h2>1. Operator Suite <span class="new-badge">New</span></h2>
+<p class="info">Exclusive Growth Partner Suite — Elite / Founder Operator / Accelerator</p>
+<span class="size" id="operatorSize">Loading...</span>
+<button class="btn btn-operator" id="copyOperator" onclick="copyCode('operator')">📋 Copy Operator Suite Code</button>
+</div>
+
 <div class="card">
-<h2>1. Launch Configurator</h2>
+<h2>2. Launch Configurator</h2>
 <p class="info">The main build configurator — Template / Custom Build / Operator Suite</p>
 <span class="size" id="launchSize">Loading...</span>
 <button class="btn btn-launch" id="copyLaunch" onclick="copyCode('launch')">📋 Copy Launch Configurator Code</button>
 </div>
 
 <div class="card">
-<h2>2. Marketing Configurator</h2>
+<h2>3. Marketing Configurator</h2>
 <p class="info">Brand Activation Core + marketing add-ons</p>
 <span class="size" id="marketingSize">Loading...</span>
 <button class="btn btn-marketing" id="copyMarketing" onclick="copyCode('marketing')">📋 Copy Marketing Configurator Code</button>
 </div>
 
 <div class="card">
-<h2>3. Home / Landing Page</h2>
-<p class="info">The page where visitors choose between Launch and Marketing</p>
+<h2>4. Home / Landing Page</h2>
+<p class="info">The page where visitors choose between Launch, Marketing, and Operator Suite</p>
 <span class="size" id="homeSize">Loading...</span>
 <button class="btn btn-home" id="copyHome" onclick="copyCode('home')">📋 Copy Landing Page Code</button>
 </div>
@@ -64,6 +74,7 @@ h1{font-size:32px;margin-bottom:8px;text-align:center}
 <li>Click <strong>Save & Close</strong></li>
 <li>Click <strong>Publish</strong> to see it live</li>
 <li><strong>Each configurator goes on its own Webflow page!</strong></li>
+<li><strong>Operator Suite goes on a new /operator page</strong></li>
 </ol>
 </div>
 
@@ -71,8 +82,8 @@ h1{font-size:32px;margin-bottom:8px;text-align:center}
 </div>
 
 <script>
-var codes={launch:null,marketing:null,home:null};
-var files={launch:'growpro-launch.html',marketing:'growpro-marketing.html',home:'growpro-home.html'};
+var codes={operator:null,launch:null,marketing:null,home:null};
+var files={operator:'growpro-operator.html',launch:'growpro-launch.html',marketing:'growpro-marketing.html',home:'growpro-home.html'};
 
 Object.keys(files).forEach(function(key){
   fetch(files[key]).then(function(r){return r.text()}).then(function(t){

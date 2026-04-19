@@ -657,18 +657,17 @@ e.preventDefault();
 payBtn.textContent='Processing...';
 payBtn.style.opacity='0.7';
 var planDesc=payPlan==='pif'?'Pay in Full':payPlan==='split15'?'$15K Down 5%':'$10K Down 15%';
+var fetchBody={email:em,description:'GrowPro Launch — '+pkgNames[pkg]+' — '+bn+' — '+planDesc,metadata:{business_name:bn,customer_name:fn+' '+($i('lastName').value.trim()),promo_codes:activePromos.map(function(p){return p.code}).join(',')||'none',phone:$i('phone').value.trim(),source:$i('source').value,payment_plan:planDesc,build_total:t.ot},success_url:window.location.origin+'/launch?success=true',cancel_url:window.location.href};
+if(planInfo){
+fetchBody.payment_plan={down_payment_cents:planInfo.down*100,installment_cents:planInfo.installment*100,installment_count:2,interval_days:28,plan_label:planInfo.planLabel};
+} else {
+fetchBody.line_items=stripeItems;
+fetchBody.mode=checkoutMode;
+}
 fetch(STRIPE_API_URL,{
 method:'POST',
 headers:{'Content-Type':'application/json'},
-body:JSON.stringify({
-email:em,
-description:'GrowPro Launch — '+pkgNames[pkg]+' — '+bn+' — '+planDesc,
-metadata:{business_name:bn,customer_name:fn+' '+($i('lastName').value.trim()),promo_codes:activePromos.map(function(p){return p.code}).join(',')||'none',phone:$i('phone').value.trim(),source:$i('source').value,payment_plan:planDesc,build_total:t.ot},
-line_items:stripeItems,
-mode:checkoutMode,
-success_url:window.location.origin+'/launch?success=true',
-cancel_url:window.location.href
-})
+body:JSON.stringify(fetchBody)
 }).then(function(r){return r.json()}).then(function(d){
 if(d.url){window.location.href=d.url}
 else{payBtn.textContent=btnLabel;payBtn.style.opacity='1';alert('Error: '+(d.error||'Unknown error'))}
@@ -719,7 +718,7 @@ var items=[
 {name:pkgNames[pkg]+' — Down Payment ('+planLabel+')',amount_cents:down*100,recurring:false}
 ];
 items.push({name:pkgNames[pkg]+' — Installment ('+planLabel+')',amount_cents:installment*100,recurring:true});
-return{items:items,mode:'subscription',installment:installment,down:down,planLabel:planLabel,totalWithFee:down+balWithFee};
+return{items:items,mode:'subscription',installment:installment,down:down,planLabel:planLabel,totalWithFee:down+balWithFee,trialDays:28};
 }
 document.addEventListener('DOMContentLoaded',function(){
 $i('sidebar').style.display='none';

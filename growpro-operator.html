@@ -158,6 +158,20 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 .compare-card .cc-price{font-size:20px;font-weight:700;color:var(--n)}
 .compare-card .cc-note{font-size:12px;color:#888;margin-top:4px}
 .compare-card.highlight .cc-note{color:var(--g);font-weight:600}
+.sig-section{margin:32px 0;padding:24px;background:var(--gb);border:1px solid var(--gbd);border-radius:var(--r)}
+.sig-title{font-size:16px;font-weight:700;color:var(--n);margin-bottom:4px}
+.sig-sub{font-size:13px;color:#666;margin-bottom:16px}
+.sig-link{color:var(--p);text-decoration:none;font-weight:600;font-size:14px}
+.sig-link:hover{text-decoration:underline}
+.sig-canvas-wrap{background:var(--w);border:2px solid var(--gbd);border-radius:8px;margin:16px 0;position:relative;touch-action:none}
+.sig-canvas-wrap canvas{display:block;width:100%;height:150px;cursor:crosshair}
+.sig-clear{position:absolute;top:8px;right:8px;font-size:11px;color:var(--p);cursor:pointer;font-weight:600;background:var(--w);padding:2px 8px;border-radius:4px;border:1px solid var(--pl)}
+.sig-placeholder{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:14px;color:#CCC;pointer-events:none;font-style:italic}
+.sig-check{display:flex;align-items:flex-start;gap:10px;margin-top:12px;cursor:pointer}
+.sig-check input{margin-top:3px;accent-color:var(--p);width:18px;height:18px;flex-shrink:0}
+.sig-check label{font-size:13px;color:#555;cursor:pointer;line-height:1.5}
+.sig-err{font-size:12px;color:#E53935;margin-top:8px;display:none}
+.sig-err.show{display:block}
 </style>
 </head>
 <body>
@@ -294,6 +308,21 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <div class="fi fw"><label class="fl">Business Name <span class="rq">*</span></label><input type="text" class="fx" id="bizName" placeholder="Your business or project name"><span class="fe" id="bnE">Business name is required</span></div>
 <div class="fi fw"><label class="fl">How did you hear about us?</label><select class="fsel" id="source"><option value="">Select one...</option><option value="Brad Lea Podcast">Brad Lea Podcast</option><option value="Referral">Referral</option><option value="Social Media">Social Media</option><option value="Google">Google</option><option value="Other">Other</option></select></div>
 </div>
+<div class="sig-section" id="sigSection">
+<div class="sig-title">Service Agreement</div>
+<div class="sig-sub">Please review the agreement and sign below to proceed.</div>
+<a href="/agreement" target="_blank" class="sig-link">View Full Services Agreement →</a>
+<div class="sig-canvas-wrap" id="sigWrap">
+<canvas id="sigCanvas"></canvas>
+<div class="sig-placeholder" id="sigPlaceholder">Draw your signature here</div>
+<span class="sig-clear" onclick="clearSig()">Clear</span>
+</div>
+<div class="sig-check" onclick="var cb=document.getElementById('agreeCheck');cb.checked=!cb.checked">
+<input type="checkbox" id="agreeCheck" onclick="event.stopPropagation()">
+<label>I have read and agree to the <a href="/agreement" target="_blank" style="color:var(--p)" onclick="event.stopPropagation()">GrowPro Services Agreement</a></label>
+</div>
+<div class="sig-err" id="sigErr">Please sign above and check the agreement box to continue</div>
+</div>
 <div class="bnav"><button class="btn btn-s" onclick="goTo(2)">← Back</button><button class="btn btn-p" onclick="submitForm()">Submit & Pay →</button></div>
 </div>
 <div class="conf hid" id="confV">
@@ -337,7 +366,7 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 </div></footer>
 
 <script>
-var WEBHOOK_URL="YOUR_GHL_WEBHOOK_URL_HERE";
+var WEBHOOK_URL="https://services.leadconnectorhq.com/hooks/us7NjUIDufkMTLkmIPXQ/webhook-trigger/21bc9b49-ec90-4e61-a955-b852244d112f";
 var STRIPE_API_URL="https://growpro-stripe-api.vercel.app/api/create-checkout";
 
 var tier=null,step=1;
@@ -543,7 +572,7 @@ function goTo(s){
   if(s===1){sb.style.display='none';mb.style.display='none'}
   else{if(window.innerWidth>=1024) sb.style.display='block';if(window.innerWidth<1024) mb.style.display='block'}
   step=s;
-  if(s===2) buildSum();
+  if(s===2) buildSum();if(s===3) setTimeout(initSig,100);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -613,6 +642,8 @@ function submitForm(){
   if(!fn){document.getElementById('firstName').classList.add('err');document.getElementById('fnE').classList.add('show');ok=false}
   if(!em||em.indexOf('@')===-1||em.indexOf('.')===-1){document.getElementById('email').classList.add('err');document.getElementById('emE').classList.add('show');ok=false}
   if(!bn){document.getElementById('bizName').classList.add('err');document.getElementById('bnE').classList.add('show');ok=false}
+  if(!sigHasData){document.getElementById('sigErr').classList.add('show');ok=false}else{document.getElementById('sigErr').classList.remove('show')}
+  if(!document.getElementById('agreeCheck').checked){document.getElementById('sigErr').classList.add('show');ok=false}
   if(!ok) return;
 
   var t=TIERS[tier],tots=calcTotals();
@@ -624,7 +655,11 @@ function submitForm(){
     tier:t.name,setup_fee:tots.setup,monthly_rate:tots.mo,
     term:t.term,
     total_one_time:tots.setup,total_monthly:tots.mo,
-    configurator_type:'operator_suite'
+    configurator_type:'operator_suite',
+    agreement_accepted:true,
+    agreement_version:'v1.0',
+    date_signed:new Date().toISOString(),
+    signature:getSigData()
   };
   if(WEBHOOK_URL&&WEBHOOK_URL!=="YOUR_GHL_WEBHOOK_URL_HERE"){
     fetch(WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(function(e){console.log('Webhook error:',e)});
@@ -681,6 +716,47 @@ document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('sidebar').style.display='none';
   document.getElementById('mBar').style.display='none';
 });
+
+var sigCanvas,sigCtx,sigDrawing=false,sigHasData=false;
+function initSig(){
+sigCanvas=document.getElementById('sigCanvas');
+if(!sigCanvas) return;
+sigCtx=sigCanvas.getContext('2d');
+var wrap=document.getElementById('sigWrap');
+function resize(){
+var r=wrap.getBoundingClientRect();
+sigCanvas.width=r.width;
+sigCanvas.height=150;
+sigCtx.strokeStyle='#0D1B2A';
+sigCtx.lineWidth=2;
+sigCtx.lineCap='round';
+sigCtx.lineJoin='round';
+}
+resize();
+window.addEventListener('resize',resize);
+function getPos(e){
+var r=sigCanvas.getBoundingClientRect();
+var t=e.touches?e.touches[0]:e;
+return{x:t.clientX-r.left,y:t.clientY-r.top};
+}
+sigCanvas.addEventListener('mousedown',function(e){sigDrawing=true;var p=getPos(e);sigCtx.beginPath();sigCtx.moveTo(p.x,p.y)});
+sigCanvas.addEventListener('mousemove',function(e){if(!sigDrawing)return;var p=getPos(e);sigCtx.lineTo(p.x,p.y);sigCtx.stroke();sigHasData=true;document.getElementById('sigPlaceholder').style.display='none'});
+sigCanvas.addEventListener('mouseup',function(){sigDrawing=false});
+sigCanvas.addEventListener('mouseleave',function(){sigDrawing=false});
+sigCanvas.addEventListener('touchstart',function(e){e.preventDefault();sigDrawing=true;var p=getPos(e);sigCtx.beginPath();sigCtx.moveTo(p.x,p.y)},{passive:false});
+sigCanvas.addEventListener('touchmove',function(e){e.preventDefault();if(!sigDrawing)return;var p=getPos(e);sigCtx.lineTo(p.x,p.y);sigCtx.stroke();sigHasData=true;document.getElementById('sigPlaceholder').style.display='none'},{passive:false});
+sigCanvas.addEventListener('touchend',function(){sigDrawing=false});
+}
+function clearSig(){
+if(!sigCanvas)return;
+sigCtx.clearRect(0,0,sigCanvas.width,sigCanvas.height);
+sigHasData=false;
+document.getElementById('sigPlaceholder').style.display='block';
+}
+function getSigData(){
+if(!sigHasData)return null;
+return sigCanvas.toDataURL('image/png');
+}
 </script>
 </body>
 </html>

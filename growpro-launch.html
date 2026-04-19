@@ -373,7 +373,7 @@ h1,h2,h3,.display-font{font-family:'Inter',sans-serif;letter-spacing:-0.5px}
 <div class="conf-i">✓</div>
 <h1 class="display-font">You are in.</h1>
 <p>We'll be in touch shortly with your personalized quote.</p>
-<div style="margin:24px 0"><a id="stripePayBtn" href="#" target="_blank" class="btn btn-p" style="font-size:18px;padding:18px 48px;background:#34C759;text-decoration:none;display:inline-block">💳 Pay Now →</a><p style="font-size:13px;color:#888;margin-top:8px">Secure payment via Stripe. Your quote total will be pre-filled.</p></div>
+<div style="margin:24px 0"><a id="stripePayBtn" href="#" target="_blank" class="btn btn-p" style="font-size:18px;padding:18px 48px;background:#34C759;text-decoration:none;display:inline-block">Pay Now →</a><p style="font-size:13px;color:#888;margin-top:8px">Secure payment via Stripe. Your quote total will be pre-filled.</p></div>
 <div class="conf-r"><div class="suc" id="confSum"></div></div>
 <div class="conf-c"><a href="mailto:hello@kickstartsocial.co">hello@kickstartsocial.co</a> | <a href="https://growpro.co" target="_blank">growpro.co</a></div>
 </div>
@@ -639,7 +639,7 @@ function submitForm(){
   document.getElementById('confSum').innerHTML=document.getElementById('sumC').innerHTML;
   var stripeUrl=STRIPE_LAUNCH_URL+'?prefilled_email='+encodeURIComponent(em);
   document.getElementById('stripePayBtn').href=stripeUrl;
-  document.getElementById('stripePayBtn').textContent='💳 Pay Now — '+fmt(t.ot)+' →';
+  document.getElementById('stripePayBtn').textContent='Pay Now — '+fmt(t.ot)+' →';
   document.querySelectorAll('.pst').forEach(function(ps){ps.classList.remove('active');ps.classList.add('completed');ps.querySelector('.pdot').innerHTML='✓'});
   document.querySelectorAll('.pcon').forEach(function(c){c.classList.add('completed')});
 }
